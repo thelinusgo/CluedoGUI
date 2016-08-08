@@ -6,4 +6,12 @@ package cluedo.main;
  */
 public class Main {
 
+	
+	public static void main(String[] a){
+		new CluedoFrame();
+		new Main();
+	}
+	
+	
+	
 }
