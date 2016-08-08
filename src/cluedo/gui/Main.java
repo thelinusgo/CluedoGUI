@@ -1,4 +1,4 @@
-package cluedo.main;
+package cluedo.gui;
 /**
  * First class in CluedoGUI
  * @author linus

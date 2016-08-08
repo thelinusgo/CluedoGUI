@@ -1,4 +1,4 @@
-package cluedo.main;
+package cluedo.gui;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
