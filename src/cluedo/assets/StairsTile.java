@@ -1,5 +1,6 @@
 package cluedo.assets;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class StairsTile extends Tile{
@@ -8,6 +9,7 @@ public class StairsTile extends Tile{
 	}
 
 	public void draw(Graphics g){
-
+		g.setColor(new Color(255, 153, 0));
+		g.fillRect(super.xLoc, super.yLoc, super.size, super.size);
 	}
 }
