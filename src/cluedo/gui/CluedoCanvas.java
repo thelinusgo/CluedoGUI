@@ -63,7 +63,7 @@ public class CluedoCanvas extends JPanel {
 		this.drawBoard(g);
 		//TODO get rid of this!
 		g.setColor(Color.red);
-		g.drawRect(0, 0, this.getWidth()-1, this.getHeight()-1);
+		g.drawRect(0, 0, 25, 25);
 	}
 
 	private void initialise(){
