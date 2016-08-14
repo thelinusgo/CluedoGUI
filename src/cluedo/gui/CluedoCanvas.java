@@ -1,4 +1,5 @@
 package cluedo.gui;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -60,6 +61,9 @@ public class CluedoCanvas extends JPanel {
 	public void paint(Graphics g){
 		this.initialise();
 		this.drawBoard(g);
+		//TODO get rid of this!
+		g.setColor(Color.red);
+		g.drawRect(0, 0, this.getWidth()-1, this.getHeight()-1);
 	}
 
 	private void initialise(){

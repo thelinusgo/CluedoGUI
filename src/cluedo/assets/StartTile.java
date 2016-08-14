@@ -12,6 +12,6 @@ public class StartTile extends Tile{
 
 	public void draw(Graphics g){
 		g.setColor(c.getColor());
-		g.fillRect(xLoc, yLoc, size, size);
+		g.fillRect(xLoc, yLoc, TILESIZE, TILESIZE);
 	}
 }

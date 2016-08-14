@@ -8,7 +8,7 @@ public class Tile {
 	protected int xLoc;
 	protected int yLoc;
 	
-	protected final int size = 2;
+	protected static final int TILESIZE = 2;
 	
 	/**
 	 * Construct a new Tile with the given type of tile inside.
@@ -21,6 +21,6 @@ public class Tile {
 	
 	public void draw(Graphics g){
 		g.setColor(new Color(153, 102, 255));
-		g.fillRect(xLoc, yLoc, size, size);
+		g.fillRect(xLoc, yLoc, TILESIZE, TILESIZE);
 	}
 }

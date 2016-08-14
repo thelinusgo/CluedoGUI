@@ -17,7 +17,7 @@ public class DoorTile extends Tile{
 	
 	public void draw(Graphics g){
 		g.setColor(new Color(0, 179, 89));
-		g.fillRect(super.xLoc, super.yLoc, super.size, super.size);
-		g.drawString(door.getString(), super.xLoc + super.size/2, super.yLoc + super.size/2);
+		g.fillRect(super.xLoc, super.yLoc, super.TILESIZE, super.TILESIZE);
+		g.drawString(door.getString(), super.xLoc + super.TILESIZE/2, super.yLoc + super.TILESIZE/2);
 	}
 }

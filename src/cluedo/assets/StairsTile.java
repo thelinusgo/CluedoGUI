@@ -10,6 +10,6 @@ public class StairsTile extends Tile{
 
 	public void draw(Graphics g){
 		g.setColor(new Color(255, 153, 0));
-		g.fillRect(super.xLoc, super.yLoc, super.size, super.size);
+		g.fillRect(super.xLoc, super.yLoc, super.TILESIZE, super.TILESIZE);
 	}
 }
