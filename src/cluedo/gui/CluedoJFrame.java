@@ -39,9 +39,11 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 	private JButton btnAccusation;
 	private JButton btnEndTurn;
 	private JButton btnRollDice;
+	//the combo boxes.
 	private JComboBox combo1;
 	private JComboBox combo2;
 	private JComboBox combo3;
+	//the text pane.
 	private JTextPane textPane;
 	
 	/**
