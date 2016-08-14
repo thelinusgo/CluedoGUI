@@ -9,7 +9,7 @@ public class WallTile extends Tile{
 	}
 
 	public void draw(Graphics g){
-		g.setColor(new Color(255, 92, 51));
+		g.setColor(new Color(153, 102, 51));
 		g.fillRect(super.xLoc, super.yLoc, super.size, super.size);
 	}
 }

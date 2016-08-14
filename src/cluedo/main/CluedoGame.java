@@ -130,7 +130,7 @@ public class CluedoGame {
 	public void initialSetup(){
 		drawAsciiArt();
 		TextClient.askPlayers();
-		initializer.distributeCharacters(currentPlayers);
+		//initializer.distributeCharacters(currentPlayers);
 		initializer.distributeCards(currentPlayers);
 
 		board.setPlayerPosition(currentPlayers);
@@ -142,7 +142,7 @@ public class CluedoGame {
 	 * Test class for the initial setup.
 	 */
 	public void testInitialSetup(){
-		initializer.distributeCharacters(currentPlayers);
+		//initializer.distributeCharacters(currentPlayers);
 		initializer.distributeCards(currentPlayers);
 		board.setPlayerPosition(currentPlayers);
 		board.drawBoard();

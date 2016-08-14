@@ -1,4 +1,7 @@
 package cluedo.assets;
+
+import java.awt.Color;
+
 /**
  * Class that represents a player in the game. Contains a name.
  * @author Casey & Linus
@@ -21,11 +24,23 @@ public class Character {
 	private Player player;
 	
 	/**
+	 * Colour of this character
+	 */
+	private Color color;
+	
+	/**
+	 * Stores the start position of this character
+	 */
+	private Position startPos;
+	
+	/**
 	 * Construct a new character with a given name.
 	 * @param name
 	 */
-	public Character(String name){
+	public Character(String name, Color c, Position startPos){
 		this.name = name;
+		this.color = c;
+		this.startPos = startPos;
 	}
 	
 	/**
@@ -42,6 +57,22 @@ public class Character {
 			case "Professor Plum": return "R";
 		}
 		return null;
+	}
+	
+	/**
+	 * Returns the colour of this character
+	 * @return
+	 */
+	public Color getColor(){
+		return this.color;
+	}
+	
+	/**
+	 * Returns the start position of this character
+	 * @return
+	 */
+	public Position getStartPos(){
+		return startPos;
 	}
 	
 	/**

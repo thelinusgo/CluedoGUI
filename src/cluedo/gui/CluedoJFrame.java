@@ -22,6 +22,7 @@ import java.awt.Font;
 import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.JTextPane;
+import java.awt.Canvas;
 
 /**
  * This class represents the JFrame for the Cluedo Game.
@@ -107,9 +108,6 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
 		
-		
-		
-		
 		JLabel label = new JLabel("1. Choose your Suspects");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel.add(label, "cell 0 1");
@@ -178,8 +176,6 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 		
 		btnEndTurn = new JButton("End Turn");
 		panel_1.add(btnEndTurn, "cell 0 3,alignx center");
-		JPanel panel_3 = new JPanel();
-		contentPane.add(panel_3, BorderLayout.CENTER);
 		btnSuggestion.addActionListener(new ActionListener(){
 			//TODO: implement button logic here
 			public void actionPerformed(ActionEvent e) {
@@ -199,6 +195,9 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 		panel_2.add(lblDice);
 		panel_2.add(textPane);
 		panel_2.add(btnRollDice);
+		
+		CluedoCanvas canvas = new CluedoCanvas();
+		contentPane.add(canvas, BorderLayout.CENTER);
 	}
 
 	@Override

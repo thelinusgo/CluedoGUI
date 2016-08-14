@@ -1,5 +1,6 @@
 package cluedo.main;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,15 +37,15 @@ public class Initializer {
 	private long seed = System.nanoTime();
 
 	/*Initialise Rooms NB: not all rooms have weapons.  */
-	Room kitchen = new Room("Kitchen", 0, 1, 6, 6, true);
-	Room diningrm = new Room("Dining Room", 0, 9, 8, 7, false);
-	Room ballRm = new Room("Ball Room", 8, 1, 8, 7, false);
-	Room conservatory = new Room("Conservatory", 18, 1, 7, 5, true);
-	Room billRm = new Room("Billiard Room", 19, 8, 6, 5, false);
-	Room lib = new Room("Library", 18, 14, 7, 5, false);
-	Room study = new Room("Study", 17, 21, 8, 4, true);
-	Room hall = new Room("Hall", 9, 18, 6, 7, false);
-	Room lounge = new Room("Lounge", 0, 19, 7, 6, true);
+	public Room kitchen = new Room("Kitchen", 0, 1, 6, 6, true);
+	public Room diningrm = new Room("Dining Room", 0, 9, 8, 7, false);
+	public Room ballRm = new Room("Ball Room", 8, 1, 8, 7, false);
+	public Room conservatory = new Room("Conservatory", 18, 1, 7, 5, true);
+	public Room billRm = new Room("Billiard Room", 19, 8, 6, 5, false);
+	public Room lib = new Room("Library", 18, 14, 7, 5, false);
+	public Room study = new Room("Study", 17, 21, 8, 4, true);
+	public Room hall = new Room("Hall", 9, 18, 6, 7, false);
+	public Room lounge = new Room("Lounge", 0, 19, 7, 6, true);
 
 	/**
 	 * Construct a new Board
@@ -118,13 +119,12 @@ public class Initializer {
 	 */
 	private void initializeCharacters(){
 		/*Fill the ArrayList with people.. */
-		characters.add(new Character("Miss Scarlett"));
-		characters.add(new Character("Colonel Mustard"));
-		characters.add(new Character("Mrs. White"));
-		characters.add(new Character("The Reverend Green"));
-		characters.add(new Character("Mrs. Peacock"));
-		characters.add(new Character("Professor Plum"));
-		Collections.shuffle(characters, new Random(seed)); //shuffle it
+		characters.add(new Character("Miss Scarlet", Color.red, new Position(24, 7)));
+		characters.add(new Character("Colonel Mustard", Color.yellow, new Position(0, 14)));
+		characters.add(new Character("Mrs. White", Color.white, new Position(0, 9)));
+		characters.add(new Character("The Reverend Green", Color.green, new Position(17, 0)));
+		characters.add(new Character("Mrs. Peacock", Color.blue, new Position(6, 24)));
+		characters.add(new Character("Professor Plum", Color.black, new Position(19, 24)));
 	}
 
 	/**
@@ -218,7 +218,7 @@ public class Initializer {
 	/**
 	 * Distribute characters to current players.
 	 * @param currentPlayers
-	 */
+	 *//*
 	public void distributeCharacters(List<Player> currentPlayers){
 		Collections.shuffle(characters, new Random(seed)); 
 		for(int i = 0; i < players.length; i++){	
@@ -231,7 +231,7 @@ public class Initializer {
 			p.setCharacter(characters.get(i));
 			players[i] = p;
 		}
-	}
+	}*/
 
 	/**
 	 * Distribute cards to players.
@@ -300,5 +300,13 @@ public class Initializer {
 	 */
 	public static List<Room> getRooms(){
 		return Initializer.rooms;
+	}
+	
+	/**
+	 * Returns the list of characters
+	 * @return
+	 */
+	public static List<Character> getCharacters(){
+		return characters;
 	}
 }
