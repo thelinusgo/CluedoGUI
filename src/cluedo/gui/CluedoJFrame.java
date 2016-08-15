@@ -76,38 +76,17 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
+		/*Stuff that goes under the File Tab*/
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 		
 		JMenuItem mntmStartGame = new JMenuItem("Start Game");
 		mnFile.add(mntmStartGame);
-		mntmStartGame.addActionListener(new ActionListener(){
-			//TODO need to implement this.
-			@Override
-			public void actionPerformed(ActionEvent e){
-				System.out.println("Doesn't do anything");	
-			}
-		});
-		
-		
-		
-		
 		
 		JMenuItem mntmExitGame = new JMenuItem("Exit Program");
 		mnFile.add(mntmExitGame);
-		mntmExitGame.addActionListener(new ActionListener(){ 
-			@Override
-			public void actionPerformed(ActionEvent e){
-				int value = JOptionPane.showConfirmDialog(null, "Do you want to exit this Game?", "Confirmation", JOptionPane.YES_NO_OPTION);
-				if(value == 0)
-					System.exit(0);		
-			}
-				
-		});
 		
-		
-		
-		
+		/*Stuff that goes into the HELP tab */
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
 		
@@ -117,11 +96,29 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 		JMenuItem mntmAboutCluedogui = new JMenuItem("About CluedoGUI");
 		mnHelp.add(mntmAboutCluedogui);
 		
+		
+		/*ACTION LISTENER STUFF */
+		
+		mntmStartGame.addActionListener(new ActionListener(){
+			//TODO need to implement this.
+			@Override
+			public void actionPerformed(ActionEvent e){
+				System.out.println("Doesn't do anything");	
+			}
+		});
+		
+		mntmExitGame.addActionListener(
+				e->{
+					int value = JOptionPane.showConfirmDialog(null, "Do you want to exit this Game?", "Confirmation", JOptionPane.YES_NO_OPTION);
+					if(value == 0)
+						System.exit(0);	
+				}
+					);
+		
 		mntmAboutCluedogui.addActionListener(
 				e-> JOptionPane.showMessageDialog(
 						null, "This game was created by Casey Huang and Linus Go for their SWEN 222 Project. \n (c) 2016 All rights reserved.")
 				);
-		
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -132,7 +129,7 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 		contentPane.add(panel, BorderLayout.EAST);
 		panel.setLayout(new MigLayout("", "[88px,grow]", "[14px][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 		
-		//create JPanel here.
+		//create JPanel
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.WEST);
 		panel_1.setLayout(new MigLayout("", "[113px,grow]", "[23px][][][][][grow]"));
