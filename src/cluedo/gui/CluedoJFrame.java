@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -68,8 +70,6 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 	public CluedoJFrame() {
 		textPane = new JTextPane();
 
-		
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 942, 700);
 		
@@ -81,9 +81,32 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 		
 		JMenuItem mntmStartGame = new JMenuItem("Start Game");
 		mnFile.add(mntmStartGame);
+		mntmStartGame.addActionListener(new ActionListener(){
+			//TODO need to implement this.
+			@Override
+			public void actionPerformed(ActionEvent e){
+				System.out.println("Doesn't do anything");	
+			}
+		});
 		
-		JMenuItem mntmExitGame = new JMenuItem("Exit Game");
+		
+		
+		
+		
+		JMenuItem mntmExitGame = new JMenuItem("Exit Program");
 		mnFile.add(mntmExitGame);
+		mntmExitGame.addActionListener(new ActionListener(){ 
+			@Override
+			public void actionPerformed(ActionEvent e){
+				int value = JOptionPane.showConfirmDialog(null, "Do you want to exit this Game?", "Confirmation", JOptionPane.YES_NO_OPTION);
+				if(value == 0)
+					System.exit(0);		
+			}
+				
+		});
+		
+		
+		
 		
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
@@ -93,6 +116,13 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 		
 		JMenuItem mntmAboutCluedogui = new JMenuItem("About CluedoGUI");
 		mnHelp.add(mntmAboutCluedogui);
+		
+		mntmAboutCluedogui.addActionListener(
+				e-> JOptionPane.showMessageDialog(
+						null, "This game was created by Casey Huang and Linus Go for their SWEN 222 Project. \n (c) 2016 All rights reserved.")
+				);
+		
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -163,7 +193,7 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 		btnSuggestion.addActionListener(new ActionListener(){
 			//TODO: implement button logic here.
 			public void actionPerformed(ActionEvent e){
-				
+				System.out.println("Suggestion has been pressed");
 			}
 		});
 		
