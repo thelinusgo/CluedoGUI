@@ -2,11 +2,15 @@ package cluedo.gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import cluedo.assets.Door;
@@ -61,6 +65,33 @@ public class CluedoCanvas extends JPanel {
 
 	public void paint(Graphics g){
 		this.initialise();
+		
+		BufferedImage kitchen = null;
+		BufferedImage ballroom = null;
+		BufferedImage billiardRoom = null;
+		BufferedImage hall = null;
+		BufferedImage lounge = null;
+		BufferedImage study = null;
+		BufferedImage conservatory = null;
+		BufferedImage library = null;
+		BufferedImage diningRoom = null;
+		BufferedImage cluedo = null;
+		
+		try {
+			kitchen = ImageIO.read(new File("kitchenRoom.jpg"));
+			ballroom = ImageIO.read(new File("ballroomRoom.jpg"));
+			billiardRoom = ImageIO.read(new File("billiardRoomRoom.jpg"));
+			hall = ImageIO.read(new File("hallRoom.jpg"));
+			lounge = ImageIO.read(new File("loungeRoom.jpg"));
+			study = ImageIO.read(new File("studyRoom.jpg"));
+			conservatory = ImageIO.read(new File("conservatoryRoom.jpg"));
+			library = ImageIO.read(new File("libraryRoom.jpg"));
+			diningRoom = ImageIO.read(new File("diningRoomRoom.jpg"));
+			cluedo = ImageIO.read(new File("cluedo.jpg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		g.drawImage(kitchen, 0, Tile.TILESIZE, 590, 590, null);
 		this.drawBoard(g);
 	}
 

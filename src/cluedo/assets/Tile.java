@@ -8,19 +8,23 @@ public class Tile {
 	protected int xLoc;
 	protected int yLoc;
 	
-	protected static final int TILESIZE = 20;
+	public static final int TILESIZE = 21;
 	
 	/**
 	 * Construct a new Tile with the given type of tile inside.
 	 * @param tile
 	 */
 	public Tile(int x, int y){
-		this.xLoc = x*TILESIZE;
-		this.yLoc = y*TILESIZE;
+		this.xLoc = 38+x*TILESIZE;
+		this.yLoc = 25+y*TILESIZE;
 	}
+	
+	
 	
 	public void draw(Graphics g){
 		g.setColor(new Color(204, 153, 255));
 		g.fillRect(xLoc, yLoc, TILESIZE, TILESIZE);
+		g.setColor(Color.black);
+		g.drawRect(xLoc, yLoc, TILESIZE, TILESIZE);
 	}
 }

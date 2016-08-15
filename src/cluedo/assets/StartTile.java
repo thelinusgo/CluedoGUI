@@ -1,5 +1,6 @@
 package cluedo.assets;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class StartTile extends Tile{
@@ -13,5 +14,7 @@ public class StartTile extends Tile{
 	public void draw(Graphics g){
 		g.setColor(c.getColor());
 		g.fillRect(xLoc, yLoc, TILESIZE, TILESIZE);
+		g.setColor(Color.black);
+		g.drawRect(xLoc, yLoc, TILESIZE, TILESIZE);
 	}
 }
