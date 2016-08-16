@@ -40,12 +40,12 @@ public class CluedoGame {
 	/**
 	 * Flag for stating whether asking was a success or not.
 	 */
-	public static boolean askSuccess; 
+	public boolean askSuccess; 
 	
 	/**
 	 * If a player has asked or not.
 	 */
-	private static boolean hasAsked = false;
+	private boolean hasAsked = false;
 	
 	/**
 	 * List of sequencial numbers. This allows a random number to be chosen.
@@ -110,7 +110,7 @@ public class CluedoGame {
 	 * Add new player to current players.
 	 * @param player
 	 */
-	public static void addPlayer(Player player){
+	public void addPlayer(Player player){
 		currentPlayers.add(player);
 	}
 
@@ -123,31 +123,34 @@ public class CluedoGame {
 		currentRoll = diceList.get(0);
 		return currentRoll;
 	}
+	
+	/**
+	 * Initialize the current players - give them random cards, assign them a random character.
+	 */
+	public void initialSetup(){
+	if(currentPlayers.size() == 0){
+		System.out.println("current players list is empty");
+		return; //silently fail, do nothing if there are no currentPlayers.
+	}
+	initializer.distributeCards(currentPlayers); //distributes the cards out to the players.
+	//initializer.setCharacters();
+	System.out.println("I have finished initalizing.");
+	}
 
-//	/**
-//	 * Sets up the board and an instance of the textClient.
-//	 */
-//	public void initialSetup(){
-//		TextClient.askPlayers();
-//		//initializer.distributeCharacters(currentPlayers);
-//		initializer.distributeCards(currentPlayers);
-//
-//		board.setPlayerPosition(currentPlayers);
-//		initializer.setCharacters();
-//		board.drawBoard();
-//	}
-
-//	/**
-//	 * Test class for the initial setup.
-//	 */
-//	public void testInitialSetup(){
-//		//initializer.distributeCharacters(currentPlayers);
-//		initializer.distributeCards(currentPlayers);
-//		board.setPlayerPosition(currentPlayers);
-//		board.drawBoard();
-//	}
-
-
+	
+	/**
+	 * Returns all of the currentPlayers, for use in a JTextBox or a JList.
+	 */
+	public String getPlayerAndCharacterText(){
+		StringBuilder sb = new StringBuilder();
+		int index = 1;
+		for(Player player : currentPlayers){
+			String value = index + ": " + player.getName() + "\n->"+ player.getCharacter().name() + "\n";
+			sb.append(value);
+			++index;
+		}
+		return sb.toString();
+	}
 	
 	/**
 	 * This sets the players position on the game. It places them strategically in a random location each round.
@@ -495,15 +498,14 @@ public class CluedoGame {
 		}
 	}
 	
-	/**
-	 * The main method. This must be run/invoked to play the game.
-	 * @param args
-	 * @throws InvalidMove
-	 */
-	public static void main(String[] args) throws InvalidMove{
-		CluedoGame game = new CluedoGame();
-		//game.initialSetup();
-		game.runGame();
-
-	}
+//	/**
+//	 * The main method. This must be run/invoked to play the game.
+//	 * @param args
+//	 * @throws InvalidMove
+//	 */
+//	public static void main(String[] args) throws InvalidMove{
+//		CluedoGame game = new CluedoGame();
+//		//game.initialSetup();
+//		game.runGame();
+//	}
 }

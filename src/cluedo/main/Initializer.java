@@ -27,6 +27,7 @@ public class Initializer {
 	private static List<Weapon> weapons = new ArrayList<>();
 	private static List<Card> cards = new ArrayList<>();
 	private static List<Character> characters = new ArrayList<>();
+	public static List<String> characterNames = new ArrayList<>();
 	private static Player[] players = new Player[6];
 	private static Envelope envelope = new Envelope();
 	private static List<RoomCard> roomCards = new ArrayList<>();
@@ -122,9 +123,14 @@ public class Initializer {
 		characters.add(new Character("Miss Scarlet", Color.red, new Position(24, 7)));
 		characters.add(new Character("Colonel Mustard", Color.yellow, new Position(0, 14)));
 		characters.add(new Character("Mrs. White", Color.white, new Position(0, 9)));
-		characters.add(new Character("The Reverend Green", Color.green, new Position(17, 0)));
+		characters.add(new Character("The Reverend Green", new Color(0, 204, 0), new Position(17, 0)));
 		characters.add(new Character("Mrs. Peacock", Color.blue, new Position(6, 24)));
 		characters.add(new Character("Professor Plum", Color.black, new Position(19, 24)));
+	
+		/*Allows a List of the characters Names to be used/modified */
+		for(Character c : characters){
+			characterNames.add(c.name());
+		}
 	}
 
 	/**
@@ -202,7 +208,7 @@ public class Initializer {
 	 */
 	public void setCharacters(){
 		Collections.shuffle(rooms, new Random(seed));
-		for(int i = 3; i < players.length; i++){
+		for(int i = 0; i < players.length; i++){
 			Player p = players[i];
 			Character c = p.getCharacter();
 			if(p.getName().equals("none")){
@@ -218,7 +224,7 @@ public class Initializer {
 	/**
 	 * Distribute characters to current players.
 	 * @param currentPlayers
-	 *//*
+	 */
 	public void distributeCharacters(List<Player> currentPlayers){
 		Collections.shuffle(characters, new Random(seed)); 
 		for(int i = 0; i < players.length; i++){	
@@ -231,7 +237,7 @@ public class Initializer {
 			p.setCharacter(characters.get(i));
 			players[i] = p;
 		}
-	}*/
+	}
 
 	/**
 	 * Distribute cards to players.
@@ -261,12 +267,6 @@ public class Initializer {
 			}
 			Player currentPlayer = currentPlayers.get(i);
 			currentPlayer.addCard(characterCards.get(j));
-		}
-
-		for(Player p : currentPlayers){
-			for(Card c : p.getCards()){
-				System.out.println(c);
-			}
 		}
 	}
 
