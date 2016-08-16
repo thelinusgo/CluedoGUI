@@ -18,6 +18,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.AbstractAction;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -60,7 +61,6 @@ public class CluedoJFrame extends JFrame {
 	private JTextPane textPane_1;
 	private JTextField txtNull;
 	
-	private int comboIndex = 0;
 	
 	
 	
@@ -116,7 +116,7 @@ public class CluedoJFrame extends JFrame {
 					isInteger = true;
 				}
 			} else {
-				if(Integer.parseInt(numPlayers) == -1) System.exit(0);
+				if(Integer.parseInt(numPlayers) == -1) System.exit(0); //secret value
 				JOptionPane.showMessageDialog(null, "You must enter Integer values only.");
 			}
 		}
@@ -125,6 +125,39 @@ public class CluedoJFrame extends JFrame {
 		
 	}
 	
+	 /**
+     * This code allows us to select from a list of characters, given a player.
+     */
+    public Character grabCharacters(String[] characters) {
+        JPanel panel = new JPanel();
+        panel.add(new JLabel("Please make a selection:"));
+        @SuppressWarnings("rawtypes")
+		DefaultComboBoxModel model = new DefaultComboBoxModel();
+        for(int i = 0; i != characters.length; ++i){
+        if(!characters[i].equals("...")){
+        model.addElement(characters[i]);
+        }
+        }
+        JComboBox comboBox = new JComboBox(model);
+        panel.add(comboBox);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Choose a Character", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        switch (result) {
+            case JOptionPane.OK_OPTION:
+                System.out.println("You selected " + comboBox.getSelectedItem());
+                for(int i = 0 ; i != characters.length; ++i){
+                	if(characters[i].equals(comboBox.getSelectedItem())){
+                		characters[i] = "...";
+                	}else{
+                		continue;
+                	}
+                }
+        //TODO: need to fix initializing the color and the pos.
+        return new Character( (String)comboBox.getSelectedItem(), new Color(0,0,0), new Position(0,0));
+        }
+        return null;
+    } 
+
 	/**
 	 * Asks for the number of Players.
 	 * @param numPlayers
@@ -140,27 +173,14 @@ public class CluedoJFrame extends JFrame {
 		"Professor Plum"
 		};
 		
-		String message = "	Instructions: Please enter the Index of the Character desired.\n"
-				+ "1.	Miss Scarlett \n"
-				+ "2.	Colonel Mustard\n"
-				+ "3.	Mrs. White \n"
-				+ "4.	The Reverend Green \n"
-				+ "5.	Mrs. Peacock \n"
-				+ "6.	Professor Plum \n";
-				
-				
-		
-		
 		String singleName = "";
 		Player playerInProgress = null;
-		comboIndex = 0;
 		for (int i = 0; i != (numPlayers); ++i) {
 			singleName = (JOptionPane.showInputDialog(null, "Please enter Player " + (i + 1) + "'s name."));
 			playerInProgress = new Player(singleName);			
-			
-			comboIndex = Integer.parseInt(JOptionPane.showInputDialog(null, message));
 			//TODO: casey, need to look at this part.
-			playerInProgress.setCharacter(new Character(characters[comboIndex], new Color(0,0,0), new Position(0,0)));
+			Character c = grabCharacters(characters);
+			playerInProgress.setCharacter(c);
 			game.addPlayer(playerInProgress);
 		}
 		game.askSuccess = true;
