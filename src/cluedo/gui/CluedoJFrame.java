@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import cluedo.assets.Player;
+import cluedo.main.CluedoGame;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -32,9 +36,12 @@ import java.awt.Canvas;
  * @author linus + casey
  *
  */
-public class CluedoJFrame extends JFrame implements ActionListener {
+public class CluedoJFrame extends JFrame{
 
 	private JPanel contentPane;
+	private static CluedoGame game;
+	
+	
 	
 	//initialize the buttons that have logic in them.
 	private JButton btnSuggestion;
@@ -47,6 +54,7 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 	private JComboBox combo3;
 	//the text pane.
 	private JTextPane textPane;
+	private JTextField txtNull;
 	
 	/**
 	 * Launch the application.
@@ -57,18 +65,62 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 				try {
 					CluedoJFrame frame = new CluedoJFrame();
 					frame.setVisible(true);
+					game = new CluedoGame();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
-
+	
+	/**
+	 * Determines whether the user has inputed an integer.
+	 * @param input
+	 * @return
+	 */
+	private boolean isInteger(String input){
+		try{
+			Integer.parseInt( input );
+			return true;
+		}catch(Exception e){
+			return false;
+		}
+	}
+	
+	/**
+	 * Asks the players for user input. Brings up a JOptionPane to request user input.
+	 * 
+	 */
+	public void askPlayers(){
+	
+	String singleName = "";
+	String numPlayers = "";
+	boolean correctInput = false, isInteger = false;
+	
+	while(!correctInput && !isInteger){
+	numPlayers = (String)(JOptionPane.showInputDialog(null, "How many players would you like?"));
+	if(isInteger(numPlayers)){
+	if(Integer.parseInt(numPlayers) > 6 || Integer.parseInt(numPlayers) < 3){
+		JOptionPane.showMessageDialog(null, "Number of players has to be in between 3-6 (a number)", "Incorrect Input",JOptionPane.ERROR_MESSAGE);
+	}else{
+		correctInput = true;
+		isInteger = true;
+	}
+  }else{
+	  JOptionPane.showMessageDialog(null, "You must enter Integer values only.");
+  }
+}
+  for(int i = 0; i != Integer.parseInt(numPlayers); ++i){
+	  singleName = (JOptionPane.showInputDialog(null, "Please enter Player " + (i+1) + "'s name."));
+	  game.addPlayer(new Player(singleName));
+  }
+  JOptionPane.showMessageDialog(null, "Please note that every player will be assigned a random character");
+  game.askSuccess = true;
+}
 	/**
 	 * Create the frame.
 	 */
 	public CluedoJFrame() {
-		textPane = new JTextPane();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 942, 700);
@@ -103,7 +155,7 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 			//TODO need to implement this.
 			@Override
 			public void actionPerformed(ActionEvent e){
-				System.out.println("Doesn't do anything");	
+			askPlayers();
 			}
 		});
 		
@@ -127,22 +179,22 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.EAST);
-		panel.setLayout(new MigLayout("", "[88px,grow]", "[14px][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+		panel.setLayout(new MigLayout("", "[88px,grow]", "[14px][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 		
 		//create JPanel
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.WEST);
-		panel_1.setLayout(new MigLayout("", "[113px,grow]", "[23px][][][][][grow]"));
+		panel_1.setLayout(new MigLayout("", "[113px,grow]", "[23px][][][][][][][][grow]"));
 				
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
 		
 		JLabel label = new JLabel("1. Choose your Suspects");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel.add(label, "cell 0 1");
+		panel.add(label, "cell 0 2");
 		
 		combo1 = new JComboBox();
-		panel.add(combo1, "cell 0 2,growx");
+		panel.add(combo1, "cell 0 3,growx");
 		combo1.addItem("Miss Scarlett");
 		combo1.addItem("Colonel Mustard");
 		combo1.addItem("Mrs. White");
@@ -154,23 +206,23 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 		
 		JLabel label_1 = new JLabel("2.	Choose your Weapons");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel.add(label_1, "cell 0 8");
+		panel.add(label_1, "cell 0 4");
 		
 		combo2 = new JComboBox();
-		panel.add(combo2, "cell 0 9,growx");
+		panel.add(combo2, "cell 0 5,growx");
 		combo2.addItem("Knife");
 		combo2.addItem("Rope");
 		combo2.addItem("Revolver");
 		combo2.addItem("Wrench");
 		combo2.addItem("Pipe");
 		combo2.addItem("Candlestick");
-
+		
 		JLabel label_2 = new JLabel("3.	Choose your Rooms");
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel.add(label_2, "cell 0 15");
+		panel.add(label_2, "cell 0 6");
 		
 		combo3 = new JComboBox();
-		panel.add(combo3, "cell 0 16,growx");
+		panel.add(combo3, "cell 0 7,growx");
 		combo3.addItem("Kitchen");
 		combo3.addItem("Ball Room");
 		combo3.addItem("Conservatory");
@@ -181,12 +233,18 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 		combo3.addItem("Lounge");
 		combo3.addItem("Dining Room");
 
-		JLabel label_3 = new JLabel("Current Player");
-		label_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_1.add(label_3, "cell 0 0");
+		JLabel lblCurrentPlayer = new JLabel("Current Player:");
+		lblCurrentPlayer.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel_1.add(lblCurrentPlayer, "cell 0 0");
+		
+		txtNull = new JTextField();
+		txtNull.setText("null\r\n");
+		txtNull.setEditable(false);
+		panel_1.add(txtNull, "cell 0 1,growx");
+		txtNull.setColumns(10);
 		
 		btnSuggestion = new JButton("Suggestion");
-		panel_1.add(btnSuggestion, "cell 0 1,alignx center");
+		panel_1.add(btnSuggestion, "cell 0 2,alignx center");
 		btnSuggestion.addActionListener(new ActionListener(){
 			//TODO: implement button logic here.
 			public void actionPerformed(ActionEvent e){
@@ -195,7 +253,7 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 		});
 		
 		btnAccusation = new JButton("Accusation");
-		panel_1.add(btnAccusation, "cell 0 2,alignx center");
+		panel_1.add(btnAccusation, "cell 0 3,alignx center");
 		btnAccusation.addActionListener(new ActionListener(){
 			//TODO: implement button logic here.
 			public void actionPerformed(ActionEvent e){
@@ -204,32 +262,26 @@ public class CluedoJFrame extends JFrame implements ActionListener {
 		});
 		
 		btnEndTurn = new JButton("End Turn");
-		panel_1.add(btnEndTurn, "cell 0 3,alignx center");
-		btnSuggestion.addActionListener(new ActionListener(){
-			//TODO: implement button logic here
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		
-		btnRollDice = new JButton("Roll Dice");
-		btnRollDice.addActionListener(new ActionListener() {
-			//TODO: implement button logic here.
-			public void actionPerformed(ActionEvent e) {
-			textPane.setText(Double.toString((int)(10*Math.random())));
-			}
-		});
+		panel_1.add(btnEndTurn, "cell 0 4,alignx center");
 		
 		JLabel lblDice = new JLabel("Dice Value: ");
-		panel_2.add(lblDice);
-		panel_2.add(textPane);
-		panel_2.add(btnRollDice);
+		panel_1.add(lblDice, "cell 0 5");
+		textPane = new JTextPane();
+		panel_1.add(textPane, "cell 0 6");
+		textPane.setEditable(false);
+		
+		btnRollDice = new JButton("Roll Dice");
+		panel_1.add(btnRollDice, "cell 0 7");
+		btnRollDice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			textPane.setText(""+game.diceRoll());
+			}
+		});
+		btnSuggestion.addActionListener(e->System.out.println("Not programmed to do anything yet"));
 		
 		CluedoCanvas canvas = new CluedoCanvas();
 		contentPane.add(canvas, BorderLayout.CENTER);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {}
 
 }

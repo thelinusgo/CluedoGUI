@@ -124,48 +124,30 @@ public class CluedoGame {
 		return currentRoll;
 	}
 
-	/**
-	 * Sets up the board and an instance of the textClient.
-	 */
-	public void initialSetup(){
-		drawAsciiArt();
-		TextClient.askPlayers();
-		//initializer.distributeCharacters(currentPlayers);
-		initializer.distributeCards(currentPlayers);
+//	/**
+//	 * Sets up the board and an instance of the textClient.
+//	 */
+//	public void initialSetup(){
+//		TextClient.askPlayers();
+//		//initializer.distributeCharacters(currentPlayers);
+//		initializer.distributeCards(currentPlayers);
+//
+//		board.setPlayerPosition(currentPlayers);
+//		initializer.setCharacters();
+//		board.drawBoard();
+//	}
 
-		board.setPlayerPosition(currentPlayers);
-		initializer.setCharacters();
-		board.drawBoard();
-	}
+//	/**
+//	 * Test class for the initial setup.
+//	 */
+//	public void testInitialSetup(){
+//		//initializer.distributeCharacters(currentPlayers);
+//		initializer.distributeCards(currentPlayers);
+//		board.setPlayerPosition(currentPlayers);
+//		board.drawBoard();
+//	}
 
-	/**
-	 * Test class for the initial setup.
-	 */
-	public void testInitialSetup(){
-		//initializer.distributeCharacters(currentPlayers);
-		initializer.distributeCards(currentPlayers);
-		board.setPlayerPosition(currentPlayers);
-		board.drawBoard();
-	}
 
-	/**
-	 * This method draws "CLUEDO GAME" in ascii representative form.
-	 * @author Linus Go
-	 */
-	public void drawAsciiArt(){
-		String art = "";
-		art+="+===========================================================================+\n";
-		art+="|| #####          by CASEY & LINUS              #####                       ||\n";
-		art+="||#     # #      #    # ###### #####   ####    #     #   ##   #    # ###### ||\n";
-		art+="||#       #      #    # #      #    # #    #   #        #  #  ##  ## #      ||\n";
-		art+="||#       #      #    # #####  #    # #    #   #  #### #    # # ## # #####  ||\n";
-		art+="||#       #      #    # #      #    # #    #   #     # ###### #    # #      ||\n";
-		art+="||#     # #      #    # #      #    # #    #   #     # #    # #    # #      ||\n";
-		art+="|| #####  ######  ####  ###### #####   ####     #####  #    # #    # ###### ||\n";
-		art+="+===========================================================================+\n";
-		System.out.println(art);
-		System.out.println("Welcome to the Cluedo Game.");
-	}
 	
 	/**
 	 * This sets the players position on the game. It places them strategically in a random location each round.
@@ -520,7 +502,7 @@ public class CluedoGame {
 	 */
 	public static void main(String[] args) throws InvalidMove{
 		CluedoGame game = new CluedoGame();
-		game.initialSetup();
+		//game.initialSetup();
 		game.runGame();
 
 	}
