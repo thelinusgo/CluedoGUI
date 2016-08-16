@@ -117,12 +117,11 @@ public class CluedoCanvas extends JPanel {
 		g.drawImage(ballroomIm, x+ballRm.x*Tile.TILESIZE, y+ballRm.y*Tile.TILESIZE, ballRm.width*Tile.TILESIZE, ballRm.height*Tile.TILESIZE, null);
 		g.drawImage(diningRoomIm, x+diningRoom.x*Tile.TILESIZE, y+diningRoom.y*Tile.TILESIZE, diningRoom.width*Tile.TILESIZE, diningRoom.height*Tile.TILESIZE, null);
 		g.drawImage(loungeIm, x+lounge.x*Tile.TILESIZE, y+lounge.y*Tile.TILESIZE, lounge.width*Tile.TILESIZE, lounge.height*Tile.TILESIZE, null);
-		g.drawImage(hallIm, x+hall.x*Tile.TILESIZE, y+hall.y*Tile.TILESIZE, hall.width*Tile.TILESIZE, hall.height*Tile.TILESIZE, null);
+		g.drawImage(hallIm, x+hall.x*Tile.TILESIZE, y+hall.y*Tile.TILESIZE, hall.width*Tile.TILESIZE, hall.height*Tile.TILESIZE+9, null);
 		g.drawImage(studyIm, x+study.x*Tile.TILESIZE, y+study.y*Tile.TILESIZE, study.width*Tile.TILESIZE, study.height*Tile.TILESIZE, null);
-		g.drawImage(libraryIm, x+library.x*Tile.TILESIZE, y+library.y*Tile.TILESIZE, library.width*Tile.TILESIZE, library.height*Tile.TILESIZE, null);
-		g.drawImage(billiardRoomIm, x+billiardRm.x*Tile.TILESIZE, y+billiardRm.y*Tile.TILESIZE, billiardRm.width*Tile.TILESIZE, billiardRm.height*Tile.TILESIZE, null);
+		g.drawImage(libraryIm, x+library.x*Tile.TILESIZE, y+library.y*Tile.TILESIZE, library.width*Tile.TILESIZE+8, library.height*Tile.TILESIZE, null);
+		g.drawImage(billiardRoomIm, x+billiardRm.x*Tile.TILESIZE, y+billiardRm.y*Tile.TILESIZE, billiardRm.width*Tile.TILESIZE+10, billiardRm.height*Tile.TILESIZE, null);
 		g.drawImage(conservatoryIm, x+conservatory.x*Tile.TILESIZE, y+conservatory.y*Tile.TILESIZE, conservatory.width*Tile.TILESIZE, conservatory.height*Tile.TILESIZE, null);
-		g.drawImage(hallIm, x+hall.x*Tile.TILESIZE, y+hall.y*Tile.TILESIZE, hall.width*Tile.TILESIZE, hall.height*Tile.TILESIZE, null);
 	}
 
 	private void initialise(Graphics g){
