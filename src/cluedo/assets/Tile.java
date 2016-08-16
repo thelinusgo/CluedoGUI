@@ -7,6 +7,7 @@ public class Tile {
 	
 	protected int xLoc;
 	protected int yLoc;
+	private Player player;
 	
 	public static final int TILESIZE = 21;
 	
@@ -26,5 +27,14 @@ public class Tile {
 		g.fillRect(xLoc, yLoc, TILESIZE, TILESIZE);
 		g.setColor(Color.black);
 		g.drawRect(xLoc, yLoc, TILESIZE, TILESIZE);
+		
+		if(this.player != null){
+			g.setColor(this.player.getCharacter().getColor());
+			g.drawOval(xLoc, yLoc, TILESIZE, TILESIZE);
+		}
+	}
+
+	public void setPlayer(Player p) {
+		this.player = p;
 	}
 }

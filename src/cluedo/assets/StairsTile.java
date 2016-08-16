@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 public class StairsTile extends Tile{
 	private String direction = null;
 	private String direction2 = null;
+	private Player player = null;
 	
 	public StairsTile(int x, int y, String dir, String dir2){
 		super(x, y);
@@ -15,8 +16,8 @@ public class StairsTile extends Tile{
 		this.direction2 = dir2;
 	}
 	
-	public void setPlayer(){
-		
+	public void setPlayer(Player p){
+		this.player = p;
 	}
 	
 	public void draw(Graphics g){
@@ -58,5 +59,10 @@ public class StairsTile extends Tile{
 			}
 		}
 		g2.setStroke(new BasicStroke(0));
+		
+		if(this.player != null){
+			g.setColor(this.player.getCharacter().getColor());
+			g.drawOval(super.xLoc, super.yLoc, super.TILESIZE, super.TILESIZE);
+		}
 	}
 }

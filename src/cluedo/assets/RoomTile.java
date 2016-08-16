@@ -59,7 +59,9 @@ public class RoomTile extends Tile{
 			}
 		}
 		g2.setStroke(new BasicStroke(0));
+		
 		if(this.player != null){
+			g.setColor(this.player.getCharacter().getColor());
 			g.drawOval(super.xLoc, super.yLoc, super.TILESIZE, super.TILESIZE);
 		}
 	}

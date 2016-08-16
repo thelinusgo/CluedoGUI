@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 public class DoorTile extends Tile{
 	private Door door;
 	private String direction;
+	private Player player = null;
 	
 	public DoorTile(int x, int y, Door d, String dir) {
 		super(x, y);
@@ -17,6 +18,10 @@ public class DoorTile extends Tile{
 	
 	public Door getDoor(){
 		return this.door;
+	}
+	
+	public void setPlayer(Player p){
+		this.player = p;
 	}
 	
 	public void draw(Graphics g){
@@ -42,5 +47,10 @@ public class DoorTile extends Tile{
 			}
 		}
 		g2.setStroke(new BasicStroke(0));
+		
+		if(this.player  != null){
+			g.setColor(this.player.getCharacter().getColor());
+			g.drawOval(super.xLoc, super.yLoc, super.TILESIZE, super.TILESIZE);
+		}
 	}
 }

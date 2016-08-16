@@ -80,7 +80,7 @@ public class CluedoCanvas extends JPanel {
 	}
 
 	public void paint(Graphics g){
-		this.initialise(g);
+		this.initialise();
 		int x = 38;
 		int y = 25;
 		BufferedImage cluedoIm = null;
@@ -114,6 +114,7 @@ public class CluedoCanvas extends JPanel {
 		g.drawRect(32, 20, 25*Tile.TILESIZE+10, 25*Tile.TILESIZE+10);
 		g2.setStroke(new BasicStroke(0));
 		this.drawBoard(g);
+		
 		//Draw images of rooms
 		g.drawImage(cluedoIm, x+this.cluedo.x*Tile.TILESIZE, y+this.cluedo.y*Tile.TILESIZE, cluedo.width*Tile.TILESIZE, cluedo.height*Tile.TILESIZE, null);
 		g.drawImage(kitchenIm, x+kitchen.x*Tile.TILESIZE, y+kitchen.y*Tile.TILESIZE, kitchen.width*Tile.TILESIZE, kitchen.height*Tile.TILESIZE, null);
@@ -127,7 +128,7 @@ public class CluedoCanvas extends JPanel {
 		g.drawImage(conservatoryIm, x+conservatory.x*Tile.TILESIZE, y+conservatory.y*Tile.TILESIZE, conservatory.width*Tile.TILESIZE, conservatory.height*Tile.TILESIZE, null);
 	}
 
-	private void initialise(Graphics g){
+	private void initialise(){
 		this.drawPath();
 		this.drawBorder();
 		this.kitchen = this.drawKitchen();
@@ -708,14 +709,11 @@ public class CluedoCanvas extends JPanel {
 	 * @param list of currentPlayers
 	 */
 	public void setPlayerPosition(List<Player> currentPlayers){
-		for(int i = 0; i < currentPlayers.size(); i++){
-			int x = startPos.get(i).getX();
-			int y = startPos.get(i).getY();
-			board[x][y] = currentPlayers.get(i).getCharacterName() + "|";
-			currentPlayers.get(i).setPos(x, y);
-			if(x == 0 && y == 17){
-				board[x][y] = "|" +currentPlayers.get(i).getCharacterName() + "|";
-			}
+		for(Player p : currentPlayers){
+			int x = p.getCharacter().getStartPos().getX();
+			int y = p.getCharacter().getStartPos().getY();
+			board[x][y].setPlayer(p);
+			p.setPos(x, y);
 		}
 	}
 
