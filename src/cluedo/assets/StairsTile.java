@@ -14,7 +14,11 @@ public class StairsTile extends Tile{
 		this.direction = dir;
 		this.direction2 = dir2;
 	}
-
+	
+	public void setPlayer(){
+		
+	}
+	
 	public void draw(Graphics g){
 		g.setColor(new Color(255, 153, 0));
 		g.fillRect(super.xLoc, super.yLoc, super.TILESIZE, super.TILESIZE);

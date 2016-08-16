@@ -8,11 +8,16 @@ import java.awt.Graphics2D;
 public class RoomTile extends Tile{
 	private String direction = null;
 	private String direction2 = null;
+	private Player player = null;
 
 	public RoomTile(int x, int y, String dir, String dir2){
 		super(x, y);
 		this.direction = dir;
 		this.direction2 = dir2;
+	}
+
+	public void setPlayer(Player p){
+		this.player = p;
 	}
 
 	public void draw(Graphics g){
@@ -54,5 +59,8 @@ public class RoomTile extends Tile{
 			}
 		}
 		g2.setStroke(new BasicStroke(0));
+		if(this.player != null){
+			g.drawOval(super.xLoc, super.yLoc, super.TILESIZE, super.TILESIZE);
+		}
 	}
 }
