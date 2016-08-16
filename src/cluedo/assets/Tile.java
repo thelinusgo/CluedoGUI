@@ -22,7 +22,7 @@ public class Tile {
 	
 	
 	public void draw(Graphics g){
-		g.setColor(new Color(204, 153, 255));
+		g.setColor(new Color(222, 192, 70));
 		g.fillRect(xLoc, yLoc, TILESIZE, TILESIZE);
 		g.setColor(Color.black);
 		g.drawRect(xLoc, yLoc, TILESIZE, TILESIZE);
