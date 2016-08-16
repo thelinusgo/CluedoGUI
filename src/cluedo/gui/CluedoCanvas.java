@@ -276,12 +276,11 @@ public class CluedoCanvas extends JPanel {
 
 		board[x+1][y+1] = new StairsTile(x+1, y+1);
 		
-		Door d = new Door(false, x+width-2, y, CluedoGame.initializer.lounge, "v");
-		d.setInFront(new Position(x+width-2, y-1));
-		doors.add(d);
+		Door d = new Door(false, x+width-1, y, CluedoGame.initializer.lounge, "v");
+		d.setInFront(new Position(x+width-1, y-1));
+		board[x+width-1][y] = new DoorTile(x+width-1, y, d, "right");
 		
 		board[x][y] = new RoomTile(x, y, "top", "left");
-		board[x+width-1][y] = new RoomTile(x+width-1, y, "top", "right");
 		board[x][y+height-1] = new RoomTile(x, y+height-1, "bottom", "left");
 		board[x+width-1][y+height-1] = new RoomTile(x+width-1, y+height-1, "bottom", "right");
 	}
@@ -378,11 +377,10 @@ public class CluedoCanvas extends JPanel {
 
 		board[x+width-2][y+1] = new StairsTile(x+width-2, y+1);
 
-		Door d = new Door(false, x+1, y, CluedoGame.initializer.study, "v");
+		Door d = new Door(false, x, y, CluedoGame.initializer.study, "v");
 		d.setInFront(new Position(x, y-1));
-		doors.add(d);
+		board[x][y] = new DoorTile(x, y, d, "left");
 		
-		board[x][y] = new RoomTile(x, y, "top", "left");
 		board[x][y+height-1] = new RoomTile(x, y+height-1, "left", "bottom");
 		board[x+width-1][y+height-1] = new RoomTile(x+width-1, y+height-1, "bottom", "right");
 		board[x+width-1][y] = new RoomTile(x+width-1, y, "top", "right");
@@ -532,14 +530,14 @@ public class CluedoCanvas extends JPanel {
 
 		board[x+width-2][y+height-1] = new StairsTile(x+width-2, y+height-1);
 
-		Door d = new Door(false, x+1, y+height-1, CluedoGame.initializer.conservatory, "^");
-		d.setInFront(new Position(x+1, y+height));
-		doors.add(d);
+		Door d = new Door(false, x, y+height-2, CluedoGame.initializer.conservatory, "^");
+		d.setInFront(new Position(x, y+height));
+		board[x][y+height-2] = new DoorTile(x, y+height-2, d, "left");
 		
 		board[x][y] = new RoomTile(x, y, "top", "left");
-		board[x][y+height-2] = new RoomTile(x, y+height-2, "bottom", "left");
 		board[x+width-1][y] = new RoomTile(x+width-1, y, "top", "right");
 		board[x+width-1][y+height-2] = new RoomTile(x+width-1, y+height-2, "bottom", "right");
+		board[x+1][y+height-1] = new RoomTile(x+1, y+height-1, "bottom", "left");
 	}
 
 	/**
@@ -627,7 +625,7 @@ public class CluedoCanvas extends JPanel {
 			Door d = doors.get(i);
 			int x = d.getPosition().getX();
 			int y = d.getPosition().getY();
-			board[x][y] = new DoorTile(x, y, d);
+			board[x][y] = new DoorTile(x, y, d, null);
 		}
 	}
 	
