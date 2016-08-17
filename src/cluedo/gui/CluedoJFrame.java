@@ -219,7 +219,8 @@ public class CluedoJFrame extends JFrame {
 						//textPane.setText("" + game.diceRoll());
 						dicecanvas.setDiceOne(game.diceRoll());
 						dicecanvas.setDiceTwo(game.diceRoll());
-						dicecanvas.repaint(100);
+						dicecanvas.repaint();
+						panel_1.repaint();
 					}
 				});
 		textPane = new JTextPane();
