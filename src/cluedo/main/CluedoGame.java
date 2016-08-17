@@ -98,11 +98,6 @@ public class CluedoGame implements MouseListener{
 	private Accusation accusation = null;
 	
 	/**
-	 * Stores the player's mouse clicked position
-	 */
-	private Point point;
-	
-	/**
 	 * Construct a new instance of the cluedo game. Initialize the fields.
 	 */
 	public CluedoGame(){
@@ -568,15 +563,15 @@ public class CluedoGame implements MouseListener{
 			String choice = TextClient.inputString();
 			switch(choice){
 			case "y":
-				//board.moveToRoom(p, p.getRoom().getOtherRoom());
+				cluedoCanvas.moveToRoom(p, p.getRoom().getOtherRoom());
 				break;
 			case "n":
-				//board.exitRoom(p, currentPlayers);
+				cluedoCanvas.exitRoom(p, currentPlayers);
 				break;
 			}
 		}else if(currentPlayer.isInRoom()){
 			System.out.println("You must exit the room now as the room does not have any stairs for you to take.");
-			//board.exitRoom(p, currentPlayers);
+			cluedoCanvas.exitRoom(p, currentPlayers);
 		}else{
 			while(currentPlayer.numberofMoves() > 0){
 				System.out.println(currentPlayer.getName() + " (" + currentPlayer.getCharacterName() + ")" + " currently has " + currentPlayer.numberofMoves() + " moves left.");
@@ -618,6 +613,7 @@ public class CluedoGame implements MouseListener{
 		}
 		return false;
 	}
+	
 	/**
 	 * This prints out the contents of the envelope.
 	 */
@@ -630,11 +626,12 @@ public class CluedoGame implements MouseListener{
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		System.out.println(e.getX());
 		for(int x = 0; x < board.length; x++){
 			for(int y = 0; y < board.length; y++){
 				Tile t = board[x][y];
 				if(t.contains(e.getPoint())){
-					point = e.getPoint();
+					//currentPlayer =e.getPoint();
 				}
 			}
 		}
