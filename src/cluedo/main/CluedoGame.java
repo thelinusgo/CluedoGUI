@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.util.*;
 
@@ -26,7 +27,7 @@ import cluedo.gui.CluedoCanvas;
  * @author Casey & Linus
  *
  */
-public class CluedoGame implements MouseListener{
+public class CluedoGame implements MouseMotionListener, MouseListener{
 	/**
 	 * Initializes all of the data
 	 */
@@ -666,6 +667,18 @@ public class CluedoGame implements MouseListener{
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
