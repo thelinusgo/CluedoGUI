@@ -84,7 +84,6 @@ public class CluedoCanvas extends JPanel{
 	private BufferedImage diningRoomIm = null;
 
 	public CluedoCanvas(){
-		CluedoGame game = new CluedoGame();
 		this.initialise();
 		
 		try {
