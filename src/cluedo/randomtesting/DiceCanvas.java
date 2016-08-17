@@ -90,68 +90,49 @@ public class DiceCanvas extends JPanel{
 		switch(diceOne){
 		case 1:
 			g.drawImage(dOne, diceXPos, diceYPos, DICE_SIZE, DICE_SIZE, null);
-			System.out.println('1');
 			break;
 		case 2:
 			g.drawImage(dTwo, diceXPos, diceYPos, DICE_SIZE, DICE_SIZE, null);
-			System.out.println('2');
 			break;
 		case 3:
 			g.drawImage(dThree, diceXPos, diceYPos, DICE_SIZE, DICE_SIZE, null);
-			System.out.println('3');
 			break;
 		case 4:
 			g.drawImage(dFour, diceXPos, diceYPos, DICE_SIZE, DICE_SIZE, null);
-			System.out.println('4');
 			break;
 		case 5:
 			g.drawImage(dFive, diceXPos, diceYPos, DICE_SIZE, DICE_SIZE, null);
-			System.out.println('5');
 			break;
 		case 6:
 			g.drawImage(dSix, diceXPos, diceYPos, DICE_SIZE,DICE_SIZE, null);
-			System.out.println('6');
 			break;
 		default:
 			g.drawImage(dNull, diceXPos, diceYPos, DICE_SIZE, DICE_SIZE, null);
-			System.out.println('0');
 			break;
 		}
 		
 		switch(diceTwo){
 		case 1:
 			g.drawImage(dOne, diceXPos+DICE_SIZE, diceYPos, DICE_SIZE, DICE_SIZE, null);
-			System.out.println('1');
 			break;
 		case 2:
 			g.drawImage(dTwo, diceXPos+DICE_SIZE, diceYPos, DICE_SIZE, DICE_SIZE, null);
-			System.out.println('2');
 			break;
 		case 3:
 			g.drawImage(dThree, diceXPos+DICE_SIZE, diceYPos, DICE_SIZE, DICE_SIZE, null);
-			System.out.println('3');
 			break;
 		case 4:
 			g.drawImage(dFour, diceXPos+DICE_SIZE, diceYPos, DICE_SIZE, DICE_SIZE, null);
-			System.out.println('4');
 			break;
 		case 5:
 			g.drawImage(dFive, diceXPos+DICE_SIZE, diceYPos, DICE_SIZE, DICE_SIZE, null);
-			System.out.println('5');
 			break;
 		case 6:
 			g.drawImage(dSix, diceXPos+DICE_SIZE, diceYPos, DICE_SIZE,DICE_SIZE, null);
-			System.out.println('6');
 			break;
 		default:
 			g.drawImage(dNull, diceXPos+DICE_SIZE, diceYPos, DICE_SIZE, DICE_SIZE, null);
-			System.out.println('0');
 			break;
 		}
-		
-		
-		
-		
-		
 	}
 }
