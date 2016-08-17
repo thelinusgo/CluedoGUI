@@ -215,7 +215,7 @@ public class Initializer {
 				Room rm = rooms.get(i);
 				rm.addCharacter(c);
 				c.addRoom(rm);
-				CluedoGame.cluedoCanvas.moveToRoom(p, rm);
+				CluedoGame.board.moveToRoom(p, rm);
 			}
 
 		}
