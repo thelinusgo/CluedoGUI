@@ -46,10 +46,6 @@ public class CluedoJFrame extends JFrame {
 
 	private JPanel contentPane;
 	private static CluedoGame game;
-
-	// initialize the buttons that have logic in them.
-	private JButton btnSuggestion;
-	private JButton btnAccusation;
 	private JButton btnEndTurn;
 	private JButton btnRollDice;
 	// the combo boxes.
@@ -81,20 +77,11 @@ public class CluedoJFrame extends JFrame {
 		});
 	}
 
-	
-
-	
-	
-	
-
-	
-	
-	
 	/**
 	 * Create the frame.
 	 */
 	public CluedoJFrame() {
-		game = new CluedoGame();
+		game = new CluedoGame();//create a new instance of the game.
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 942, 700);
@@ -152,7 +139,7 @@ public class CluedoJFrame extends JFrame {
 		// create JPanel
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.WEST);
-		panel_1.setLayout(new MigLayout("", "[113px,grow]", "[23px][][][][][][][][grow][300px]"));
+		panel_1.setLayout(new MigLayout("", "[113px,grow]", "[23px][][][][][][][][][][grow][300px]"));
 
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
@@ -208,55 +195,45 @@ public class CluedoJFrame extends JFrame {
 		txtNull.setEditable(false);
 		panel_1.add(txtNull, "cell 0 1,growx");
 		txtNull.setColumns(10);
-
-		btnSuggestion = new JButton("Suggestion");
-		panel_1.add(btnSuggestion, "cell 0 2,alignx center");
-		btnSuggestion.addActionListener(new ActionListener() {
-			// TODO: implement button logic here.
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Suggestion has been pressed");
-			}
-		});
-
-		btnAccusation = new JButton("Accusation");
-		panel_1.add(btnAccusation, "cell 0 3,alignx center");
-		btnAccusation.addActionListener(new ActionListener() {
-			// TODO: implement button logic here.
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-
-		btnEndTurn = new JButton("End Turn");
-		panel_1.add(btnEndTurn, "cell 0 4,alignx center");
-
-		JLabel lblDice = new JLabel("Dice Value: ");
-		panel_1.add(lblDice, "cell 0 5");
-		textPane = new JTextPane();
-		panel_1.add(textPane, "flowx,cell 0 6");
-		textPane.setEditable(false);
+				
+				JButton btnStartTurn = new JButton("Start Turn");
+				panel_1.add(btnStartTurn, "cell 0 2,alignx center");
 		
-		JLabel lblListOfPlayers = new JLabel("List of available players: ");
-		panel_1.add(lblListOfPlayers, "cell 0 7");
+				btnEndTurn = new JButton("End Turn");
+				panel_1.add(btnEndTurn, "cell 0 3,alignx center");
+		
+		JRadioButton rdbtnDoSuggestion = new JRadioButton("Do Suggestion");
+		panel_1.add(rdbtnDoSuggestion, "cell 0 4");
+		
+		JRadioButton rdbtnDoAccusation = new JRadioButton("Do Accusation");
+		panel_1.add(rdbtnDoAccusation, "cell 0 5");
+		
+				JLabel lblDice = new JLabel("Dice Value: ");
+				panel_1.add(lblDice, "cell 0 6");
+		
+				btnRollDice = new JButton("Roll Dice");
+				panel_1.add(btnRollDice, "cell 0 7");
+				btnRollDice.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						textPane.setText("" + game.diceRoll());
+					}
+				});
+		textPane = new JTextPane();
+		panel_1.add(textPane, "flowx,cell 0 8");
+		textPane.setEditable(false);
 		textPane_1 = new JTextPane();
 		textPane_1.setEditable(false);
-		panel_1.add(textPane_1, "cell 0 8,grow");
+		panel_1.add(textPane_1, "cell 0 9,grow");
 		
 
 		JList list = new JList();
-		panel_1.add(list, "flowx,cell 0 9");
-
-		btnRollDice = new JButton("Roll Dice");
-		panel_1.add(btnRollDice, "cell 0 6");
+		panel_1.add(list, "flowx,cell 0 11");
 
 		JList list_1 = new JList();
-		panel_1.add(list_1, "cell 0 9");
-		btnRollDice.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textPane.setText("" + game.diceRoll());
-			}
-		});
-		btnSuggestion.addActionListener(e -> System.out.println("Not programmed to do anything yet"));
+		panel_1.add(list_1, "cell 0 11");
+		
+		JLabel lblListOfPlayers = new JLabel("List of available players: ");
+		panel_1.add(lblListOfPlayers, "cell 0 8");
 
 		CluedoCanvas canvas = new CluedoCanvas();
 		contentPane.add(canvas, BorderLayout.CENTER);
