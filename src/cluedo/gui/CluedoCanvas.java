@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -36,7 +37,7 @@ import cluedo.main.CluedoGame.InvalidMove;
  * @author Casey and Linus
  *
  */
-public class CluedoCanvas extends JPanel implements MouseListener{
+public class CluedoCanvas extends JPanel{
 	private Rectangle kitchen;
 	private Rectangle diningRoom;
 	private Rectangle lounge;
@@ -50,7 +51,7 @@ public class CluedoCanvas extends JPanel implements MouseListener{
 	/**
 	 * Represents the board in 2d array form.
 	 */
-	private Tile[][] board = new Tile[25][25];
+	public Tile[][] board = new Tile[25][25];
 
 	/**
 	 * Stores the list of doors on the board.
@@ -70,21 +71,22 @@ public class CluedoCanvas extends JPanel implements MouseListener{
 	 */
 	private static String direction = "top|bottom|right|left";
 	
-	BufferedImage cluedoIm = null;
-	BufferedImage kitchenIm = null;
-	BufferedImage ballroomIm = null;
-	BufferedImage billiardRoomIm = null;
-	BufferedImage hallIm = null;
-	BufferedImage loungeIm = null;
-	BufferedImage studyIm = null;
-	BufferedImage conservatoryIm = null;
-	BufferedImage libraryIm = null;
-	BufferedImage diningRoomIm = null;
+	//Setup images
+	private BufferedImage cluedoIm = null;
+	private BufferedImage kitchenIm = null;
+	private BufferedImage ballroomIm = null;
+	private BufferedImage billiardRoomIm = null;
+	private BufferedImage hallIm = null;
+	private BufferedImage loungeIm = null;
+	private BufferedImage studyIm = null;
+	private BufferedImage conservatoryIm = null;
+	private BufferedImage libraryIm = null;
+	private BufferedImage diningRoomIm = null;
 
 	public CluedoCanvas(){
 		CluedoGame game = new CluedoGame();
 		this.initialise();
-		this.addMouseListener(this);
+		
 		try {
 			cluedoIm = ImageIO.read(new File("cluedo.jpg"));
 			kitchenIm = ImageIO.read(new File("kitchenRoom.jpg"));
@@ -861,42 +863,6 @@ public class CluedoCanvas extends JPanel implements MouseListener{
 		}
 		return true;
 	}
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		for(int x = 0; x < board.length; x++){
-			for(int y = 0; y < board.length; y++){
-				Tile t = board[x][y];
-				if(t.contains(e.getPoint())){
-					int r = t.getColor().getRed();
-					int g = t.getColor().getGreen();
-					int b = t.getColor().getBlue();
-					t.setColor(new Color(r, g, b, 50));
-					System.out.println("inside mouse entered");
-				}
-			}
-		}
-		
-	}
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	/**
 	 * Determines if player can still move or not.
@@ -930,9 +896,4 @@ public class CluedoCanvas extends JPanel implements MouseListener{
 		}
 		return true;
 	}*/
-	
-	public static void main(String[] argv){
-		Timer t = new Timer();
-		t.start();
-	}
 }

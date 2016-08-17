@@ -1,4 +1,7 @@
 package cluedo.main;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.*;
 
@@ -10,21 +13,27 @@ import cluedo.cards.Card;
 import cluedo.cards.CharacterCard;
 import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
+import cluedo.gui.CluedoCanvas;
 /**
  * Creates a new instance of a Board, and runs the textClient.
  * @author Casey & Linus
  *
  */
-public class CluedoGame {
+public class CluedoGame implements MouseListener{
 	/**
 	 * Initializes all of the data
 	 */
-	public static Initializer initializer; //initializes all of the data
+	public static Initializer initializer;
 	
 	/**
-	 * An instance of the board.
+	 * An instance of the CluedoCanvas.
 	 */
-	public static Board board; //an instance of the board.
+	public static CluedoCanvas cluedoCanvas;
+	
+	/**
+	 * An instance of the board
+	 */
+	public Tile[][] board;
 	
 	/**
 	 * stores the amount of players.
@@ -82,12 +91,18 @@ public class CluedoGame {
 	private Accusation accusation = null;
 	
 	/**
+	 * Stores the player's mouse clicked position
+	 */
+	private Point point;
+	
+	/**
 	 * Construct a new instance of the cluedo game. Initialize the fields.
 	 */
 	public CluedoGame(){
 		currentPlayers = new ArrayList<Player>();
 		initializer = new Initializer();
-		board = new Board();
+		cluedoCanvas = new CluedoCanvas();
+		board = cluedoCanvas.board;
 	}
 
 	/**
@@ -157,7 +172,7 @@ public class CluedoGame {
 	 */
 	public void setPlayerPosition(){
 		Collections.shuffle(currentPlayers, new Random(seed)); 
-		board.setPlayerPosition(currentPlayers);
+		//board.setPlayerPosition(currentPlayers);
 	}
 
 	/**
@@ -193,7 +208,7 @@ public class CluedoGame {
 							}
 							doOption(option, currentPlayer);
 							if(moveMade){
-								board.drawBoard();
+								//board.drawBoard();
 							}
 						}
 					}
@@ -429,15 +444,15 @@ public class CluedoGame {
 			String choice = TextClient.inputString();
 			switch(choice){
 			case "y":
-				board.moveToRoom(p, p.getRoom().getOtherRoom());
+				//board.moveToRoom(p, p.getRoom().getOtherRoom());
 				break;
 			case "n":
-				board.exitRoom(p, currentPlayers);
+				//board.exitRoom(p, currentPlayers);
 				break;
 			}
 		}else if(currentPlayer.isInRoom()){
 			System.out.println("You must exit the room now as the room does not have any stairs for you to take.");
-			board.exitRoom(p, currentPlayers);
+			//board.exitRoom(p, currentPlayers);
 		}else{
 			while(currentPlayer.numberofMoves() > 0){
 				System.out.println(currentPlayer.getName() + " (" + currentPlayer.getCharacterName() + ")" + " currently has " + currentPlayer.numberofMoves() + " moves left.");
@@ -448,11 +463,11 @@ public class CluedoGame {
 					System.out.println("take the stairs or exit the room.");
 					break;
 				}
-				if(!board.canMove(p) && !p.coordinatesTaken().isEmpty()){
+				/*if(!board.canMove(p) && !p.coordinatesTaken().isEmpty()){
 					System.out.println("Sorry you do not have anywhere to move now.");
 					break;
 				}
-				board.drawBoard();
+				board.drawBoard();*/
 			}
 			if(currentPlayer.numberofMoves() <= 0){
 				System.out.println(currentPlayer.getName() + " has run out of moves.");
@@ -488,6 +503,18 @@ public class CluedoGame {
 			System.out.println(c.toString());
 		}
 	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		for(int x = 0; x < board.length; x++){
+			for(int y = 0; y < board.length; y++){
+				Tile t = board[x][y];
+				if(t.contains(e.getPoint())){
+					point = e.getPoint();
+				}
+			}
+		}
+	}
 
 	/**
 	 * Indicates an attempt to make an invalid move.
@@ -496,6 +523,30 @@ public class CluedoGame {
 		public InvalidMove(String msg) {
 			super(msg);
 		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 //	/**

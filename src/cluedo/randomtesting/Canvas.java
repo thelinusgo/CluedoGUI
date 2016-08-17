@@ -40,7 +40,7 @@ public class Canvas extends JPanel implements MouseListener{
 			System.out.println("changed colour");
 			color = new Color(r, g, b, 50);
 		}
-		startTimer();
+		//startTimer();
 	}
 
 	@Override
