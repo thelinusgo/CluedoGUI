@@ -19,7 +19,6 @@ public class Player {
 	private Position position;
 	private int numberofMoves;
 	private boolean isInRoom = false;
-	private String lookback = "/|";
 	private Room room = null;
 
 	private List<Position> coordinates = new ArrayList<Position>();
@@ -50,8 +49,8 @@ public class Player {
 	/**
 	 * This allows the player to move a step.
 	 */
-	public void moveAStep(){
-		this.numberofMoves--;
+	public void moveNStep(int x, int y){
+		this.numberofMoves -= Math.abs(x-y);
 	}
 	/**
 	 * Returns the amount of moves a player currently has.
@@ -86,10 +85,6 @@ public class Player {
 	public void setPos(int x, int y){
 		this.position = new Position(x, y);
 		coordinates.add(this.position);
-		if(x == 0 && y == 17){
-			this.lookback = "|/|";
-		}
-		
 		this.setPossibleCoords(x, y);
 		
 		for(int i = 0; i < possibleCoords.length; i++){
@@ -177,23 +172,7 @@ public class Player {
 	public boolean isInRoom() {
 		return this.isInRoom;
 	}
-
-	/**
-	 * Set look back string, in order to remove player's position when moving to another square.
-	 * @param lb
-	 */
-	public void setLookBack(String lb){
-		this.lookback = lb;
-	}
-
-	/**
-	 * Returns the lookback string.
-	 * @return
-	 */
-	public String getLookBack(){
-		return this.lookback;
-	}
-
+	
 	/**
 	 * Set room that player is in.
 	 * @param rm

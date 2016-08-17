@@ -46,6 +46,7 @@ public class CluedoJFrame extends JFrame {
 
 	private JPanel contentPane;
 	private static CluedoGame game;
+	public CluedoCanvas canvas;
 
 	// initialize the buttons that have logic in them.
 	private JButton btnSuggestion;
@@ -357,7 +358,7 @@ public class CluedoJFrame extends JFrame {
 		});
 		btnSuggestion.addActionListener(e -> System.out.println("Not programmed to do anything yet"));
 
-		CluedoCanvas canvas = new CluedoCanvas();
+		canvas = new CluedoCanvas();
 		contentPane.add(canvas, BorderLayout.CENTER);
 	}
 

@@ -10,7 +10,7 @@ public class SolutionTile extends Tile{
 	}
 
 	public void draw(Graphics g){
-		g.setColor(new Color(51, 51, 255));
+		g.setColor(new Color(51, 51, 255,0));
 		g.fillRect(super.xLoc, super.yLoc, super.TILESIZE, super.TILESIZE);
 	}
 }

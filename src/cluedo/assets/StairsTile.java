@@ -21,9 +21,9 @@ public class StairsTile extends Tile{
 	}
 	
 	public void draw(Graphics g){
-		g.setColor(new Color(255, 153, 0));
+		/*g.setColor(new Color(255, 153, 0, 0));
 		g.fillRect(super.xLoc, super.yLoc, super.TILESIZE, super.TILESIZE);
-		g.setColor(Color.black);
+		g.setColor(new Color(0, 0, 0, 0));
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(2));
 		if(this.direction != null){
@@ -58,7 +58,7 @@ public class StairsTile extends Tile{
 				break;
 			}
 		}
-		g2.setStroke(new BasicStroke(0));
+		g2.setStroke(new BasicStroke(0));*/
 		
 		if(this.player != null){
 			g.setColor(this.player.getCharacter().getColor());
