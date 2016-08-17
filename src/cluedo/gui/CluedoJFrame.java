@@ -58,9 +58,6 @@ public class CluedoJFrame extends JFrame {
 	private JTextPane textPane_1;
 	private JTextField txtNull;
 	
-	//the other canvas.
-	private DiceCanvas dicecanvas = new DiceCanvas();
-	
 	/**
 	 * Launch the application.
 	 */
@@ -209,17 +206,14 @@ public class CluedoJFrame extends JFrame {
 		JRadioButton rdbtnDoAccusation = new JRadioButton("Do Accusation");
 		panel_1.add(rdbtnDoAccusation, "cell 0 5");
 		
-				JLabel lblDice = new JLabel("Dice Value: ");
-				panel_1.add(lblDice, "cell 0 6");
-		
 				btnRollDice = new JButton("Roll Dice");
+				DiceCanvas dicecanvas = new DiceCanvas();
+				panel_1.add(dicecanvas, "cell 0 10,grow");
 				panel_1.add(btnRollDice, "cell 0 7");
 				btnRollDice.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						//textPane.setText("" + game.diceRoll());
 						dicecanvas.setDiceOne(game.diceRoll());
 						dicecanvas.setDiceTwo(game.diceRoll());
-						dicecanvas.repaint();
 						panel_1.repaint();
 					}
 				});
@@ -233,9 +227,6 @@ public class CluedoJFrame extends JFrame {
 		JLabel lblListOfPlayers = new JLabel("List of available players: ");
 		panel_1.add(lblListOfPlayers, "cell 0 8");
 		
-		//JPanel panel_3 = new JPanel();
-		panel_1.add(dicecanvas, "cell 0 10,grow");
-
 		CluedoCanvas canvas = new CluedoCanvas();
 		contentPane.add(canvas, BorderLayout.CENTER);
 		canvas.addMouseListener(game);

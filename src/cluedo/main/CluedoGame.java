@@ -67,23 +67,12 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	/**
 	 * List of sequencial numbers. This allows a random number to be chosen.
 	 */
-	private List<Integer> diceList = new ArrayList<Integer>(Arrays.asList(2,3,4,5,6,7,8,9,10,11,12));
-	
-	
-	/**
-	 * List of sequencial numbers. This allows a random number to be chosen.
-	 */
 	private List<Integer> singleDie = new ArrayList<Integer>(Arrays.asList(1,2,3,4,5,6));
 
-	
-	
-	
-	
-	
 	/**
 	 * This rolls the dice, obtains the first element in the array.
 	 */
-	private int currentRoll = diceList.get(0);
+	private int currentRoll;
 	
 	/**
 	 * The current player of the round.
@@ -97,9 +86,6 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * Stores the cards of players who have been kicked out of the game because they made an incorrect accusation.
 	 */
 	private List<List<Card>> showCards = new ArrayList<>();
-
-	/** This helps generate a random shuffle for the lists */
-	private long seed = System.nanoTime();
 
 	/**Stores player's previous option*/
 	private String prevOption = "";
@@ -149,7 +135,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 */
 	public int diceRoll(){
 		Collections.shuffle(singleDie);
-		currentRoll = diceList.get(0);
+		currentRoll = singleDie.get(0);
 		return currentRoll;
 	}
 	
@@ -185,7 +171,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * This sets the players position on the game. It places them strategically in a random location each round.
 	 */
 	public void setPlayerPosition(){
-		Collections.shuffle(currentPlayers, new Random(seed)); 
+		Collections.shuffle(currentPlayers); 
 		//board.setPlayerPosition(currentPlayers);
 	}
 	
