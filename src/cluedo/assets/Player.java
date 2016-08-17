@@ -87,12 +87,12 @@ public class Player {
 		coordinates.add(this.position);
 		this.setPossibleCoords(x, y);
 		
-		for(int i = 0; i < possibleCoords.length; i++){
+		/*for(int i = 0; i < possibleCoords.length; i++){
 			Position pos = possibleCoords[i];
-			if(!CluedoGame.board.validPos(pos, this)){
+			if(!CluedoGame.cluedoCanvas.validPos(pos, this)){
 				possibleCoords[i] = null;
 			}
-		}
+		}*/
 	}
 	
 	/**
