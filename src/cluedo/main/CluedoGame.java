@@ -1,9 +1,16 @@
 package cluedo.main;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.*;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import cluedo.arguments.Accusation;
 import cluedo.arguments.Suggestion;
@@ -174,7 +181,124 @@ public class CluedoGame implements MouseListener{
 		Collections.shuffle(currentPlayers, new Random(seed)); 
 		//board.setPlayerPosition(currentPlayers);
 	}
+	
+	/*START OF SPECIAL METHODS*/
+	///////////////////////////
+	/**
+	 * Determines whether the user has inputed an integer.
+	 * 
+	 * @param input
+	 * @return
+	 */
+	private boolean isInteger(String input) {
+		try {
+			Integer.parseInt(input);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	/**
+	 * Asks the players for their name, and their preferred character.. Brings up a JOptionPane to request user
+	 * input.
+	 * 
+	 */
+	public String askPlayers() {
+		String numPlayers = "";
+		boolean correctInput = false, isInteger = false;
 
+		while (!correctInput && !isInteger) {
+			numPlayers = (String) (JOptionPane.showInputDialog(null, "How many players would you like?"));
+			if (isInteger(numPlayers)) {
+				if (Integer.parseInt(numPlayers) > 6 || Integer.parseInt(numPlayers) < 3) {
+					JOptionPane.showMessageDialog(null, "Number of players has to be in between 3-6 (a number)",
+							"Incorrect Input", JOptionPane.ERROR_MESSAGE);
+				} else {
+					correctInput = true;
+					isInteger = true;
+				}
+			} else {
+				if(Integer.parseInt(numPlayers) == -1) System.exit(0); //secret value
+				JOptionPane.showMessageDialog(null, "You must enter Integer values only.");
+			}
+		}
+		return askCharacters(Integer.parseInt(numPlayers));
+	}
+	
+	/**
+	 * Asks for the number of Players.
+	 * @param numPlayers
+	 */
+	private String askCharacters(int numPlayers){
+		/*This is our array of choices. Used for the drop down menu */
+		String[] characters = {
+		"Miss Scarlett",
+		"Colonel Mustard",
+		"Mrs. White",
+		"The Reverend Green",
+		"Mrs. Peacock",
+		"Professor Plum"
+		};
+		
+		String singleName = "";
+		Player playerInProgress = null;
+		for (int i = 0; i != (numPlayers); ++i) {
+			singleName = (JOptionPane.showInputDialog(null, "Please enter Player " + (i + 1) + "'s name."));
+			playerInProgress = new Player(singleName);			
+			//TODO: casey, need to look at this part.
+			Character c = grabCharacters(characters);
+			playerInProgress.setCharacter(c);
+			addPlayer(playerInProgress);
+		}
+		this.askSuccess = true;
+		this.initialSetup();
+		return this.getPlayerAndCharacterText();
+	}
+	
+	 /**
+     * This code allows us to select from a list of characters, given a player.
+     */
+    public Character grabCharacters(String[] characters) {
+        JPanel panel = new JPanel();
+        panel.add(new JLabel("Please make a selection:"));
+        @SuppressWarnings("rawtypes")
+		DefaultComboBoxModel model = new DefaultComboBoxModel();
+        for(int i = 0; i != characters.length; ++i){
+        if(!characters[i].equals("...")){
+        model.addElement(characters[i]);
+        }
+        }
+        JComboBox comboBox = new JComboBox(model);
+        panel.add(comboBox);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Choose a Character", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        switch (result) {
+            case JOptionPane.OK_OPTION:
+                System.out.println("You selected " + comboBox.getSelectedItem());
+                for(int i = 0 ; i != characters.length; ++i){
+                	if(characters[i].equals(comboBox.getSelectedItem())){
+                		characters[i] = "...";
+                	}else{
+                		continue;
+                	}
+                }
+        //TODO: need to fix initializing the color and the pos.
+        return new Character( (String)comboBox.getSelectedItem(), new Color(0,0,0), new Position(0,0));
+        }
+        return null;
+    } 
+	
+	
+	
+	
+	
+	
+	
+	//////////////////////////
+	/*END OF SPECIAL METHODS*/
+	
+	
 	/**
 	 * Runs the game - only if asking players was successful.
 	 * @throws InvalidMove 
