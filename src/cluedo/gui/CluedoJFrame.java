@@ -12,6 +12,7 @@ import cluedo.assets.Position;
 import cluedo.assets.Character;
 import cluedo.main.CluedoGame;
 import cluedo.main.Initializer;
+import cluedo.randomtesting.DiceCanvas;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -57,8 +58,8 @@ public class CluedoJFrame extends JFrame {
 	private JTextPane textPane_1;
 	private JTextField txtNull;
 	
-	
-	
+	//the other canvas.
+	private DiceCanvas dicecanvas = new DiceCanvas();
 	
 	/**
 	 * Launch the application.
@@ -139,7 +140,7 @@ public class CluedoJFrame extends JFrame {
 		// create JPanel
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.WEST);
-		panel_1.setLayout(new MigLayout("", "[113px,grow]", "[23px][][][][][][][][][][grow][300px]"));
+		panel_1.setLayout(new MigLayout("", "[113px,grow]", "[23px][][][][][][][][][][grow]"));
 
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
@@ -189,13 +190,13 @@ public class CluedoJFrame extends JFrame {
 		JLabel lblCurrentPlayer = new JLabel("Current Player:");
 		lblCurrentPlayer.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_1.add(lblCurrentPlayer, "cell 0 0");
+		
 
 		txtNull = new JTextField();
 		txtNull.setText("null\r\n");
 		txtNull.setEditable(false);
 		panel_1.add(txtNull, "cell 0 1,growx");
-		txtNull.setColumns(10);
-				
+		txtNull.setColumns(10);	
 				JButton btnStartTurn = new JButton("Start Turn");
 				panel_1.add(btnStartTurn, "cell 0 2,alignx center");
 		
@@ -215,7 +216,10 @@ public class CluedoJFrame extends JFrame {
 				panel_1.add(btnRollDice, "cell 0 7");
 				btnRollDice.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						textPane.setText("" + game.diceRoll());
+						//textPane.setText("" + game.diceRoll());
+						dicecanvas.setDiceOne(game.diceRoll());
+						dicecanvas.setDiceTwo(game.diceRoll());
+						dicecanvas.repaint(100);
 					}
 				});
 		textPane = new JTextPane();
@@ -225,15 +229,11 @@ public class CluedoJFrame extends JFrame {
 		textPane_1.setEditable(false);
 		panel_1.add(textPane_1, "cell 0 9,grow");
 		
-
-		JList list = new JList();
-		panel_1.add(list, "flowx,cell 0 11");
-
-		JList list_1 = new JList();
-		panel_1.add(list_1, "cell 0 11");
-		
 		JLabel lblListOfPlayers = new JLabel("List of available players: ");
 		panel_1.add(lblListOfPlayers, "cell 0 8");
+		
+		//JPanel panel_3 = new JPanel();
+		panel_1.add(dicecanvas, "cell 0 10,grow");
 
 		CluedoCanvas canvas = new CluedoCanvas();
 		contentPane.add(canvas, BorderLayout.CENTER);

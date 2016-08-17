@@ -16,7 +16,7 @@ public class DiceCanvas extends JPanel{
 	private int diceOne = 0;
 	private int diceTwo = 0;
 	
-	private static final int DICE_SIZE = 105;
+	private static final int DICE_SIZE = 40;
 	
 	private int diceXPos = 0;
 	private int diceYPos = 0;
@@ -30,7 +30,7 @@ public class DiceCanvas extends JPanel{
 	private BufferedImage dNull;
 	
 	/**
-	 * Dumb constructor, just create the canvas.
+	 * Dumb constructor, just create the canvas with the default values
 	 * @param value
 	 */
 	public DiceCanvas(){
@@ -113,25 +113,25 @@ public class DiceCanvas extends JPanel{
 		
 		switch(diceTwo){
 		case 1:
-			g.drawImage(dOne, diceXPos, diceYPos+DICE_SIZE, DICE_SIZE, DICE_SIZE, null);
+			g.drawImage(dOne, diceXPos+DICE_SIZE, diceYPos, DICE_SIZE, DICE_SIZE, null);
 			break;
 		case 2:
-			g.drawImage(dTwo, diceXPos, diceYPos+DICE_SIZE, DICE_SIZE, DICE_SIZE, null);
+			g.drawImage(dTwo, diceXPos+DICE_SIZE, diceYPos, DICE_SIZE, DICE_SIZE, null);
 			break;
 		case 3:
-			g.drawImage(dThree, diceXPos, diceYPos+DICE_SIZE, DICE_SIZE, DICE_SIZE, null);
+			g.drawImage(dThree, diceXPos+DICE_SIZE, diceYPos, DICE_SIZE, DICE_SIZE, null);
 			break;
 		case 4:
-			g.drawImage(dFour, diceXPos, diceYPos+DICE_SIZE, DICE_SIZE, DICE_SIZE, null);
+			g.drawImage(dFour, diceXPos+DICE_SIZE, diceYPos, DICE_SIZE, DICE_SIZE, null);
 			break;
 		case 5:
-			g.drawImage(dFive, diceXPos, diceYPos+DICE_SIZE, DICE_SIZE, DICE_SIZE, null);
+			g.drawImage(dFive, diceXPos+DICE_SIZE, diceYPos, DICE_SIZE, DICE_SIZE, null);
 			break;
 		case 6:
-			g.drawImage(dSix, diceXPos, diceYPos+DICE_SIZE, DICE_SIZE,DICE_SIZE, null);
+			g.drawImage(dSix, diceXPos+DICE_SIZE, diceYPos, DICE_SIZE,DICE_SIZE, null);
 			break;
 		default:
-			g.drawImage(dNull, diceXPos, diceYPos+DICE_SIZE, DICE_SIZE, DICE_SIZE, null);
+			g.drawImage(dNull, diceXPos+DICE_SIZE, diceYPos, DICE_SIZE, DICE_SIZE, null);
 			break;
 		}
 		

@@ -69,6 +69,17 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 */
 	private List<Integer> diceList = new ArrayList<Integer>(Arrays.asList(2,3,4,5,6,7,8,9,10,11,12));
 	
+	
+	/**
+	 * List of sequencial numbers. This allows a random number to be chosen.
+	 */
+	private List<Integer> singleDie = new ArrayList<Integer>(Arrays.asList(1,2,3,4,5,6));
+
+	
+	
+	
+	
+	
 	/**
 	 * This rolls the dice, obtains the first element in the array.
 	 */
@@ -133,11 +144,11 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	}
 
 	/**
-	 * Returns a random value between 2-12.
+	 * Returns a random value between 1-6
 	 * @return
 	 */
 	public int diceRoll(){
-		Collections.shuffle(diceList);
+		Collections.shuffle(singleDie);
 		currentRoll = diceList.get(0);
 		return currentRoll;
 	}
