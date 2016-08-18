@@ -98,7 +98,6 @@ public class CluedoJFrame extends JFrame {
 				try {
 					CluedoJFrame frame = new CluedoJFrame();
 					frame.setVisible(true);
-					game = new CluedoGame();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -249,14 +248,13 @@ public class CluedoJFrame extends JFrame {
 		current_players_pane.setEditable(false);
 		panel_1.add(current_players_pane, "cell 0 9,grow");
 
-		CluedoCanvas canvas = new CluedoCanvas();
-		contentPane.add(canvas, BorderLayout.CENTER);
+		contentPane.add(game.cluedoCanvas, BorderLayout.CENTER);
 		
 		this.enableRadioButtons(false);
 		/***************************
 		 * START OF ACTION/MOUSE LISTENER STUFF
 		 ***************************/
-		canvas.addMouseListener(game);
+		game.cluedoCanvas.addMouseListener(game);
 		btnMakeArgument.addActionListener(e ->{
 			game.argsButtonPressed = true;
 			enableRadioButtons(true);

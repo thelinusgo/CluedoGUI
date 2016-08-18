@@ -41,22 +41,7 @@ public class Character {
 		this.name = name;
 		this.color = c;
 		this.startPos = startPos;
-	}
-	
-	/**
-	 * Returns the name of the character. This will return a character piece on the board.
-	 * @return
-	 */
-	public String getName(){
-		switch(this.name){
-			case "Miss Scarlett": return "M";
-			case "Colonel Mustard": return "C";
-			case "Mrs. White": return "W";
-			case "The Reverend Green": return "G";
-			case "Mrs. Peacock": return "P";
-			case "Professor Plum": return "R";
-		}
-		return null;
+		this.player = null;
 	}
 	
 	/**

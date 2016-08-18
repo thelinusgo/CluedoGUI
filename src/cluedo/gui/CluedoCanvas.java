@@ -702,12 +702,12 @@ public class CluedoCanvas extends JPanel{
 	 * Draws the start spaces.
 	 */
 	private void drawStart(){
-		board[9][0] = new StartTile(9, 0, CluedoGame.initializer.getCharacters().get(2));
-		board[14][0] = new StartTile(14, 0, CluedoGame.initializer.getCharacters().get(3));
-		board[0][17] = new StartTile(0, 17, CluedoGame.initializer.getCharacters().get(1));
-		board[7][board.length-1] = new StartTile(7, board.length-1, CluedoGame.initializer.getCharacters().get(0));
-		board[board.length-1][board.length-6] = new StartTile(board.length-1, board.length-6, CluedoGame.initializer.getCharacters().get(5));
-		board[board.length-1][6] = new StartTile(board.length-1, 6, CluedoGame.initializer.getCharacters().get(4));
+		board[9][0] = new StartTile(9, 0, CluedoGame.initializer.getCharacters()[2]);
+		board[14][0] = new StartTile(14, 0, CluedoGame.initializer.getCharacters()[3]);
+		board[0][17] = new StartTile(0, 17, CluedoGame.initializer.getCharacters()[1]);
+		board[7][board.length-1] = new StartTile(7, board.length-1, CluedoGame.initializer.getCharacters()[0]);
+		board[board.length-1][board.length-6] = new StartTile(board.length-1, board.length-6, CluedoGame.initializer.getCharacters()[5]);
+		board[board.length-1][6] = new StartTile(board.length-1, 6, CluedoGame.initializer.getCharacters()[4]);
 	}
 
 	public void drawBoard(){

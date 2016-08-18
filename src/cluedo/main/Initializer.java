@@ -26,7 +26,7 @@ public class Initializer {
 	private static List<Room> rooms = new ArrayList<>();
 	private static List<Weapon> weapons = new ArrayList<>();
 	private static List<Card> cards = new ArrayList<>();
-	private static List<Character> characters = new ArrayList<>();
+	private static Character[] characters = new Character[6];
 	public static List<String> characterNames = new ArrayList<>();
 	private static Player[] players = new Player[6];
 	private static Envelope envelope = new Envelope();
@@ -120,12 +120,12 @@ public class Initializer {
 	 */
 	private void initializeCharacters(){
 		/*Fill the ArrayList with people.. */
-		characters.add(new Character("Miss Scarlet", new Color(255, 77, 77), new Position(24, 7)));
-		characters.add(new Character("Colonel Mustard", new Color(255, 255, 77), new Position(0, 14)));
-		characters.add(new Character("Mrs. White", Color.white, new Position(0, 9)));
-		characters.add(new Character("The Reverend Green", new Color(0, 204, 0), new Position(17, 0)));
-		characters.add(new Character("Mrs. Peacock", new Color(153, 0, 204), new Position(6, 24)));
-		characters.add(new Character("Professor Plum", new Color(0, 102, 204), new Position(19, 24)));
+		characters[0] = new Character("Miss Scarlet", new Color(255, 77, 77), new Position(24, 7));
+		characters[1] = new Character("Colonel Mustard", new Color(255, 255, 77), new Position(0, 14));
+		characters[2] = new Character("Mrs. White", Color.white, new Position(0, 9));
+		characters[3] = new Character("The Reverend Green", new Color(0, 204, 0), new Position(17, 0));
+		characters[4] = new Character("Mrs. Peacock", new Color(153, 0, 204), new Position(6, 24));
+		characters[5] = new Character("Professor Plum", new Color(0, 102, 204), new Position(19, 24));
 	
 		/*Allows a List of the characters Names to be used/modified */
 		for(Character c : characters){
@@ -208,34 +208,17 @@ public class Initializer {
 	 */
 	public void setCharacters(){
 		Collections.shuffle(rooms, new Random(seed));
-		for(int i = 0; i < players.length; i++){
-			Player p = players[i];
-			Character c = p.getCharacter();
-			if(p.getName().equals("none")){
+		for(int i = 0; i < characters.length; i++){
+			Character c = characters[i];
+			if(c.player() == null){
+				Player p = new Player("none");
+				c.setPlayer(p);
+				p.setCharacter(c);
 				Room rm = rooms.get(i);
 				rm.addCharacter(c);
 				c.addRoom(rm);
 				CluedoGame.cluedoCanvas.moveToRoom(p, rm);
 			}
-
-		}
-	}
-
-	/**
-	 * Distribute characters to current players.
-	 * @param currentPlayers
-	 */
-	public void distributeCharacters(List<Player> currentPlayers){
-		Collections.shuffle(characters, new Random(seed)); 
-		for(int i = 0; i < players.length; i++){	
-			Player p = null;
-			if(i < currentPlayers.size()){
-				p = currentPlayers.get(i);
-			}else{
-				p = new Player("none");
-			}
-			p.setCharacter(characters.get(i));
-			players[i] = p;
 		}
 	}
 
@@ -306,7 +289,7 @@ public class Initializer {
 	 * Returns the list of characters
 	 * @return
 	 */
-	public static List<Character> getCharacters(){
+	public static Character[] getCharacters(){
 		return characters;
 	}
 }

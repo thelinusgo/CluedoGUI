@@ -157,7 +157,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	}
 
 	/**
-	 * Initialize the current players - give them random cards, assign them a random character.
+	 * Initialize the current players - give them random cards
 	 */
 	public void initialSetup(){
 		if(currentPlayers.size() == 0){
@@ -165,8 +165,8 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			return; //silently fail, do nothing if there are no currentPlayers.
 		}
 		initializer.distributeCards(currentPlayers); //distributes the cards out to the players.
-		//initializer.setCharacters();
 		System.out.println("I have finished initalizing.");
+		cluedoCanvas.drawBoard();
 	}
 
 
@@ -239,24 +239,12 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * @param numPlayers
 	 */
 	private String askCharacters(int numPlayers){
-		/*This is our array of choices. Used for the drop down menu */
-		String[] characters = {
-				"Miss Scarlett",
-				"Colonel Mustard",
-				"Mrs. White",
-				"The Reverend Green",
-				"Mrs. Peacock",
-				"Professor Plum"
-		};
-
 		String singleName = "";
 		Player playerInProgress = null;
 		for (int i = 0; i != (numPlayers); ++i) {
 			singleName = (JOptionPane.showInputDialog(null, "Please enter Player " + (i + 1) + "'s name."));
-			playerInProgress = new Player(singleName);			
-			//TODO: casey, need to look at this part.
-			Character c = grabCharacters(characters);
-			playerInProgress.setCharacter(c);
+			playerInProgress = new Player(singleName);		
+			grabCharacters(initializer.getCharacters(), playerInProgress);
 			addPlayer(playerInProgress);
 		}
 		this.askSuccess = true;
@@ -267,14 +255,14 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	/**
 	 * This code allows us to select from a list of characters, given a player.
 	 */
-	public Character grabCharacters(String[] characters) {
+	public void grabCharacters(Character[] characters, Player p) {
 		JPanel panel = new JPanel();
 		panel.add(new JLabel("Please make a selection:"));
 		@SuppressWarnings("rawtypes")
 		DefaultComboBoxModel model = new DefaultComboBoxModel();
-		for(int i = 0; i != characters.length; ++i){
-			if(!characters[i].equals("...")){
-				model.addElement(characters[i]);
+		for(Character c : characters){
+			if(c.player() == null){
+				model.addElement(c.name());
 			}
 		}
 		JComboBox comboBox = new JComboBox(model);
@@ -284,17 +272,15 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		switch (result) {
 		case JOptionPane.OK_OPTION:
 			System.out.println("You selected " + comboBox.getSelectedItem());
-			for(int i = 0 ; i != characters.length; ++i){
-				if(characters[i].equals(comboBox.getSelectedItem())){
-					characters[i] = "...";
+			for(Character c : characters){
+				if(c.name().equals(comboBox.getSelectedItem())){
+					p.setCharacter(c);
+					c.setPlayer(p);
 				}else{
 					continue;
 				}
 			}
-			//TODO: need to fix initializing the color and the pos.
-			return new Character( (String)comboBox.getSelectedItem(), new Color(0,0,0), new Position(0,0));
 		}
-		return null;
 	} 
 
 	//////////////////////////

@@ -107,7 +107,7 @@ public class Player {
 	 * @return
 	 */
 	public String getCharacterName(){
-		return this.character.getName();
+		return this.character.name();
 	}
 	
 	/**
@@ -212,6 +212,6 @@ public class Player {
 	 * Returns the toString representation of this player.
 	 */
 	public String toString(){
-		return "Name: " + this.name + ", Character Piece: " + this.character.getName();
+		return "Name: " + this.name + ", Character Piece: " + this.character.name();
 	}
 }
