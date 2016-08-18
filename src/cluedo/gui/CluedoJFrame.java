@@ -224,10 +224,16 @@ public class CluedoJFrame extends JFrame {
 
 		btnMakeMove = new JButton("Make Move");
 		panel_1.add(btnMakeMove, "cell 0 3");
+		btnMakeMove.addActionListener(e ->{
+			game.isMoveSelection = true;
+		});
 
 		btnEndTurn = new JButton("End Turn");
 		panel_1.add(btnEndTurn, "cell 0 4,alignx left");
-
+		btnEndTurn.addActionListener(e->{
+			game.isMoveSelection = false;
+			game.isSuggestionSelection = false;
+		});
 		btnDisplayHand = new JButton("Display Hand");
 		btnDisplayHand.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel_1.add(btnDisplayHand, "cell 0 5");
