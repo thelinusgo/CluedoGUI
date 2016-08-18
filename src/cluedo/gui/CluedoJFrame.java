@@ -77,7 +77,7 @@ public class CluedoJFrame extends JFrame {
 	private JRadioButton accusationRadioButton;
 	/* Various text panes and text Fields. */
 	private JTextPane current_players_pane;
-	private JTextField currentPlayerText; // this is where one would set the
+	public JTextField currentPlayerText; // this is where one would set the
 											// current Player's name.
 	private DiceCanvas dicecanvas = new DiceCanvas();
 
@@ -109,7 +109,7 @@ public class CluedoJFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public CluedoJFrame() {
-		game = new CluedoGame();// create a new instance of the game.
+		game = new CluedoGame(this);// create a new instance of the game.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 942, 700);
 		menuBar = new JMenuBar();
@@ -278,6 +278,12 @@ public class CluedoJFrame extends JFrame {
 		
 		mntmStartGame.addActionListener(e -> {
 			current_players_pane.setText(game.askPlayers());
+			try {
+				game.runGame();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
 		mntmExitGame.addActionListener(e -> {
 			int value = JOptionPane.showConfirmDialog(null, "Do you want to exit this Game?", "Confirmation",

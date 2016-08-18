@@ -23,6 +23,7 @@ import cluedo.cards.CharacterCard;
 import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
 import cluedo.gui.CluedoCanvas;
+import cluedo.gui.CluedoJFrame;
 /**
  * Creates a new instance of a Board, and runs the textClient.
  * @author Casey & Linus
@@ -67,11 +68,6 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	private static List<Player> currentPlayers; //a list of the current players.
 
 	/**
-	 * an instance of the textClient.
-	 */
-	public TextClient textClient; 
-
-	/**
 	 * Flag for stating whether asking was a success or not.
 	 */
 	public boolean askSuccess; 
@@ -111,15 +107,21 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * Current accusation object.
 	 */
 	private Accusation accusation = null;
+	
+	/**
+	 * Store JFrame
+	 */
+	private CluedoJFrame cluedoJFrame;
 
 	/**
 	 * Construct a new instance of the cluedo game. Initialize the fields.
 	 */
-	public CluedoGame(){
+	public CluedoGame(CluedoJFrame cluedoJF){
 		currentPlayers = new ArrayList<Player>();
 		initializer = new Initializer();
 		cluedoCanvas = new CluedoCanvas();
 		board = cluedoCanvas.board;
+		cluedoJFrame = cluedoJF;
 	}
 
 	/**
@@ -297,6 +299,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 				for(int i = 0; i < currentPlayers.size(); i++){
 					moveMade = false;
 					currentPlayer = currentPlayers.get(i);
+					cluedoJFrame.currentPlayerText.setText(currentPlayer.getName() + "\r\n");
 					if(!currentPlayer.out()){
 						System.out.println("Player " + currentPlayer.getName() + " starts.");
 						System.out.println(currentPlayer.getName() + "'s character piece is " + currentPlayer.getCharacterName() + ".");

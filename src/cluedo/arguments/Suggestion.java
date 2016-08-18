@@ -67,7 +67,7 @@ public class Suggestion extends Argument {
 			for(Player player : currentPlayers){
 				if(!player.equals(super.getCurrentPlayer())){
 					if(player.getCharacter().equals(cc.getObject())){
-						CluedoGame.board.moveToRoom(player, roomCard.getObject());
+						CluedoGame.cluedoCanvas.moveToRoom(player, roomCard.getObject());
 					}
 				}
 			}
