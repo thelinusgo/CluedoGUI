@@ -10,8 +10,10 @@ import cluedo.assets.Player;
 
 public class Tile implements MouseListener{
 	
-	public int xLoc;
-	public int yLoc;
+	protected int xLoc;
+	protected int yLoc;
+	public int x;
+	public int y;
 	private Player player;
 	private Color color = new Color(222, 192, 70); 
 	
@@ -24,6 +26,8 @@ public class Tile implements MouseListener{
 	public Tile(int x, int y){
 		this.xLoc = 38+x*TILESIZE;
 		this.yLoc = 25+y*TILESIZE;
+		this.x = x;
+		this.y = y;
 	}
 	
 	public void setColor(Color c){

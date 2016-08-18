@@ -638,12 +638,9 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			for(int y = 0; y < board.length; y++){
 				Tile t = board[x][y];
 				if(t.contains(e.getPoint())){
-					int px = e.getPoint().x;
-					int py = e.getPoint().y;
 					try {
-						cluedoCanvas.move(px-currentPlayer.position().getX(), py-currentPlayer.position().getY(), currentPlayer, currentPlayers);
+						cluedoCanvas.move(t.x-currentPlayer.position().getX(), t.y-currentPlayer.position().getY(), currentPlayer, currentPlayers);
 					} catch (InvalidMove e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}

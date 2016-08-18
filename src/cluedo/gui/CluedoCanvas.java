@@ -84,6 +84,12 @@ public class CluedoCanvas extends JPanel{
 	private BufferedImage conservatoryIm = null;
 	private BufferedImage libraryIm = null;
 	private BufferedImage diningRoomIm = null;
+	
+	/**
+	 * x and y coordinates of where the board starts drawing on the canvas
+	 */
+	private final int xCanvas = 38;
+	private final int yCanvas = 25;
 
 	public CluedoCanvas(){
 		this.initialise();
@@ -117,24 +123,22 @@ public class CluedoCanvas extends JPanel{
 
 	public void paint(Graphics g){
 		this.g = g;
-		int x = 38;
-		int y = 25;
 		g.setColor(new Color(128, 189, 147));
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(15));
 		g.drawRect(32, 20, 25*Tile.TILESIZE+10, 25*Tile.TILESIZE+10);
 		g2.setStroke(new BasicStroke(0));
 		//Draw images of rooms
-		g.drawImage(kitchenIm, x+kitchen.x*Tile.TILESIZE, y+kitchen.y*Tile.TILESIZE, kitchen.width*Tile.TILESIZE, kitchen.height*Tile.TILESIZE, null);
-		g.drawImage(ballroomIm, x+ballRm.x*Tile.TILESIZE, y+ballRm.y*Tile.TILESIZE, ballRm.width*Tile.TILESIZE, ballRm.height*Tile.TILESIZE, null);
-		g.drawImage(diningRoomIm, x+diningRoom.x*Tile.TILESIZE, y+diningRoom.y*Tile.TILESIZE, diningRoom.width*Tile.TILESIZE, diningRoom.height*Tile.TILESIZE, null);
-		g.drawImage(loungeIm, x+lounge.x*Tile.TILESIZE, y+lounge.y*Tile.TILESIZE, lounge.width*Tile.TILESIZE, lounge.height*Tile.TILESIZE, null);
-		g.drawImage(hallIm, x+hall.x*Tile.TILESIZE, y+hall.y*Tile.TILESIZE, hall.width*Tile.TILESIZE, hall.height*Tile.TILESIZE+9, null);
-		g.drawImage(studyIm, x+study.x*Tile.TILESIZE, y+study.y*Tile.TILESIZE, study.width*Tile.TILESIZE, study.height*Tile.TILESIZE, null);
-		g.drawImage(libraryIm, x+library.x*Tile.TILESIZE, y+library.y*Tile.TILESIZE, library.width*Tile.TILESIZE+8, library.height*Tile.TILESIZE, null);
-		g.drawImage(billiardRoomIm, x+billiardRm.x*Tile.TILESIZE, y+billiardRm.y*Tile.TILESIZE, billiardRm.width*Tile.TILESIZE+10, billiardRm.height*Tile.TILESIZE, null);
-		g.drawImage(conservatoryIm, x+conservatory.x*Tile.TILESIZE, y+conservatory.y*Tile.TILESIZE, conservatory.width*Tile.TILESIZE, conservatory.height*Tile.TILESIZE, null);
-		g.drawImage(cluedoIm, x+this.cluedo.x*Tile.TILESIZE, y+this.cluedo.y*Tile.TILESIZE, cluedo.width*Tile.TILESIZE, cluedo.height*Tile.TILESIZE, null);
+		g.drawImage(kitchenIm, xCanvas+kitchen.x*Tile.TILESIZE, yCanvas+kitchen.y*Tile.TILESIZE, kitchen.width*Tile.TILESIZE, kitchen.height*Tile.TILESIZE, null);
+		g.drawImage(ballroomIm, xCanvas+ballRm.x*Tile.TILESIZE, yCanvas+ballRm.y*Tile.TILESIZE, ballRm.width*Tile.TILESIZE, ballRm.height*Tile.TILESIZE, null);
+		g.drawImage(diningRoomIm, xCanvas+diningRoom.x*Tile.TILESIZE, yCanvas+diningRoom.y*Tile.TILESIZE, diningRoom.width*Tile.TILESIZE, diningRoom.height*Tile.TILESIZE, null);
+		g.drawImage(loungeIm, xCanvas+lounge.x*Tile.TILESIZE, yCanvas+lounge.y*Tile.TILESIZE, lounge.width*Tile.TILESIZE, lounge.height*Tile.TILESIZE, null);
+		g.drawImage(hallIm, xCanvas+hall.x*Tile.TILESIZE, yCanvas+hall.y*Tile.TILESIZE, hall.width*Tile.TILESIZE, hall.height*Tile.TILESIZE+9, null);
+		g.drawImage(studyIm, xCanvas+study.x*Tile.TILESIZE, yCanvas+study.y*Tile.TILESIZE, study.width*Tile.TILESIZE, study.height*Tile.TILESIZE, null);
+		g.drawImage(libraryIm, xCanvas+library.x*Tile.TILESIZE, yCanvas+library.y*Tile.TILESIZE, library.width*Tile.TILESIZE+8, library.height*Tile.TILESIZE, null);
+		g.drawImage(billiardRoomIm, xCanvas+billiardRm.x*Tile.TILESIZE, yCanvas+billiardRm.y*Tile.TILESIZE, billiardRm.width*Tile.TILESIZE+10, billiardRm.height*Tile.TILESIZE, null);
+		g.drawImage(conservatoryIm, xCanvas+conservatory.x*Tile.TILESIZE, yCanvas+conservatory.y*Tile.TILESIZE, conservatory.width*Tile.TILESIZE, conservatory.height*Tile.TILESIZE, null);
+		g.drawImage(cluedoIm, xCanvas+this.cluedo.x*Tile.TILESIZE, yCanvas+this.cluedo.y*Tile.TILESIZE, cluedo.width*Tile.TILESIZE, cluedo.height*Tile.TILESIZE, null);
 		this.drawBoard();
 	}
 
@@ -804,8 +808,7 @@ public class CluedoCanvas extends JPanel{
 	/**
 	 * Checks if player is doing a valid move. If they are not, then it returns false, else it returns true.
 	 * 
-	 * @param x - position of player after being moved
-	 * @param y - position of player after being moved
+	 * @param Position - position of player after being moved
 	 * @param directionX - how much the player is moving by in the x direction
 	 * @param directionY - how much the player is moving by in the y direction
 	 * @param p - current player
@@ -816,7 +819,9 @@ public class CluedoCanvas extends JPanel{
 		int x = position.getX();
 		int y = position.getY();
 		try {
-			if(x > 38+24*Tile.TILESIZE || x < 0 || y > 25+24*Tile.TILESIZE || y < 0){
+			if(p.numberofMoves() < Math.abs(directionX - directionY)){
+				throw new CluedoGame.InvalidMove("You cannot move into this tile because you do not have enough moves.");
+			}if(x > 24 || x < 0 || y > 24 || y < 0){
 				throw new CluedoGame.InvalidMove("Cannot go out of bounds!");
 			}else if(board[x][y] instanceof WallTile){
 				throw new CluedoGame.InvalidMove("Cannot move into wall.");
