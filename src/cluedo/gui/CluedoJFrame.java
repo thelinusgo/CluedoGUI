@@ -220,13 +220,7 @@ public class CluedoJFrame extends JFrame {
 
 		btnRollDice = new JButton("Roll Dice");
 		panel_1.add(btnRollDice, "cell 0 6");
-		btnRollDice.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dicecanvas.setDiceOne(game.diceRoll());
-				dicecanvas.setDiceTwo(game.diceRoll());
-				panel_1.repaint();
-			}
-		});
+		
 		panel_1.add(dicecanvas, "cell 0 7,aligny top");
 
 		JLabel lblListOfPlayers = new JLabel("List of available players: ");
@@ -255,7 +249,23 @@ public class CluedoJFrame extends JFrame {
 		mntmAboutCluedogui.addActionListener(e -> JOptionPane.showMessageDialog(null,
 				"This game was created by Casey Huang and Linus Go for their SWEN 222 Project. \n (c) 2016 All rights reserved."));
 		
-		btnDisplayHand.addActionListener(e-> cardsframe = new CardsFrame());
+		btnDisplayHand.addActionListener(e -> cardsframe = new CardsFrame());
+		
+		btnRollDice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dicecanvas.setDiceOne(game.diceRoll());
+				dicecanvas.setDiceTwo(game.diceRoll());
+				panel_1.repaint();
+			}
+		});
+		
+		btnRollDice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dicecanvas.setDiceOne(game.diceRoll());
+				dicecanvas.setDiceTwo(game.diceRoll());
+				panel_1.repaint();
+			}
+		});
 
 		/********************* END OF ACTION LISTENER STUFF ***************************/
 	}
