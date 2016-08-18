@@ -4,13 +4,18 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 
 import cluedo.gui.DiceCanvas;
-public class DiceFrame extends JFrame{
-	
+/**
+ * This class represents the pop up window that comes up, when a player views his hand.
+ * @author linus
+ *
+ */
+public class CardsFrame extends JFrame{
+	//TODO: casey - need to put some logic into here.
 	private CardsCanvas canvas;
-	public DiceFrame(){
+	public CardsFrame(){
 		super("Cards In Hand");
 		canvas = new CardsCanvas();
-		setLayout(new BorderLayout()); // use border layour
+		setLayout(new BorderLayout()); // use border layout
 		add(canvas, BorderLayout.CENTER); // add canvas
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack(); // pack components tightly together
@@ -18,9 +23,9 @@ public class DiceFrame extends JFrame{
 		setVisible(true); // make sure we are visible!
 	}
 	
-	public static void main(String... args){
-		new DiceFrame();
-	}
+//	public static void main(String... args){
+//		new CardsFrame();
+//	}
 	
 	
 }
