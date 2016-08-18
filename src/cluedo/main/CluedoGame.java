@@ -296,8 +296,8 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 					if(!currentPlayer.out()){
 						System.out.println("Player " + currentPlayer.getName() + " starts.");
 						System.out.println(currentPlayer.getName() + "'s character piece is " + currentPlayer.getCharacterName() + ".");
-						loop: while(!moveMade){
-							/*String option;
+						while(!moveMade){
+							String option;
 							if(prevOption.equals("s")){
 								prevOption = "";
 								System.out.println("Do you want to end your turn or make an accusation? (Press Y for ending your turn or N for making an accusation)");
@@ -317,7 +317,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 							doOption(option, currentPlayer);
 							if(moveMade){
 								//board.drawBoard();
-							}*/
+							}
 						}
 					}
 					if(isGameOver()){
