@@ -877,36 +877,4 @@ public class CluedoCanvas extends JPanel{
 		}
 		return minDoor;
 	}
-	/**
-	 * Determines if player can still move or not.
-	 * @param p
-	 * @return
-	 *//*
-	public boolean canMove(Player p){
-		for(Position position : p.getPossibleCoords()){
-			if(position != null){
-				if(!p.coordinatesTaken().contains(position)){
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	*//**
-	 * Returns true if player has valid possible moves.
-	 * @param pos
-	 * @param p
-	 * @return
-	 *//*
-	public boolean validPos(Position pos, Player p){
-		int x = pos.getX();
-		int y = pos.getY();
-		if(x > 24 || x < 0 || y > 24 || y < 0){
-			return false;
-		}else if(board[x][y].equals("|#|") || board[x][y].equals("#|") || board[x][y].equals("|X|") || board[x][y].equals("X|")){
-			return false;
-		}
-		return true;
-	}*/
 }

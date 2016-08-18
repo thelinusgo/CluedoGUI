@@ -22,7 +22,6 @@ public class Player {
 	private Room room = null;
 
 	private List<Position> coordinates = new ArrayList<Position>();
-	private Position[] possibleCoords = new Position[4];
 	private Door door;
 	private boolean out;
 
@@ -85,28 +84,8 @@ public class Player {
 	public void setPos(int x, int y){
 		this.position = new Position(x, y);
 		coordinates.add(this.position);
-		this.setPossibleCoords(x, y);
-		
-		for(int i = 0; i < possibleCoords.length; i++){
-			Position pos = possibleCoords[i];
-			if(!CluedoGame.board.validPos(pos, this)){
-				possibleCoords[i] = null;
-			}
-		}
 	}
 	
-	/**
-	 * Set the possible coordinates that a player can go into.
-	 * @param x
-	 * @param y
-	 */
-	private void setPossibleCoords(int x, int y){
-		possibleCoords[0] = new Position(x + 1, y);
-		possibleCoords[1] = new Position(x - 1, y);
-		possibleCoords[2] = new Position(x, y + 1);
-		possibleCoords[3] = new Position(x, y - 1);
-	}
-
 	/**
 	 * Returns the position of where this player is.
 	 * @return
@@ -195,14 +174,6 @@ public class Player {
 	 */
 	public List<Position> coordinatesTaken(){
 		return coordinates;
-	}
-	
-	/**
-	 * Returns the possible coordinates that this player can move to.
-	 * @return
-	 */
-	public Position[] getPossibleCoords(){
-		return this.possibleCoords;
 	}
 	
 	/**

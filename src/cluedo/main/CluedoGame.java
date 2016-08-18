@@ -29,37 +29,37 @@ import cluedo.gui.CluedoCanvas;
  *
  */
 public class CluedoGame implements MouseMotionListener, MouseListener{
-	
+
 	/**
 	 * This boolean represents if the arguments button has been pressed.
 	 */
 	public boolean argsButtonPressed = false;
-	
+
 	/**
 	 * This boolean respresents if suggestion radio box was ticked.
 	 */
 	public boolean isSuggestionSelection = false;
-	
+
 	/**
 	 * This boolean respresents if move button is pressed.
 	 */
 	public boolean isMoveSelection = false;
-	
+
 	/**
 	 * Initializes all of the data
 	 */
 	public static Initializer initializer;
-	
+
 	/**
 	 * An instance of the CluedoCanvas.
 	 */
 	public static CluedoCanvas cluedoCanvas;
-	
+
 	/**
 	 * An instance of the board
 	 */
 	public Tile[][] board;
-	
+
 	/**
 	 * stores the amount of players.
 	 */
@@ -70,17 +70,17 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * an instance of the textClient.
 	 */
 	public TextClient textClient; 
-	
+
 	/**
 	 * Flag for stating whether asking was a success or not.
 	 */
 	public boolean askSuccess; 
-	
+
 	/**
 	 * If a player has asked or not.
 	 */
 	private boolean hasAsked = false;
-	
+
 	/**
 	 * List of sequencial numbers. This allows a random number to be chosen.
 	 */
@@ -90,7 +90,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * This rolls the dice, obtains the first element in the array.
 	 */
 	private int currentRoll;
-	
+
 	/**
 	 * The current player of the round.
 	 */
@@ -106,12 +106,12 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 
 	/**Stores player's previous option*/
 	private String prevOption = "";
-	
+
 	/**
 	 * Current accusation object.
 	 */
 	private Accusation accusation = null;
-	
+
 	/**
 	 * Construct a new instance of the cluedo game. Initialize the fields.
 	 */
@@ -155,21 +155,21 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		currentRoll = singleDie.get(0);
 		return currentRoll;
 	}
-	
+
 	/**
 	 * Initialize the current players - give them random cards, assign them a random character.
 	 */
 	public void initialSetup(){
-	if(currentPlayers.size() == 0){
-		System.out.println("current players list is empty");
-		return; //silently fail, do nothing if there are no currentPlayers.
-	}
-	initializer.distributeCards(currentPlayers); //distributes the cards out to the players.
-	//initializer.setCharacters();
-	System.out.println("I have finished initalizing.");
+		if(currentPlayers.size() == 0){
+			System.out.println("current players list is empty");
+			return; //silently fail, do nothing if there are no currentPlayers.
+		}
+		initializer.distributeCards(currentPlayers); //distributes the cards out to the players.
+		//initializer.setCharacters();
+		System.out.println("I have finished initalizing.");
 	}
 
-	
+
 	/**
 	 * Returns all of the currentPlayers, for use in a JTextBox or a JList.
 	 */
@@ -183,14 +183,14 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		}
 		return sb.toString();
 	}
-	
+
 	/**
 	 * This sets the players position on the game. It places them strategically in a random location each round.
 	 */
 	public void setPlayerPosition(){
 		Collections.shuffle(currentPlayers); 
 	}
-	
+
 	/*START OF SPECIAL METHODS*/
 	///////////////////////////
 	/**
@@ -207,7 +207,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Asks the players for their name, and their preferred character.. Brings up a JOptionPane to request user
 	 * input.
@@ -233,7 +233,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		}
 		return askCharacters(Integer.parseInt(numPlayers));
 	}
-	
+
 	/**
 	 * Asks for the number of Players.
 	 * @param numPlayers
@@ -241,14 +241,14 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	private String askCharacters(int numPlayers){
 		/*This is our array of choices. Used for the drop down menu */
 		String[] characters = {
-		"Miss Scarlett",
-		"Colonel Mustard",
-		"Mrs. White",
-		"The Reverend Green",
-		"Mrs. Peacock",
-		"Professor Plum"
+				"Miss Scarlett",
+				"Colonel Mustard",
+				"Mrs. White",
+				"The Reverend Green",
+				"Mrs. Peacock",
+				"Professor Plum"
 		};
-		
+
 		String singleName = "";
 		Player playerInProgress = null;
 		for (int i = 0; i != (numPlayers); ++i) {
@@ -263,50 +263,44 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		this.initialSetup();
 		return this.getPlayerAndCharacterText();
 	}
-	
-	 /**
-     * This code allows us to select from a list of characters, given a player.
-     */
-    public Character grabCharacters(String[] characters) {
-        JPanel panel = new JPanel();
-        panel.add(new JLabel("Please make a selection:"));
-        @SuppressWarnings("rawtypes")
-		DefaultComboBoxModel model = new DefaultComboBoxModel();
-        for(int i = 0; i != characters.length; ++i){
-        if(!characters[i].equals("...")){
-        model.addElement(characters[i]);
-        }
-        }
-        JComboBox comboBox = new JComboBox(model);
-        panel.add(comboBox);
 
-        int result = JOptionPane.showConfirmDialog(null, panel, "Choose a Character", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-        switch (result) {
-            case JOptionPane.OK_OPTION:
-                System.out.println("You selected " + comboBox.getSelectedItem());
-                for(int i = 0 ; i != characters.length; ++i){
-                	if(characters[i].equals(comboBox.getSelectedItem())){
-                		characters[i] = "...";
-                	}else{
-                		continue;
-                	}
-                }
-        //TODO: need to fix initializing the color and the pos.
-        return new Character( (String)comboBox.getSelectedItem(), new Color(0,0,0), new Position(0,0));
-        }
-        return null;
-    } 
-	
-	
-	
-	
-	
-	
-	
+	/**
+	 * This code allows us to select from a list of characters, given a player.
+	 */
+	public Character grabCharacters(String[] characters) {
+		JPanel panel = new JPanel();
+		panel.add(new JLabel("Please make a selection:"));
+		@SuppressWarnings("rawtypes")
+		DefaultComboBoxModel model = new DefaultComboBoxModel();
+		for(int i = 0; i != characters.length; ++i){
+			if(!characters[i].equals("...")){
+				model.addElement(characters[i]);
+			}
+		}
+		JComboBox comboBox = new JComboBox(model);
+		panel.add(comboBox);
+
+		int result = JOptionPane.showConfirmDialog(null, panel, "Choose a Character", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		switch (result) {
+		case JOptionPane.OK_OPTION:
+			System.out.println("You selected " + comboBox.getSelectedItem());
+			for(int i = 0 ; i != characters.length; ++i){
+				if(characters[i].equals(comboBox.getSelectedItem())){
+					characters[i] = "...";
+				}else{
+					continue;
+				}
+			}
+			//TODO: need to fix initializing the color and the pos.
+			return new Character( (String)comboBox.getSelectedItem(), new Color(0,0,0), new Position(0,0));
+		}
+		return null;
+	} 
+
 	//////////////////////////
 	/*END OF SPECIAL METHODS*/
-	
-	
+
+
 	/**
 	 * Runs the game - only if asking players was successful.
 	 * @throws InvalidMove 
@@ -354,7 +348,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			}
 		}
 	}
-	
+
 	/**
 	 * This method performs a given option, based off the users input.
 	 * m is move, c is current cards, d is show previous player cards, a is accusation and s is for suggestion.
@@ -397,7 +391,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			moveMade = true;
 			break;
 		case "s":
-			
+
 			System.out.println("Player " + currentPlayer.getName() + " wishes to make an suggestion.");
 			Suggestion sugg = makeSuggestion(currentPlayer);
 
@@ -595,11 +589,6 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 					System.out.println("take the stairs or exit the room.");
 					break;
 				}
-				/*if(!board.canMove(p) && !p.coordinatesTaken().isEmpty()){
-					System.out.println("Sorry you do not have anywhere to move now.");
-					break;
-				}
-				board.drawBoard();*/
 			}
 			if(currentPlayer.numberofMoves() <= 0){
 				System.out.println(currentPlayer.getName() + " has run out of moves.");
@@ -626,7 +615,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		}
 		return false;
 	}
-	
+
 	/**
 	 * This prints out the contents of the envelope.
 	 */
@@ -636,18 +625,19 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			System.out.println(c.toString());
 		}
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println(e.getX());
-		for(int x = 0; x < board.length; x++){
-			for(int y = 0; y < board.length; y++){
-				Tile t = board[x][y];
-				if(t.contains(e.getPoint())){
-					try {
-						cluedoCanvas.move(t.x-currentPlayer.position().getX(), t.y-currentPlayer.position().getY(), currentPlayer, currentPlayers);
-					} catch (InvalidMove e1) {
-						e1.printStackTrace();
+		if(this.isMoveSelection){
+			for(int x = 0; x < board.length; x++){
+				for(int y = 0; y < board.length; y++){
+					Tile t = board[x][y];
+					if(t.contains(e.getPoint())){
+						try {
+							cluedoCanvas.move(t.x-currentPlayer.position().getX(), t.y-currentPlayer.position().getY(), currentPlayer, currentPlayers);
+						} catch (InvalidMove e1) {
+							e1.printStackTrace();
+						}
 					}
 				}
 			}
@@ -666,47 +656,47 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-//	/**
-//	 * The main method. This must be run/invoked to play the game.
-//	 * @param args
-//	 * @throws InvalidMove
-//	 */
-//	public static void main(String[] args) throws InvalidMove{
-//		CluedoGame game = new CluedoGame();
-//		//game.initialSetup();
-//		game.runGame();
-//	}
+
+	//	/**
+	//	 * The main method. This must be run/invoked to play the game.
+	//	 * @param args
+	//	 * @throws InvalidMove
+	//	 */
+	//	public static void main(String[] args) throws InvalidMove{
+	//		CluedoGame game = new CluedoGame();
+	//		//game.initialSetup();
+	//		game.runGame();
+	//	}
 }
