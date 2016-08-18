@@ -17,6 +17,7 @@ import cluedo.arguments.Accusation;
 import cluedo.arguments.Suggestion;
 import cluedo.assets.*;
 import cluedo.assets.Character;
+import cluedo.assets.tiles.Tile;
 import cluedo.cards.Card;
 import cluedo.cards.CharacterCard;
 import cluedo.cards.RoomCard;
@@ -212,7 +213,6 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 					isInteger = true;
 				}
 			} else {
-				if(Integer.parseInt(numPlayers) == -1) System.exit(0); //secret value
 				JOptionPane.showMessageDialog(null, "You must enter Integer values only.");
 			}
 		}

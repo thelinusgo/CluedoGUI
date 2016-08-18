@@ -1,9 +1,11 @@
-package cluedo.assets;
+package cluedo.assets.tiles;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
+import cluedo.assets.Player;
 
 public class StairsTile extends Tile{
 	private String direction = null;

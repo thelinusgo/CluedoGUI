@@ -20,16 +20,16 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import cluedo.assets.Door;
-import cluedo.assets.DoorTile;
 import cluedo.assets.Player;
 import cluedo.assets.Position;
 import cluedo.assets.Room;
-import cluedo.assets.RoomTile;
-import cluedo.assets.SolutionTile;
-import cluedo.assets.StairsTile;
-import cluedo.assets.StartTile;
-import cluedo.assets.Tile;
-import cluedo.assets.WallTile;
+import cluedo.assets.tiles.DoorTile;
+import cluedo.assets.tiles.RoomTile;
+import cluedo.assets.tiles.SolutionTile;
+import cluedo.assets.tiles.StairsTile;
+import cluedo.assets.tiles.StartTile;
+import cluedo.assets.tiles.Tile;
+import cluedo.assets.tiles.WallTile;
 import cluedo.main.CluedoGame;
 import cluedo.main.CluedoGame.InvalidMove;
 /**

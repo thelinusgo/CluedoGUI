@@ -1,7 +1,10 @@
-package cluedo.assets;
+package cluedo.assets.tiles;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
+import cluedo.assets.Character;
+import cluedo.assets.Player;
 
 public class StartTile extends Tile{
 

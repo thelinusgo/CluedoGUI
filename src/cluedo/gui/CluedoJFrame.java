@@ -52,8 +52,6 @@ public class CluedoJFrame extends JFrame {
 	private JComboBox combo1;
 	private JComboBox combo2;
 	private JComboBox combo3;
-	// the text pane.
-	private JTextPane textPane;
 	private JTextPane textPane_1;
 	private JTextField txtNull;
 	
@@ -206,8 +204,12 @@ public class CluedoJFrame extends JFrame {
 		panel_1.add(rdbtnDoAccusation, "cell 0 5");
 		
 				btnRollDice = new JButton("Roll Dice");
+				
+				JButton btnDisplayHand = new JButton("Display Hand");
+				btnDisplayHand.setHorizontalAlignment(SwingConstants.RIGHT);
+				panel_1.add(btnDisplayHand, "cell 0 6");
 				DiceCanvas dicecanvas = new DiceCanvas();
-				panel_1.add(dicecanvas, "cell 0 10,grow");
+				panel_1.add(dicecanvas, "cell 0 10");
 				panel_1.add(btnRollDice, "cell 0 7");
 				btnRollDice.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -216,9 +218,6 @@ public class CluedoJFrame extends JFrame {
 						panel_1.repaint();
 					}
 				});
-		textPane = new JTextPane();
-		panel_1.add(textPane, "flowx,cell 0 8");
-		textPane.setEditable(false);
 		textPane_1 = new JTextPane();
 		textPane_1.setEditable(false);
 		panel_1.add(textPane_1, "cell 0 9,grow");
