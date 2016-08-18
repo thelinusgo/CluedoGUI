@@ -68,6 +68,8 @@ public class CluedoJFrame extends JFrame {
 	private JButton btnRollDice;
 	private JButton btnDisplayHand;
 	private JButton btnMakeArgument;
+	private JButton btnShowPrevPlayersCards;
+
 	/* ComboBoxes used for Suggestion/Accusation. */
 	private JComboBox suspectsComboBox;
 	private JComboBox weaponsComboBox;
@@ -148,7 +150,7 @@ public class CluedoJFrame extends JFrame {
 		// create JPanel
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.WEST);
-		panel_1.setLayout(new MigLayout("", "[113px,grow]", "[23px][][][][][][][45px][][][][grow]"));
+		panel_1.setLayout(new MigLayout("", "[113px,grow]", "[23px][][][][][][][][45px][][][][grow]"));
 
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
@@ -221,32 +223,38 @@ public class CluedoJFrame extends JFrame {
 		btnStartTurn = new JButton("Start Turn");
 		panel_1.add(btnStartTurn, "cell 0 2,alignx left");
 
+		//Button for when a move is made.
 		btnMakeMove = new JButton("Make Move");
 		panel_1.add(btnMakeMove, "cell 0 3");
 		btnMakeMove.addActionListener(e ->{
 			game.isMoveSelection = true;
+			//game.setOption("m");
 		});
-
+		
+		//Button for when a turn has ended.
 		btnEndTurn = new JButton("End Turn");
 		panel_1.add(btnEndTurn, "cell 0 4,alignx left");
-		btnEndTurn.addActionListener(e->{
-			game.isMoveSelection = false;
-			game.isSuggestionSelection = false;
-		});
+
+		//Button to display the current players hand.
 		btnDisplayHand = new JButton("Display Hand");
 		btnDisplayHand.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel_1.add(btnDisplayHand, "cell 0 5");
-
+		
+		//Button to roll the dice.
 		btnRollDice = new JButton("Roll Dice");
 		panel_1.add(btnRollDice, "cell 0 6");
+		
+		btnShowPrevPlayersCards = new JButton("New button");
+	
+		panel_1.add(btnShowPrevPlayersCards, "cell 0 7");
 
-		panel_1.add(dicecanvas, "cell 0 7,aligny top");
+		panel_1.add(dicecanvas, "cell 0 8,aligny top");
 
 		JLabel lblListOfPlayers = new JLabel("List of available players: ");
-		panel_1.add(lblListOfPlayers, "cell 0 8");
+		panel_1.add(lblListOfPlayers, "cell 0 9");
 		current_players_pane = new JTextPane();
 		current_players_pane.setEditable(false);
-		panel_1.add(current_players_pane, "cell 0 9,grow");
+		panel_1.add(current_players_pane, "cell 0 10,grow");
 
 		contentPane.add(game.cluedoCanvas, BorderLayout.CENTER);
 		
@@ -265,16 +273,27 @@ public class CluedoJFrame extends JFrame {
 			}
 		});
 		
+		btnEndTurn.addActionListener(e->{
+			game.isMoveSelection = false;
+			game.isSuggestionSelection = false;
+		});
+		
 		suggestionRadioButton.addActionListener(e->{
 			game.isSuggestionSelection = true;
+			game.setOption("s");
 		});
 		
 		accusationRadioButton.addActionListener(e->{
 			game.isSuggestionSelection = false;
+			game.setOption("a");
 		});
 		
-		
-		
+		btnShowPrevPlayersCards.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			game.setOption("d");
+			}
+		});
+	
 		
 		mntmStartGame.addActionListener(e -> {
 			current_players_pane.setText(game.askPlayers());
@@ -294,7 +313,10 @@ public class CluedoJFrame extends JFrame {
 		mntmAboutCluedogui.addActionListener(e -> JOptionPane.showMessageDialog(null,
 				"This game was created by Casey Huang and Linus Go for their SWEN 222 Project. \n (c) 2016 All rights reserved."));
 
-		btnDisplayHand.addActionListener(e -> cardsframe = new CardsFrame());
+		btnDisplayHand.addActionListener(e -> {
+			//cardsframe = new CardsFrame();
+			game.setOption("c");
+		});
 
 		btnRollDice.addActionListener(e -> {
 			if(game.isMoveSelection){

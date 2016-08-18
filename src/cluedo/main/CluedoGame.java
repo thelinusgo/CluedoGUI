@@ -71,7 +71,19 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * Flag for stating whether asking was a success or not.
 	 */
 	public boolean askSuccess; 
-
+	
+	/**
+	 * Field that determines the choice of the player.
+	 */
+	private String option;
+	/**
+	 * This sets the option field to a value.
+	 * @param val
+	 */
+	public void setOption(String val){
+		this.option = val;
+	}
+	
 	/**
 	 * If a player has asked or not.
 	 */
@@ -297,23 +309,6 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 						System.out.println("Player " + currentPlayer.getName() + " starts.");
 						System.out.println(currentPlayer.getName() + "'s character piece is " + currentPlayer.getCharacterName() + ".");
 						while(!moveMade){
-							String option;
-							if(prevOption.equals("s")){
-								prevOption = "";
-								System.out.println("Do you want to end your turn or make an accusation? (Press Y for ending your turn or N for making an accusation)");
-								option = TextClient.inputString();
-								switch(option){
-								case "y":
-									System.out.println("You have ended your turn.");
-									moveMade = true;
-									break loop;
-								case "n":
-									option = "a";
-									break;
-								}
-							}else{
-								option = TextClient.askOption();
-							}
 							doOption(option, currentPlayer);
 							if(moveMade){
 								//board.drawBoard();
@@ -339,7 +334,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * @throws InvalidMove
 	 */
 	public void doOption(String option, Player p) throws InvalidMove{
-		/*switch(option){
+		switch(option){
 		case "m":
 			doMove(p);
 			moveMade = true;
@@ -386,10 +381,9 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			}else{
 				System.out.println("no extra cards were found");
 			}
-
 			prevOption = "s";
 			break;
-		}*/
+		}
 	}
 
 	/**
