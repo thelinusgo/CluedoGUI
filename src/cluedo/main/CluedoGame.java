@@ -29,6 +29,16 @@ import cluedo.gui.CluedoCanvas;
  *
  */
 public class CluedoGame implements MouseMotionListener, MouseListener{
+	
+	/**
+	 * This boolean represents if the arguments button has been pressed.
+	 */
+	public boolean argsButtonPressed = false;
+	/**
+	 * This boolean respresents if suggestion radio box was ticked.
+	 */
+	public boolean isSuggestionSelection = false;
+	
 	/**
 	 * Initializes all of the data
 	 */

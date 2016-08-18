@@ -73,8 +73,8 @@ public class CluedoJFrame extends JFrame {
 	private JComboBox weaponsComboBox;
 	private JComboBox roomsComboBox;
 	/* RadioButtons */
-	private JRadioButton suspectButton;
-	private JRadioButton accusationButton;
+	private JRadioButton suggestionRadioButton;
+	private JRadioButton accusationRadioButton;
 	/* Various text panes and text Fields. */
 	private JTextPane current_players_pane;
 	private JTextField currentPlayerText; // this is where one would set the
@@ -157,13 +157,12 @@ public class CluedoJFrame extends JFrame {
 		btnMakeArgument = new JButton("MAKE ARGUMENT");
 		panel.add(btnMakeArgument, "cell 0 1,alignx center");
 
-		suspectButton = new JRadioButton("Do Suggestion");
-		panel.add(suspectButton, "cell 0 2");
-		// suspectButton.setEnabled(false);
-
-		accusationButton = new JRadioButton("Do Accusation");
-		panel.add(accusationButton, "cell 0 3");
-		// accusationButton.setEnabled(false);
+		suggestionRadioButton = new JRadioButton("Do Suggestion");
+		panel.add(suggestionRadioButton, "cell 0 2");
+		
+		
+		accusationRadioButton = new JRadioButton("Do Accusation");
+		panel.add(accusationRadioButton, "cell 0 3");
 
 		JLabel label = new JLabel("1. Choose your Suspects");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -177,6 +176,8 @@ public class CluedoJFrame extends JFrame {
 		suspectsComboBox.addItem("The Reverend Green");
 		suspectsComboBox.addItem("Mrs. Peacock");
 		suspectsComboBox.addItem("Professor Plum");
+		suspectsComboBox.setEnabled(false);
+		
 
 		JLabel label_1 = new JLabel("2.	Choose your Weapons");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -190,6 +191,7 @@ public class CluedoJFrame extends JFrame {
 		weaponsComboBox.addItem("Wrench");
 		weaponsComboBox.addItem("Pipe");
 		weaponsComboBox.addItem("Candlestick");
+		weaponsComboBox.setEnabled(false);
 
 		JLabel label_2 = new JLabel("3.	Choose your Rooms");
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -206,6 +208,7 @@ public class CluedoJFrame extends JFrame {
 		roomsComboBox.addItem("Hall");
 		roomsComboBox.addItem("Lounge");
 		roomsComboBox.addItem("Dining Room");
+		roomsComboBox.setEnabled(false);
 
 		JLabel currentPlyrLabel = new JLabel("Current Player:");
 		currentPlyrLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -242,15 +245,31 @@ public class CluedoJFrame extends JFrame {
 
 		CluedoCanvas canvas = new CluedoCanvas();
 		contentPane.add(canvas, BorderLayout.CENTER);
+		
+		this.enableRadioButtons(false);
 		/***************************
 		 * START OF ACTION/MOUSE LISTENER STUFF
 		 ***************************/
-		
-		
 		canvas.addMouseListener(game);
 		btnMakeArgument.addActionListener(e ->{
-		
+			game.argsButtonPressed = true;
+			enableRadioButtons(true);
+			if(game.isSuggestionSelection){
+				enableComboBoxes(true);
+			}else{
+				enableComboBoxes(false);
+			}
 		});
+		
+		suggestionRadioButton.addActionListener(e->{
+			game.isSuggestionSelection = true;
+		});
+		
+		accusationRadioButton.addActionListener(e->{
+			game.isSuggestionSelection = false;
+		});
+		
+		
 		
 		
 		mntmStartGame.addActionListener(e -> {
@@ -272,11 +291,43 @@ public class CluedoJFrame extends JFrame {
 			dicecanvas.setDiceTwo(game.diceRoll());
 			panel_1.repaint();
 		});
-
-	
-
 		/*********************
 		 * END OF ACTION/MOUSE LISTENER STUFF
 		 ***************************/
 	}
+	
+	/**
+	 * This enables the radioButtons, once the Argument button has been pressed.
+	 * @param b
+	 */
+	private void enableRadioButtons(boolean b){
+		suggestionRadioButton.setEnabled(b);
+		accusationRadioButton.setEnabled(b);
+//		suspectsComboBox.setEnabled(b);
+//		weaponsComboBox.setEnabled(b);
+//		roomsComboBox.setEnabled(b);
+	}
+	
+	/**
+	 * This enables the appropriate combo boxes, once a radio button has been pressed.
+	 * @param isSuggestion
+	 */
+	private void enableComboBoxes(boolean isSuggestion){
+		if(isSuggestion){
+			accusationRadioButton.setEnabled(false);
+			suspectsComboBox.setEnabled(true);
+			weaponsComboBox.setEnabled(true);
+			roomsComboBox.setEnabled(false);
+		}else{
+			suggestionRadioButton.setEnabled(false);
+			suspectsComboBox.setEnabled(true);
+			weaponsComboBox.setEnabled(true);
+			roomsComboBox.setEnabled(true);
+		}
+	}
+	
+	
+	
+	
+	
 }
