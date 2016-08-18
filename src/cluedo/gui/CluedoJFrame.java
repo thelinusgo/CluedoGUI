@@ -54,6 +54,8 @@ public class CluedoJFrame extends JFrame {
 	private JComboBox combo3;
 	private JTextPane textPane_1;
 	private JTextField txtNull;
+	private	DiceCanvas dicecanvas = new DiceCanvas();
+
 	
 	/**
 	 * Launch the application.
@@ -129,22 +131,28 @@ public class CluedoJFrame extends JFrame {
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.EAST);
 		panel.setLayout(
-				new MigLayout("", "[88px,grow]", "[14px][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+				new MigLayout("", "[88px,grow]", "[14px][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		// create JPanel
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.WEST);
-		panel_1.setLayout(new MigLayout("", "[113px,grow]", "[23px][][][][][][][][][][grow]"));
+		panel_1.setLayout(new MigLayout("", "[113px,grow]", "[23px][][][][][][][45px][][][][grow]"));
 
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
+		
+		JRadioButton radioButton = new JRadioButton("Do Suggestion");
+		panel.add(radioButton, "cell 0 1");
+		
+		JRadioButton radioButton_1 = new JRadioButton("Do Accusation");
+		panel.add(radioButton_1, "cell 0 2");
 
 		JLabel label = new JLabel("1. Choose your Suspects");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel.add(label, "cell 0 2");
+		panel.add(label, "cell 0 3");
 
 		combo1 = new JComboBox();
-		panel.add(combo1, "cell 0 3,growx");
+		panel.add(combo1, "cell 0 4,growx");
 		combo1.addItem("Miss Scarlett");
 		combo1.addItem("Colonel Mustard");
 		combo1.addItem("Mrs. White");
@@ -154,10 +162,10 @@ public class CluedoJFrame extends JFrame {
 
 		JLabel label_1 = new JLabel("2.	Choose your Weapons");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel.add(label_1, "cell 0 4");
+		panel.add(label_1, "cell 0 5");
 
 		combo2 = new JComboBox();
-		panel.add(combo2, "cell 0 5,growx");
+		panel.add(combo2, "cell 0 6,growx");
 		combo2.addItem("Knife");
 		combo2.addItem("Rope");
 		combo2.addItem("Revolver");
@@ -167,10 +175,10 @@ public class CluedoJFrame extends JFrame {
 
 		JLabel label_2 = new JLabel("3.	Choose your Rooms");
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel.add(label_2, "cell 0 6");
+		panel.add(label_2, "cell 0 7");
 
 		combo3 = new JComboBox();
-		panel.add(combo3, "cell 0 7,growx");
+		panel.add(combo3, "cell 0 8,growx");
 		combo3.addItem("Kitchen");
 		combo3.addItem("Ball Room");
 		combo3.addItem("Conservatory");
@@ -192,38 +200,34 @@ public class CluedoJFrame extends JFrame {
 		panel_1.add(txtNull, "cell 0 1,growx");
 		txtNull.setColumns(10);	
 				JButton btnStartTurn = new JButton("Start Turn");
-				panel_1.add(btnStartTurn, "cell 0 2,alignx center");
+				panel_1.add(btnStartTurn, "cell 0 2,alignx left");
+				
+				JButton btnMakeMove = new JButton("Make Move");
+				panel_1.add(btnMakeMove, "cell 0 3");
 		
 				btnEndTurn = new JButton("End Turn");
-				panel_1.add(btnEndTurn, "cell 0 3,alignx center");
-		
-		JRadioButton rdbtnDoSuggestion = new JRadioButton("Do Suggestion");
-		panel_1.add(rdbtnDoSuggestion, "cell 0 4");
-		
-		JRadioButton rdbtnDoAccusation = new JRadioButton("Do Accusation");
-		panel_1.add(rdbtnDoAccusation, "cell 0 5");
-		
-				btnRollDice = new JButton("Roll Dice");
+				panel_1.add(btnEndTurn, "cell 0 4,alignx left");
 				
 				JButton btnDisplayHand = new JButton("Display Hand");
 				btnDisplayHand.setHorizontalAlignment(SwingConstants.RIGHT);
-				panel_1.add(btnDisplayHand, "cell 0 6");
-				DiceCanvas dicecanvas = new DiceCanvas();
-				panel_1.add(dicecanvas, "cell 0 10");
-				panel_1.add(btnRollDice, "cell 0 7");
-				btnRollDice.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						dicecanvas.setDiceOne(game.diceRoll());
-						dicecanvas.setDiceTwo(game.diceRoll());
-						panel_1.repaint();
-					}
-				});
-		textPane_1 = new JTextPane();
-		textPane_1.setEditable(false);
-		panel_1.add(textPane_1, "cell 0 9,grow");
+				panel_1.add(btnDisplayHand, "cell 0 5");
+				
+						btnRollDice = new JButton("Roll Dice");
+						panel_1.add(btnRollDice, "cell 0 6");
+						btnRollDice.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								dicecanvas.setDiceOne(game.diceRoll());
+								dicecanvas.setDiceTwo(game.diceRoll());
+								panel_1.repaint();
+							}
+						});
+		panel_1.add(dicecanvas, "cell 0 7,aligny top");
 		
 		JLabel lblListOfPlayers = new JLabel("List of available players: ");
 		panel_1.add(lblListOfPlayers, "cell 0 8");
+		textPane_1 = new JTextPane();
+		textPane_1.setEditable(false);
+		panel_1.add(textPane_1, "cell 0 9,grow");
 		
 		CluedoCanvas canvas = new CluedoCanvas();
 		contentPane.add(canvas, BorderLayout.CENTER);

@@ -65,7 +65,7 @@ public class DiceCanvas extends JPanel{
 	
 	@Override
 	public Dimension getPreferredSize(){
-		return new Dimension(105,205);
+		return new Dimension(105,45);
 	}
 	
 	/**
