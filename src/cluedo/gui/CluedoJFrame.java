@@ -230,5 +230,4 @@ public class CluedoJFrame extends JFrame {
 		contentPane.add(canvas, BorderLayout.CENTER);
 		canvas.addMouseListener(game);
 	}
-
 }

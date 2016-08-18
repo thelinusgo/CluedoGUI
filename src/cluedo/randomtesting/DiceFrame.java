@@ -8,7 +8,7 @@ public class DiceFrame extends JFrame{
 	
 	private CardsCanvas canvas;
 	public DiceFrame(){
-		super("test");
+		super("Cards In Hand");
 		canvas = new CardsCanvas();
 		setLayout(new BorderLayout()); // use border layour
 		add(canvas, BorderLayout.CENTER); // add canvas
