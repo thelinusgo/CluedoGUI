@@ -6,20 +6,27 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import cluedo.assets.Player;
+import cluedo.assets.Room;
 
 public class RoomTile extends Tile{
 	private String direction = null;
 	private String direction2 = null;
 	private Player player = null;
+	private Room room = null;
 
-	public RoomTile(int x, int y, String dir, String dir2){
+	public RoomTile(int x, int y, String dir, String dir2, Room r){
 		super(x, y);
 		this.direction = dir;
 		this.direction2 = dir2;
+		this.room = r;
 	}
 
 	public void setPlayer(Player p){
 		this.player = p;
+	}
+	
+	public Room getRoom(){
+		return this.room;
 	}
 
 	public void draw(Graphics g){

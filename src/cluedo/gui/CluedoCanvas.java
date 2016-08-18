@@ -48,6 +48,8 @@ public class CluedoCanvas extends JPanel{
 	private Rectangle conservatory;
 	private Rectangle ballRm;
 	private Rectangle cluedo;
+	
+	private Graphics g;
 	/**
 	 * Represents the board in 2d array form.
 	 */
@@ -85,7 +87,6 @@ public class CluedoCanvas extends JPanel{
 
 	public CluedoCanvas(){
 		this.initialise();
-		
 		try {
 			cluedoIm = ImageIO.read(new File("cluedo.jpg"));
 			kitchenIm = ImageIO.read(new File("kitchenRoom.jpg"));
@@ -115,6 +116,7 @@ public class CluedoCanvas extends JPanel{
 	}
 
 	public void paint(Graphics g){
+		this.g = g;
 		int x = 38;
 		int y = 25;
 		g.setColor(new Color(128, 189, 147));
@@ -133,7 +135,7 @@ public class CluedoCanvas extends JPanel{
 		g.drawImage(billiardRoomIm, x+billiardRm.x*Tile.TILESIZE, y+billiardRm.y*Tile.TILESIZE, billiardRm.width*Tile.TILESIZE+10, billiardRm.height*Tile.TILESIZE, null);
 		g.drawImage(conservatoryIm, x+conservatory.x*Tile.TILESIZE, y+conservatory.y*Tile.TILESIZE, conservatory.width*Tile.TILESIZE, conservatory.height*Tile.TILESIZE, null);
 		g.drawImage(cluedoIm, x+this.cluedo.x*Tile.TILESIZE, y+this.cluedo.y*Tile.TILESIZE, cluedo.width*Tile.TILESIZE, cluedo.height*Tile.TILESIZE, null);
-		this.drawBoard(g);
+		this.drawBoard();
 	}
 
 	private void initialise(){
@@ -189,24 +191,24 @@ public class CluedoCanvas extends JPanel{
 		/*Boarder*/
 		//top
 		for(int i = 0; i < size; i++){
-			board[i][y] = new RoomTile(i, y, "top", null);
+			board[i][y] = new RoomTile(i, y, "top", null, CluedoGame.initializer.kitchen);
 		}
 		//bottom
 		for(int i = 0; i < size; i++){
-			board[i][y+size-1] = new RoomTile(i, y+size-1, "bottom", null);
+			board[i][y+size-1] = new RoomTile(i, y+size-1, "bottom", null, CluedoGame.initializer.kitchen);
 		}
 		//left
 		for(int i = y; i < size+y; i++){
-			board[x][i] = new RoomTile(x, i, "left", null);
+			board[x][i] = new RoomTile(x, i, "left", null, CluedoGame.initializer.kitchen);
 		}
 		//right
 		for(int i = y; i < size; i++){
-			board[x+size-1][i] = new RoomTile(x+size-1, i, "right", null);
+			board[x+size-1][i] = new RoomTile(x+size-1, i, "right", null, CluedoGame.initializer.kitchen);
 		}
 		//area
 		for(int i = x+1; i < size-1; i++){
 			for(int j = y+1; j < size; j++){
-				board[i][j] = new RoomTile(i, j, null, null);
+				board[i][j] = new RoomTile(i, j, null, null, CluedoGame.initializer.kitchen);
 			}
 		}
 
@@ -216,9 +218,9 @@ public class CluedoCanvas extends JPanel{
 		d.setInFront(new Position(4, 7));
 		doors.add(d);
 
-		board[x][y] = new RoomTile(x, y, "top", "left");
-		board[x][y+size-1] = new RoomTile(x, y+size-1, "bottom", "left");
-		board[x+size-1][y+size-1] = new RoomTile(x+size-1, y+size-1, "bottom", "right");
+		board[x][y] = new RoomTile(x, y, "top", "left", CluedoGame.initializer.kitchen);
+		board[x][y+size-1] = new RoomTile(x, y+size-1, "bottom", "left", CluedoGame.initializer.kitchen);
+		board[x+size-1][y+size-1] = new RoomTile(x+size-1, y+size-1, "bottom", "right", CluedoGame.initializer.kitchen);
 
 		return new Rectangle(x, y, size, size);
 	}
@@ -235,38 +237,38 @@ public class CluedoCanvas extends JPanel{
 		/*Boarder*/
 		//top
 		for(int i = 0; i < 5; i++){
-			board[i][y] = new RoomTile(i, y, "top", null);
+			board[i][y] = new RoomTile(i, y, "top", null, CluedoGame.initializer.diningrm);
 		}
 		for(int i = 5; i < width; i++){
-			board[i][y+1] = new RoomTile(i, y+1, "top", null);
+			board[i][y+1] = new RoomTile(i, y+1, "top", null, CluedoGame.initializer.diningrm);
 		}
 
 		//bottom
 		for(int i = 0; i < width; i++){
-			board[i][y+height-1] = new RoomTile(i, y+height-1, "bottom", null);
+			board[i][y+height-1] = new RoomTile(i, y+height-1, "bottom", null, CluedoGame.initializer.diningrm);
 		}
 		//left
 		for(int i = y; i < height + y; i++){
-			board[x][i] = new RoomTile(x, i, "left", null);
+			board[x][i] = new RoomTile(x, i, "left", null, CluedoGame.initializer.diningrm);
 		}
 		//right
 		for(int i = y+2; i < height + y; i++){
-			board[x+width-1][i] = new RoomTile(x+width-1, i, "right", null);
+			board[x+width-1][i] = new RoomTile(x+width-1, i, "right", null, CluedoGame.initializer.diningrm);
 		}
 
 		//area
 		for(int i = x+1; i < 4; i++){
 			for(int j = y+1; j < y+height-1; j++){
-				board[i][j] = new RoomTile(i, j, null, null);
+				board[i][j] = new RoomTile(i, j, null, null, CluedoGame.initializer.diningrm);
 			}
 		}
 
 		for(int i = 4; i < width-1; i++){
 			for(int j = y+2; j < y+height-1; j++){
-				board[i][j] = new RoomTile(i, j, null, null);
+				board[i][j] = new RoomTile(i, j, null, null, CluedoGame.initializer.diningrm);
 			}
 		}
-		board[4][y+1] = new RoomTile(4, y+1, null, null);
+		board[4][y+1] = new RoomTile(4, y+1, null, null, CluedoGame.initializer.diningrm);
 
 		Door d1 = new Door(true, width-1, 12, CluedoGame.initializer.diningrm, "<");
 		Door d2 = new Door(false, width-2, y+height-1, CluedoGame.initializer.diningrm, "^");
@@ -275,11 +277,11 @@ public class CluedoCanvas extends JPanel{
 		doors.add(d1);
 		doors.add(d2);
 
-		board[x][y] = new RoomTile(x, y, "top", "left");
-		board[x][y+height-1] = new RoomTile(x, y+height-1, "bottom", "left");
-		board[4][y] = new RoomTile(4, y, "top", "right");
-		board[x+width-1][y+1] = new RoomTile(x+width-1, y+1, "top", "right");
-		board[x+width-1][y+height-1] = new RoomTile(x+width-1, y+height-1, "bottom", "right");
+		board[x][y] = new RoomTile(x, y, "top", "left", CluedoGame.initializer.diningrm);
+		board[x][y+height-1] = new RoomTile(x, y+height-1, "bottom", "left", CluedoGame.initializer.diningrm);
+		board[4][y] = new RoomTile(4, y, "top", "right", CluedoGame.initializer.diningrm);
+		board[x+width-1][y+1] = new RoomTile(x+width-1, y+1, "top", "right", CluedoGame.initializer.diningrm);
+		board[x+width-1][y+height-1] = new RoomTile(x+width-1, y+height-1, "bottom", "right", CluedoGame.initializer.diningrm);
 
 		return new Rectangle(x, y, width, height);
 	}
@@ -295,28 +297,28 @@ public class CluedoCanvas extends JPanel{
 		/*Boarder*/
 		//top
 		for(int i = 0; i < width; i++){
-			board[i][y] = new RoomTile(i, y, "top", null);
+			board[i][y] = new RoomTile(i, y, "top", null, CluedoGame.initializer.lounge);
 		}
 
 		//bottom
 		for(int i = 0; i < width; i++){
-			board[i][y+height-1] = new RoomTile(i, y+height-1, "bottom", null);
+			board[i][y+height-1] = new RoomTile(i, y+height-1, "bottom", null, CluedoGame.initializer.lounge);
 		}
 
 		//left
 		for(int i = y; i < y+height; i++){
-			board[x][i] = new RoomTile(x, i, "left", null);
+			board[x][i] = new RoomTile(x, i, "left", null, CluedoGame.initializer.lounge);
 		}
 
 		//right
 		for(int i = y+1; i < y+height; i++){
-			board[x+width-1][i] = new RoomTile(x+width-1, i, "right", null);
+			board[x+width-1][i] = new RoomTile(x+width-1, i, "right", null, CluedoGame.initializer.lounge);
 		}
 
 		//area
 		for(int i = x+1; i < width-1; i++){
 			for(int j = y+1; j < y+height-1; j++){
-				board[i][j] = new RoomTile(i, j, null, null);
+				board[i][j] = new RoomTile(i, j, null, null, CluedoGame.initializer.lounge);
 			}
 		}
 
@@ -326,8 +328,8 @@ public class CluedoCanvas extends JPanel{
 		d.setInFront(new Position(x+width-1, y-1));
 		board[x+width-1][y] = new DoorTile(x+width-1, y, d, "right");
 
-		board[x][y+height-1] = new RoomTile(x, y+height-1, "bottom", "left");
-		board[x+width-1][y+height-1] = new RoomTile(x+width-1, y+height-1, "bottom", "right");
+		board[x][y+height-1] = new RoomTile(x, y+height-1, "bottom", "left", CluedoGame.initializer.lounge);
+		board[x+width-1][y+height-1] = new RoomTile(x+width-1, y+height-1, "bottom", "right", CluedoGame.initializer.lounge);
 
 		return new Rectangle(x, y, width, height);
 	}
@@ -344,28 +346,28 @@ public class CluedoCanvas extends JPanel{
 		/*Boarder*/
 		//top
 		for(int i = x; i < width+x; i++){
-			board[i][y] = new RoomTile(i, y, "top", null);
+			board[i][y] = new RoomTile(i, y, "top", null, CluedoGame.initializer.hall);
 		}
 
 		//bottom
 		for(int i = x; i < width+x; i++){
-			board[i][y+height-1] = new RoomTile(i, y+height-1, "bottom", null);
+			board[i][y+height-1] = new RoomTile(i, y+height-1, "bottom", null, CluedoGame.initializer.hall);
 		}
 
 		//left
 		for(int i = y; i < height+y; i++){
-			board[x][i] = new RoomTile(x, i, "left", null);
+			board[x][i] = new RoomTile(x, i, "left", null, CluedoGame.initializer.hall);
 		}
 
 		//right
 		for(int i = y+1; i < height+y-1; i++){
-			board[x+width-1][i] = new RoomTile(x+width-1, i, "right", null);
+			board[x+width-1][i] = new RoomTile(x+width-1, i, "right", null, CluedoGame.initializer.hall);
 		}
 
 		//area
 		for(int i = x+1; i < width+x-1; i++){
 			for(int j = y+1; j < height+y-1; j++){
-				board[i][j] = new RoomTile(i, j, null, null);
+				board[i][j] = new RoomTile(i, j, null, null, CluedoGame.initializer.hall);
 			}
 		}
 
@@ -379,10 +381,10 @@ public class CluedoCanvas extends JPanel{
 		doors.add(d2);
 		doors.add(d3);
 
-		board[x][y] = new RoomTile(x, y, "top", "left");
-		board[x+width-1][y] = new RoomTile(x+width-1, y, "top", "right");
-		board[x][y+height-1] = new RoomTile(x, y+height-1, "left", "bottom");
-		board[x+width-1][y+height-1] = new RoomTile(x+width-1, y+height-1, "right", "bottom");
+		board[x][y] = new RoomTile(x, y, "top", "left", CluedoGame.initializer.hall);
+		board[x+width-1][y] = new RoomTile(x+width-1, y, "top", "right", CluedoGame.initializer.hall);
+		board[x][y+height-1] = new RoomTile(x, y+height-1, "left", "bottom", CluedoGame.initializer.hall);
+		board[x+width-1][y+height-1] = new RoomTile(x+width-1, y+height-1, "right", "bottom", CluedoGame.initializer.hall);
 
 		return new Rectangle(x, y, width, height);
 	}
@@ -399,28 +401,28 @@ public class CluedoCanvas extends JPanel{
 		/*Boarder*/
 		//top
 		for(int i = x; i < width+x; i++){
-			board[i][y] = new RoomTile(i, y, "top", null);
+			board[i][y] = new RoomTile(i, y, "top", null, CluedoGame.initializer.study);
 		}
 
 		//bottom
 		for(int i = x; i < width+x; i++){
-			board[i][y+height-1] = new RoomTile(i, y+height-1, "bottom", null);
+			board[i][y+height-1] = new RoomTile(i, y+height-1, "bottom", null, CluedoGame.initializer.study);
 		}
 
 		//left
 		for(int i = y; i < height+y; i++){
-			board[x][i] = new RoomTile(x, i, "left", null);
+			board[x][i] = new RoomTile(x, i, "left", null, CluedoGame.initializer.study);
 		}
 
 		//right
 		for(int i = y; i < height+y; i++){
-			board[x+width-1][i] = new RoomTile(x+width-1, i, "right", null);
+			board[x+width-1][i] = new RoomTile(x+width-1, i, "right", null, CluedoGame.initializer.study);
 		}
 
 		//area
 		for(int i = x+1; i < width+x-1; i++){
 			for(int j = y+1; j < height+y-1; j++){
-				board[i][j] = new RoomTile(i, j, null, null);
+				board[i][j] = new RoomTile(i, j, null, null, CluedoGame.initializer.study);
 			}
 		}
 
@@ -430,8 +432,8 @@ public class CluedoCanvas extends JPanel{
 		d.setInFront(new Position(x, y-1));
 		board[x][y] = new DoorTile(x, y, d, "left");
 
-		board[x][y+height-1] = new RoomTile(x, y+height-1, "left", "bottom");
-		board[x+width-1][y+height-1] = new RoomTile(x+width-1, y+height-1, "bottom", "right");
+		board[x][y+height-1] = new RoomTile(x, y+height-1, "left", "bottom", CluedoGame.initializer.study);
+		board[x+width-1][y+height-1] = new RoomTile(x+width-1, y+height-1, "bottom", "right", CluedoGame.initializer.study);
 
 		return new Rectangle(x, y, width, height);
 	}
@@ -448,28 +450,28 @@ public class CluedoCanvas extends JPanel{
 		/*Boarder*/
 		//top
 		for(int i = x+1; i < width+x-1; i++){
-			board[i][y] = new RoomTile(i, y, "top", null);
+			board[i][y] = new RoomTile(i, y, "top", null, CluedoGame.initializer.lib);
 		}
 
 		//bottom
 		for(int i = x+1; i < width+x-1; i++){
-			board[i][y+height-1] = new RoomTile(i, y+height-1, "bottom", null);
+			board[i][y+height-1] = new RoomTile(i, y+height-1, "bottom", null, CluedoGame.initializer.lib);
 		}
 
 		//left
 		for(int i = y+1; i < height+y-1; i++){
-			board[x][i] = new RoomTile(x, i, "left", null);
+			board[x][i] = new RoomTile(x, i, "left", null, CluedoGame.initializer.lib);
 		}
 
 		//right
 		for(int i = y+1; i < height+y-1; i++){
-			board[x+width-1][i] = new RoomTile(x+width-1, i, "right", null);
+			board[x+width-1][i] = new RoomTile(x+width-1, i, "right", null, CluedoGame.initializer.lib);
 		}
 
 		//area
 		for(int i = x+1; i < width+x-1; i++){
 			for(int j = y+1; j < height+y-1; j++){
-				board[i][j] = new RoomTile(i, j, null, null);
+				board[i][j] = new RoomTile(i, j, null, null, CluedoGame.initializer.lib);
 			}
 		}
 
@@ -480,14 +482,14 @@ public class CluedoCanvas extends JPanel{
 		doors.add(d1);
 		doors.add(d2);
 
-		board[x][y+1] = new RoomTile(x, y+1, "top", "left");
-		board[x+1][y] = new RoomTile(x+1, y, "top", "left");
-		board[x][y+height-2] = new RoomTile(x, y+height-2, "left", "bottom");
-		board[x+1][y+height-1] = new RoomTile(x+1, y+height-1, "left", "bottom");
-		board[x+width-2][y] = new RoomTile(x+width-2, y, "top", "right");
-		board[x+width-1][y+1] = new RoomTile(x+width-1, y+1, "top", "right");
-		board[x+width-1][y+height-2] = new RoomTile(x+width-1, y+height-2, "bottom", "right");
-		board[x+width-2][y+height-1] = new RoomTile(x+width-2, y+height-1, "bottom", "right");
+		board[x][y+1] = new RoomTile(x, y+1, "top", "left", CluedoGame.initializer.lib);
+		board[x+1][y] = new RoomTile(x+1, y, "top", "left", CluedoGame.initializer.lib);
+		board[x][y+height-2] = new RoomTile(x, y+height-2, "left", "bottom", CluedoGame.initializer.lib);
+		board[x+1][y+height-1] = new RoomTile(x+1, y+height-1, "left", "bottom", CluedoGame.initializer.lib);
+		board[x+width-2][y] = new RoomTile(x+width-2, y, "top", "right", CluedoGame.initializer.lib);
+		board[x+width-1][y+1] = new RoomTile(x+width-1, y+1, "top", "right", CluedoGame.initializer.lib);
+		board[x+width-1][y+height-2] = new RoomTile(x+width-1, y+height-2, "bottom", "right", CluedoGame.initializer.lib);
+		board[x+width-2][y+height-1] = new RoomTile(x+width-2, y+height-1, "bottom", "right", CluedoGame.initializer.lib);
 
 		return new Rectangle(x, y, width, height);
 	}
@@ -504,28 +506,28 @@ public class CluedoCanvas extends JPanel{
 		/*Boarder*/
 		//top
 		for(int i = x; i < width+x; i++){
-			board[i][y] = new RoomTile(i, y, "top", null);
+			board[i][y] = new RoomTile(i, y, "top", null, CluedoGame.initializer.billRm);
 		}
 
 		//bottom
 		for(int i = x; i < width+x; i++){
-			board[i][y+height-1] = new RoomTile(i, y+height-1, "bottom", null);
+			board[i][y+height-1] = new RoomTile(i, y+height-1, "bottom", null, CluedoGame.initializer.billRm);
 		}
 
 		//left
 		for(int i = y; i < height+y; i++){
-			board[x][i] = new RoomTile(x, i, "left", null);
+			board[x][i] = new RoomTile(x, i, "left", null, CluedoGame.initializer.billRm);
 		}
 
 		//right
 		for(int i = y; i < height+y; i++){
-			board[x+width-1][i] = new RoomTile(x+width-1, i, "right", null);
+			board[x+width-1][i] = new RoomTile(x+width-1, i, "right", null, CluedoGame.initializer.billRm);
 		}
 
 		//area
 		for(int i = x+1; i < width+x-1; i++){
 			for(int j = y+1; j < height+y-1; j++){
-				board[i][j] = new RoomTile(i, j, null, null);
+				board[i][j] = new RoomTile(i, j, null, null, CluedoGame.initializer.billRm);
 			}
 		}
 
@@ -536,10 +538,10 @@ public class CluedoCanvas extends JPanel{
 		doors.add(d1);
 		doors.add(d2);
 
-		board[x][y] = new RoomTile(x, y, "top", "left");
-		board[x][y+height-1] = new RoomTile(x, y+height-1, "bottom", "left");
-		board[x+width-1][y] = new RoomTile(x+width-1, y, "top", "right");
-		board[x+width-1][y+height-1] = new RoomTile(x+width-1, y+height-1, "bottom", "right");
+		board[x][y] = new RoomTile(x, y, "top", "left", CluedoGame.initializer.billRm);
+		board[x][y+height-1] = new RoomTile(x, y+height-1, "bottom", "left", CluedoGame.initializer.billRm);
+		board[x+width-1][y] = new RoomTile(x+width-1, y, "top", "right", CluedoGame.initializer.billRm);
+		board[x+width-1][y+height-1] = new RoomTile(x+width-1, y+height-1, "bottom", "right", CluedoGame.initializer.billRm);
 
 		return new Rectangle(x, y, width, height);
 	}
@@ -556,28 +558,28 @@ public class CluedoCanvas extends JPanel{
 		/*Boarder*/
 		//top
 		for(int i = x; i < width+x; i++){
-			board[i][y] = new RoomTile(i, y, "top", null);
+			board[i][y] = new RoomTile(i, y, "top", null, CluedoGame.initializer.conservatory);
 		}
 
 		//bottom
 		for(int i = x+1; i < width+x-1; i++){
-			board[i][y+height-1] = new RoomTile(i, y+height-1, "bottom", null);
+			board[i][y+height-1] = new RoomTile(i, y+height-1, "bottom", null, CluedoGame.initializer.conservatory);
 		}
 
 		//left
 		for(int i = y; i < height+y-1; i++){
-			board[x][i] = new RoomTile(x, i, "left", null);
+			board[x][i] = new RoomTile(x, i, "left", null, CluedoGame.initializer.conservatory);
 		}
 
 		//right
 		for(int i = y; i < height+y-1; i++){
-			board[x+width-1][i] = new RoomTile(x+width-1, i, "right", null);
+			board[x+width-1][i] = new RoomTile(x+width-1, i, "right", null, CluedoGame.initializer.conservatory);
 		}
 
 		//area
 		for(int i = x+1; i < width+x-1; i++){
 			for(int j = y+1; j < height+y-1; j++){
-				board[i][j] = new RoomTile(i, j, null, null);
+				board[i][j] = new RoomTile(i, j, null, null, CluedoGame.initializer.conservatory);
 			}
 		}
 
@@ -587,10 +589,10 @@ public class CluedoCanvas extends JPanel{
 		d.setInFront(new Position(x+1, y+height));
 		board[x+1][y+height-1] = new DoorTile(x+1, y+height-1, d, "bottom");
 
-		board[x][y] = new RoomTile(x, y, "top", "left");
-		board[x+width-1][y] = new RoomTile(x+width-1, y, "top", "right");
-		board[x+width-1][y+height-2] = new RoomTile(x+width-1, y+height-2, "bottom", "right");
-		board[x][y+height-2] = new RoomTile(x, y+height-2, "bottom", "left");
+		board[x][y] = new RoomTile(x, y, "top", "left", CluedoGame.initializer.conservatory);
+		board[x+width-1][y] = new RoomTile(x+width-1, y, "top", "right", CluedoGame.initializer.conservatory);
+		board[x+width-1][y+height-2] = new RoomTile(x+width-1, y+height-2, "bottom", "right", CluedoGame.initializer.conservatory);
+		board[x][y+height-2] = new RoomTile(x, y+height-2, "bottom", "left", CluedoGame.initializer.conservatory);
 
 		return new Rectangle(x, y, width, height);
 	}
@@ -607,28 +609,28 @@ public class CluedoCanvas extends JPanel{
 		/*Boarder*/
 		//top
 		for(int i = x+2; i < width+x-2; i++){
-			board[i][y] = new RoomTile(i, y, "top", null);
+			board[i][y] = new RoomTile(i, y, "top", null, CluedoGame.initializer.ballRm);
 		}
 
 		//bottom
 		for(int i = x; i < width+x; i++){
-			board[i][y+height-1] = new RoomTile(i, y+height-1,"bottom", null);
+			board[i][y+height-1] = new RoomTile(i, y+height-1,"bottom", null, CluedoGame.initializer.ballRm);
 		}
 
 		//left
 		for(int i = y+2; i < height+y; i++){
-			board[x][i] = new RoomTile(x, i, "left", null);
+			board[x][i] = new RoomTile(x, i, "left", null, CluedoGame.initializer.ballRm);
 		}
 
 		//right
 		for(int i = y+2; i < height+y; i++){
-			board[x+width-1][i] = new RoomTile(x+width-1, i, "right", null);
+			board[x+width-1][i] = new RoomTile(x+width-1, i, "right", null, CluedoGame.initializer.ballRm);
 		}
 
 		//area
 		for(int i = x+1; i < width+x-1; i++){
 			for(int j = y+2; j < height+y-1; j++){
-				board[i][j] = new RoomTile(i, j, null, null);
+				board[i][j] = new RoomTile(i, j, null, null, CluedoGame.initializer.ballRm);
 			}
 		}
 
@@ -645,18 +647,18 @@ public class CluedoCanvas extends JPanel{
 		doors.add(d3);
 		doors.add(d4);
 
-		board[x+2][y+1] = new RoomTile(x+2, y+1, "left", null);
-		board[x+3][y+1] = new RoomTile(x+3, y+1, null, null);
-		board[x+4][y+1] = new RoomTile(x+4, y+1, null, null);
-		board[x+5][y+1] = new RoomTile(x+5, y+1, "right", null);
-		board[x+1][y+2] = new RoomTile(x+1, y+2, "top", null);
-		board[x+width-2][y+2] = new RoomTile(x+width-2, y+2, "top", null);
-		board[x][y+2] = new RoomTile(x, y+2, "top", "left");
-		board[x+width-1][y+2] = new RoomTile(x+width-1, y+2, "top", "right");
-		board[x][y+height-1] = new RoomTile(x, y+height-1, "bottom", "left");
-		board[x+width-1][y+height-1] = new RoomTile(x+width-1, y+height-1, "bottom", "right");
-		board[x+2][y] = new RoomTile(x+2, y, "top", "left");
-		board[x+width-3][y] = new RoomTile(x+width-3, y, "top", "right");
+		board[x+2][y+1] = new RoomTile(x+2, y+1, "left", null, CluedoGame.initializer.ballRm);
+		board[x+3][y+1] = new RoomTile(x+3, y+1, null, null, CluedoGame.initializer.ballRm);
+		board[x+4][y+1] = new RoomTile(x+4, y+1, null, null, CluedoGame.initializer.ballRm);
+		board[x+5][y+1] = new RoomTile(x+5, y+1, "right", null, CluedoGame.initializer.ballRm);
+		board[x+1][y+2] = new RoomTile(x+1, y+2, "top", null, CluedoGame.initializer.ballRm);
+		board[x+width-2][y+2] = new RoomTile(x+width-2, y+2, "top", null, CluedoGame.initializer.ballRm);
+		board[x][y+2] = new RoomTile(x, y+2, "top", "left", CluedoGame.initializer.ballRm);
+		board[x+width-1][y+2] = new RoomTile(x+width-1, y+2, "top", "right", CluedoGame.initializer.ballRm);
+		board[x][y+height-1] = new RoomTile(x, y+height-1, "bottom", "left", CluedoGame.initializer.ballRm);
+		board[x+width-1][y+height-1] = new RoomTile(x+width-1, y+height-1, "bottom", "right", CluedoGame.initializer.ballRm);
+		board[x+2][y] = new RoomTile(x+2, y, "top", "left", CluedoGame.initializer.ballRm);
+		board[x+width-3][y] = new RoomTile(x+width-3, y, "top", "right", CluedoGame.initializer.ballRm);
 
 		return new Rectangle(x, y, width, height);
 	}
@@ -704,7 +706,7 @@ public class CluedoCanvas extends JPanel{
 		board[board.length-1][6] = new StartTile(board.length-1, 6, CluedoGame.initializer.getCharacters().get(4));
 	}
 
-	public void drawBoard(Graphics g){
+	public void drawBoard(){
 		for(int x = 0; x < board.length; x++){
 			for(int y = 0; y < board.length; y++){
 				board[x][y].draw(g);
@@ -733,7 +735,7 @@ public class CluedoCanvas extends JPanel{
 	 * @param currentPlayers
 	 * @throws InvalidMove
 	 */
-	public void move(int directionX, int directionY, Player p, List<Player> currentPlayers, Graphics g) throws InvalidMove{
+	public void move(int directionX, int directionY, Player p, List<Player> currentPlayers) throws InvalidMove{
 		List<Room> rooms = CluedoGame.initializer.getRooms();
 		int x = p.position().getX() + directionX;
 		int y = p.position().getY() + directionY;
@@ -814,15 +816,15 @@ public class CluedoCanvas extends JPanel{
 		int x = position.getX();
 		int y = position.getY();
 		try {
-			if(x > 24 || x < 0 || y > 24 || y < 0){
+			if(x > 38+24*Tile.TILESIZE || x < 0 || y > 25+24*Tile.TILESIZE || y < 0){
 				throw new CluedoGame.InvalidMove("Cannot go out of bounds!");
 			}else if(board[x][y] instanceof WallTile){
 				throw new CluedoGame.InvalidMove("Cannot move into wall.");
 			}else if(board[x][y] instanceof RoomTile){
-				if(((RoomTile) board[x][y]).getDir().equals(direction)){
+				if(((RoomTile) board[x][y]).getDir().equals(direction) && !p.isInRoom()){
 					throw new CluedoGame.InvalidMove("Cannot move into wall.");
 				}
-				if(((RoomTile) board[x][y]).getDir2().equals(direction)){
+				if(((RoomTile) board[x][y]).getDir2().equals(direction) && !p.isInRoom()){
 					throw new CluedoGame.InvalidMove("Cannot move into wall.");
 				}
 			}else if((board[x][y] instanceof StairsTile) && !p.isInRoom()){
@@ -830,17 +832,6 @@ public class CluedoCanvas extends JPanel{
 			}else if(board[x][y] instanceof SolutionTile){
 				throw new CluedoGame.InvalidMove("Cannot move into solution space");
 			}else{
-				for(Door d : doors){
-					if(!d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && (directionX > 0 || directionX < 0) && directionY == 0){
-						throw new CluedoGame.InvalidMove("Going through door the wrong way!");
-					}else if(d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && directionX == 0 && (directionY > 0 || directionY < 0)){
-						throw new CluedoGame.InvalidMove("Going through door the wrong way!");
-					}else if(x == d.getPosition().getX() && y == d.getPosition().getY()){
-						p.setDoor(d);
-						break;
-					}
-				}
-
 				for(Position pos : p.coordinatesTaken()){
 					if(pos.getX() == x && pos.getY() == y){
 						throw new CluedoGame.InvalidMove("You cannot move into the same square within this move.");
@@ -855,6 +846,11 @@ public class CluedoCanvas extends JPanel{
 
 					}
 				}
+				if(board[x][y] instanceof RoomTile){
+					Room r = ((RoomTile)board[x][y]).getRoom();
+					Door d = findClosestDoor(r, p);
+					p.setDoor(d);
+				}
 			}
 		} catch (InvalidMove e) {
 			System.err.println(e.getMessage());
@@ -863,6 +859,19 @@ public class CluedoCanvas extends JPanel{
 		return true;
 	}
 
+	public Door findClosestDoor(Room r, Player p){
+		int minX = Integer.MAX_VALUE;
+		int minY = Integer.MAX_VALUE;
+		Door minDoor = null;
+		for(Door d : r.getDoors()){
+			if(minX > Math.abs(d.getPosition().getX() - p.position().getX()) && minY > Math.abs(d.getPosition().getY() - p.position().getY())){
+				minX = d.getPosition().getX();
+				minY = d.getPosition().getY();
+				minDoor = d;
+			}
+		}
+		return minDoor;
+	}
 	/**
 	 * Determines if player can still move or not.
 	 * @param p
