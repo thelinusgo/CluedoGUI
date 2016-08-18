@@ -173,7 +173,6 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 */
 	public void setPlayerPosition(){
 		Collections.shuffle(currentPlayers); 
-		//board.setPlayerPosition(currentPlayers);
 	}
 	
 	/*START OF SPECIAL METHODS*/
@@ -631,12 +630,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 				if(t.contains(e.getPoint())){
 					int px = e.getPoint().x;
 					int py = e.getPoint().y;
-					try {
-						cluedoCanvas.move(px-currentPlayer.position().getX(), py-currentPlayer.position().getY(), currentPlayer, currentPlayers);
-					} catch (InvalidMove e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					cluedoCanvas.move(px-currentPlayer.position().getX(), py-currentPlayer.position().getY(), currentPlayer, currentPlayers, g);
 				}
 			}
 		}

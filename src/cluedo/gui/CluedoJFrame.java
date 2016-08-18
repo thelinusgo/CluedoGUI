@@ -46,40 +46,48 @@ import java.awt.Color;
  *
  */
 public class CluedoJFrame extends JFrame {
-	/*The left panel of the Class. */
+	/* The left panel of the Class. */
 	private JPanel contentPane;
-	
-	/*Holds the menuBar. */
+
+	/* Holds the menuBar. */
 	private JMenuBar menuBar;
-	
-	/*Menu Items */
+
+	/* Menu Items */
 	private JMenuItem mnFile;
 	private JMenuItem mntmStartGame;
 	private JMenuItem mntmExitGame;
-	private JMenuItem mntmGameInstructions; 
+	private JMenuItem mntmGameInstructions;
 	private JMenuItem mntmAboutCluedogui;
 	private JMenu mnHelp;
-	/*Holds an instance of the game.. */
+	/* Holds an instance of the game.. */
 	private static CluedoGame game;
-	/*JButtons */
+	/* JButtons */
 	private JButton btnStartTurn;
 	private JButton btnEndTurn;
 	private JButton btnMakeMove;
 	private JButton btnRollDice;
 	private JButton btnDisplayHand;
-	/*ComboBoxes used for Suggestion/Accusation. */
+	private JButton btnMakeArgument;
+	/* ComboBoxes used for Suggestion/Accusation. */
 	private JComboBox suspectsComboBox;
 	private JComboBox weaponsComboBox;
 	private JComboBox roomsComboBox;
-	/*Various text panes and text Fields. */
+	/* RadioButtons */
+	private JRadioButton suspectButton;
+	private JRadioButton accusationButton;
+	/* Various text panes and text Fields. */
 	private JTextPane current_players_pane;
-	private JTextField currentPlayerText; // this is where one would set the current Player's name.
+	private JTextField currentPlayerText; // this is where one would set the
+											// current Player's name.
 	private DiceCanvas dicecanvas = new DiceCanvas();
-	
-	/*The canvas representing the pop up window, for drawing the players hand. */
+
+	/*
+	 * The canvas representing the pop up window, for drawing the players hand.
+	 */
 	private CardsCanvas cardcanvas = new CardsCanvas();
-	/*The JFrame for the cardcanvas. */
+	/* The JFrame for the cardcanvas. */
 	private CardsFrame cardsframe;
+	
 
 	/**
 	 * Launch the application.
@@ -105,7 +113,6 @@ public class CluedoJFrame extends JFrame {
 		game = new CluedoGame();// create a new instance of the game.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 942, 700);
-
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -128,7 +135,7 @@ public class CluedoJFrame extends JFrame {
 
 		mntmAboutCluedogui = new JMenuItem("About CluedoGUI");
 		mnHelp.add(mntmAboutCluedogui);
-		
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -147,18 +154,23 @@ public class CluedoJFrame extends JFrame {
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
 
-		JRadioButton radioButton = new JRadioButton("Do Suggestion");
-		panel.add(radioButton, "cell 0 1");
+		btnMakeArgument = new JButton("MAKE ARGUMENT");
+		panel.add(btnMakeArgument, "cell 0 1,alignx center");
 
-		JRadioButton radioButton_1 = new JRadioButton("Do Accusation");
-		panel.add(radioButton_1, "cell 0 2");
+		suspectButton = new JRadioButton("Do Suggestion");
+		panel.add(suspectButton, "cell 0 2");
+		// suspectButton.setEnabled(false);
+
+		accusationButton = new JRadioButton("Do Accusation");
+		panel.add(accusationButton, "cell 0 3");
+		// accusationButton.setEnabled(false);
 
 		JLabel label = new JLabel("1. Choose your Suspects");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel.add(label, "cell 0 3");
+		panel.add(label, "cell 0 4");
 
 		suspectsComboBox = new JComboBox();
-		panel.add(suspectsComboBox, "cell 0 4,growx");
+		panel.add(suspectsComboBox, "cell 0 5,growx");
 		suspectsComboBox.addItem("Miss Scarlett");
 		suspectsComboBox.addItem("Colonel Mustard");
 		suspectsComboBox.addItem("Mrs. White");
@@ -168,10 +180,10 @@ public class CluedoJFrame extends JFrame {
 
 		JLabel label_1 = new JLabel("2.	Choose your Weapons");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel.add(label_1, "cell 0 5");
+		panel.add(label_1, "cell 0 6");
 
 		weaponsComboBox = new JComboBox();
-		panel.add(weaponsComboBox, "cell 0 6,growx");
+		panel.add(weaponsComboBox, "cell 0 7,growx");
 		weaponsComboBox.addItem("Knife");
 		weaponsComboBox.addItem("Rope");
 		weaponsComboBox.addItem("Revolver");
@@ -181,10 +193,10 @@ public class CluedoJFrame extends JFrame {
 
 		JLabel label_2 = new JLabel("3.	Choose your Rooms");
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel.add(label_2, "cell 0 7");
+		panel.add(label_2, "cell 0 8");
 
 		roomsComboBox = new JComboBox();
-		panel.add(roomsComboBox, "cell 0 8,growx");
+		panel.add(roomsComboBox, "cell 0 9,growx");
 		roomsComboBox.addItem("Kitchen");
 		roomsComboBox.addItem("Ball Room");
 		roomsComboBox.addItem("Conservatory");
@@ -216,11 +228,10 @@ public class CluedoJFrame extends JFrame {
 		btnDisplayHand = new JButton("Display Hand");
 		btnDisplayHand.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel_1.add(btnDisplayHand, "cell 0 5");
-		
 
 		btnRollDice = new JButton("Roll Dice");
 		panel_1.add(btnRollDice, "cell 0 6");
-		
+
 		panel_1.add(dicecanvas, "cell 0 7,aligny top");
 
 		JLabel lblListOfPlayers = new JLabel("List of available players: ");
@@ -231,14 +242,19 @@ public class CluedoJFrame extends JFrame {
 
 		CluedoCanvas canvas = new CluedoCanvas();
 		contentPane.add(canvas, BorderLayout.CENTER);
-		canvas.addMouseListener(game);
+		/***************************
+		 * START OF ACTION/MOUSE LISTENER STUFF
+		 ***************************/
 		
-		/********************* START OF ACTION LISTENER STUFF ***************************/
-		mntmStartGame.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_players_pane.setText(game.askPlayers());
-			}
+		
+		canvas.addMouseListener(game);
+		btnMakeArgument.addActionListener(e ->{
+		
+		});
+		
+		
+		mntmStartGame.addActionListener(e -> {
+			current_players_pane.setText(game.askPlayers());
 		});
 		mntmExitGame.addActionListener(e -> {
 			int value = JOptionPane.showConfirmDialog(null, "Do you want to exit this Game?", "Confirmation",
@@ -248,25 +264,19 @@ public class CluedoJFrame extends JFrame {
 		});
 		mntmAboutCluedogui.addActionListener(e -> JOptionPane.showMessageDialog(null,
 				"This game was created by Casey Huang and Linus Go for their SWEN 222 Project. \n (c) 2016 All rights reserved."));
-		
+
 		btnDisplayHand.addActionListener(e -> cardsframe = new CardsFrame());
-		
-		btnRollDice.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dicecanvas.setDiceOne(game.diceRoll());
-				dicecanvas.setDiceTwo(game.diceRoll());
-				panel_1.repaint();
-			}
-		});
-		
-		btnRollDice.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dicecanvas.setDiceOne(game.diceRoll());
-				dicecanvas.setDiceTwo(game.diceRoll());
-				panel_1.repaint();
-			}
+
+		btnRollDice.addActionListener(e -> {
+			dicecanvas.setDiceOne(game.diceRoll());
+			dicecanvas.setDiceTwo(game.diceRoll());
+			panel_1.repaint();
 		});
 
-		/********************* END OF ACTION LISTENER STUFF ***************************/
+	
+
+		/*********************
+		 * END OF ACTION/MOUSE LISTENER STUFF
+		 ***************************/
 	}
 }
