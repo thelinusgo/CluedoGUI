@@ -107,7 +107,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * Current accusation object.
 	 */
 	private Accusation accusation = null;
-	
+
 	/**
 	 * Store JFrame
 	 */
@@ -167,7 +167,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			return; //silently fail, do nothing if there are no currentPlayers.
 		}
 		initializer.distributeCards(currentPlayers); //distributes the cards out to the players.
-		System.out.println("I have finished initalizing.");
+		cluedoCanvas.setPlayerPosition(currentPlayers);
 		cluedoCanvas.drawBoard();
 	}
 
@@ -184,13 +184,6 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			++index;
 		}
 		return sb.toString();
-	}
-
-	/**
-	 * This sets the players position on the game. It places them strategically in a random location each round.
-	 */
-	public void setPlayerPosition(){
-		Collections.shuffle(currentPlayers); 
 	}
 
 	/*START OF SPECIAL METHODS*/
@@ -304,7 +297,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 						System.out.println("Player " + currentPlayer.getName() + " starts.");
 						System.out.println(currentPlayer.getName() + "'s character piece is " + currentPlayer.getCharacterName() + ".");
 						loop: while(!moveMade){
-							String option;
+							/*String option;
 							if(prevOption.equals("s")){
 								prevOption = "";
 								System.out.println("Do you want to end your turn or make an accusation? (Press Y for ending your turn or N for making an accusation)");
@@ -324,7 +317,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 							doOption(option, currentPlayer);
 							if(moveMade){
 								//board.drawBoard();
-							}
+							}*/
 						}
 					}
 					if(isGameOver()){
@@ -346,7 +339,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * @throws InvalidMove
 	 */
 	public void doOption(String option, Player p) throws InvalidMove{
-		switch(option){
+		/*switch(option){
 		case "m":
 			doMove(p);
 			moveMade = true;
@@ -396,7 +389,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 
 			prevOption = "s";
 			break;
-		}
+		}*/
 	}
 
 	/**
@@ -405,7 +398,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * @return
 	 */
 	public Suggestion makeSuggestion(Player p){
-		if(!p.isInRoom()){
+		/*if(!p.isInRoom()){
 			System.err.println("ERROR: Sorry, you must be in a room to make a suggestion.");
 			return null;
 		}
@@ -454,7 +447,8 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		System.out.println(" character: " + character);
 		System.out.println(" room: " + room);
 		System.out.println("----------------------------------");
-		return new Suggestion(weapon, room, character, p);
+		return new Suggestion(weapon, room, character, p);*/
+		return null;
 	}
 
 	/**
@@ -463,7 +457,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * @return
 	 */
 	public Accusation makeAccusation(Player p){
-		System.out.println("-----------ACCUSATION!-------------");
+		/*System.out.println("-----------ACCUSATION!-------------");
 		System.out.println("What cards do you want to nominate?");
 		System.out.println("----------------------------------");
 		System.out.println("AVAILABLE CARDS:");
@@ -540,7 +534,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		Accusation ac = new Accusation(weapon, room, character, p,  Initializer.getEnvelope());
 		if(ac.accusationStatus()){
 			return ac;
-		}
+		}*/
 		return null;
 	}
 	/**
@@ -553,7 +547,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		currentPlayer.setNumberofMoves(diceRoll());
 		System.out.println(currentPlayer.getName() + " rolls a " + currentPlayer.numberofMoves() + ".");
 		System.out.println(currentPlayer.getName() + "  has " + currentPlayer.numberofMoves() + " moves.");
-		if(currentPlayer.isInRoom() && currentPlayer.getRoom().hasStairs()){
+		/*if(currentPlayer.isInRoom() && currentPlayer.getRoom().hasStairs()){
 			System.out.println("Do you want to take the stairs or do you want to get out of the room?");
 			System.out.println("Press Y for stairs and N for exiting the room");
 			String choice = TextClient.inputString();
@@ -581,6 +575,27 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			}
 			if(currentPlayer.numberofMoves() <= 0){
 				System.out.println(currentPlayer.getName() + " has run out of moves.");
+			}
+		}*/
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(this.isMoveSelection){
+			try {
+				this.doMove(currentPlayer);
+				if(currentPlayer.numberofMoves() > 0){
+					for(int x = 0; x < board.length; x++){
+						for(int y = 0; y < board.length; y++){
+							Tile t = board[x][y];
+							if(t.contains(e.getPoint())){
+								cluedoCanvas.move(t.x-currentPlayer.position().getX(), t.y-currentPlayer.position().getY(), currentPlayer, currentPlayers);
+							}
+						}
+					}
+				}
+			}catch (InvalidMove e1) {
+				e1.printStackTrace();
 			}
 		}
 	}
@@ -612,24 +627,6 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		System.out.println("The envelope consisted of these cards: ");
 		for(Card c : initializer.getEnvelope().getCards()){
 			System.out.println(c.toString());
-		}
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		if(this.isMoveSelection){
-			for(int x = 0; x < board.length; x++){
-				for(int y = 0; y < board.length; y++){
-					Tile t = board[x][y];
-					if(t.contains(e.getPoint())){
-						try {
-							cluedoCanvas.move(t.x-currentPlayer.position().getX(), t.y-currentPlayer.position().getY(), currentPlayer, currentPlayers);
-						} catch (InvalidMove e1) {
-							e1.printStackTrace();
-						}
-					}
-				}
-			}
 		}
 	}
 

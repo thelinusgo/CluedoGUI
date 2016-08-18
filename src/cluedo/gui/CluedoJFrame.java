@@ -297,9 +297,11 @@ public class CluedoJFrame extends JFrame {
 		btnDisplayHand.addActionListener(e -> cardsframe = new CardsFrame());
 
 		btnRollDice.addActionListener(e -> {
-			dicecanvas.setDiceOne(game.diceRoll());
-			dicecanvas.setDiceTwo(game.diceRoll());
-			panel_1.repaint();
+			if(game.isMoveSelection){
+				dicecanvas.setDiceOne(game.diceRoll());
+				dicecanvas.setDiceTwo(game.diceRoll());
+				panel_1.repaint();
+			}
 		});
 		/*********************
 		 * END OF ACTION/MOUSE LISTENER STUFF
