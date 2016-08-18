@@ -1,4 +1,4 @@
-package cluedo.randomtesting;
+package cluedo.gui;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;

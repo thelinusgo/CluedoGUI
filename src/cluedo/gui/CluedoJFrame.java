@@ -12,7 +12,6 @@ import cluedo.assets.Position;
 import cluedo.assets.Character;
 import cluedo.main.CluedoGame;
 import cluedo.main.Initializer;
-import cluedo.randomtesting.DiceCanvas;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
