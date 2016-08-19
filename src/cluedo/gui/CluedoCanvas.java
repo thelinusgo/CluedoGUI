@@ -48,7 +48,7 @@ public class CluedoCanvas extends JPanel{
 	private Rectangle conservatory;
 	private Rectangle ballRm;
 	private Rectangle cluedo;
-	
+
 	private Graphics g;
 	/**
 	 * Represents the board in 2d array form.
@@ -72,7 +72,7 @@ public class CluedoCanvas extends JPanel{
 	 * Pattern for determining the direction of the wall
 	 */
 	private static String direction = "top|bottom|right|left";
-	
+
 	//Setup images
 	private BufferedImage cluedoIm = null;
 	private BufferedImage kitchenIm = null;
@@ -84,7 +84,7 @@ public class CluedoCanvas extends JPanel{
 	private BufferedImage conservatoryIm = null;
 	private BufferedImage libraryIm = null;
 	private BufferedImage diningRoomIm = null;
-	
+
 	/**
 	 * x and y coordinates of where the board starts drawing on the canvas
 	 */
@@ -217,9 +217,9 @@ public class CluedoCanvas extends JPanel{
 		}
 
 		board[x+size-1][y] = new StairsTile(x+size-1, y, "right", "top");
-
 		Door d = new Door(false, 4, 6, CluedoGame.initializer.kitchen, "^");
 		d.setInFront(new Position(4, 7));
+		CluedoGame.initializer.kitchen.addDoors(d);
 		doors.add(d);
 
 		board[x][y] = new RoomTile(x, y, "top", "left", CluedoGame.initializer.kitchen);
@@ -278,6 +278,8 @@ public class CluedoCanvas extends JPanel{
 		Door d2 = new Door(false, width-2, y+height-1, CluedoGame.initializer.diningrm, "^");
 		d1.setInFront(new Position(width, 12));
 		d2.setInFront(new Position(width-2, y+height));
+		CluedoGame.initializer.diningrm.addDoors(d1);
+		CluedoGame.initializer.diningrm.addDoors(d2);
 		doors.add(d1);
 		doors.add(d2);
 
@@ -330,6 +332,7 @@ public class CluedoCanvas extends JPanel{
 
 		Door d = new Door(false, x+width-1, y, CluedoGame.initializer.lounge, "v");
 		d.setInFront(new Position(x+width-1, y-1));
+		CluedoGame.initializer.lounge.addDoors(d);
 		board[x+width-1][y] = new DoorTile(x+width-1, y, d, "right");
 
 		board[x][y+height-1] = new RoomTile(x, y+height-1, "bottom", "left", CluedoGame.initializer.lounge);
@@ -381,6 +384,9 @@ public class CluedoCanvas extends JPanel{
 		d1.setInFront(new Position(x+width, y+2));
 		d2.setInFront(new Position(x+3, y-1));
 		d3.setInFront(new Position(x+2, y-1));
+		CluedoGame.initializer.hall.addDoors(d1);
+		CluedoGame.initializer.hall.addDoors(d2);
+		CluedoGame.initializer.hall.addDoors(d3);
 		doors.add(d1);
 		doors.add(d2);
 		doors.add(d3);
@@ -434,6 +440,7 @@ public class CluedoCanvas extends JPanel{
 
 		Door d = new Door(false, x, y, CluedoGame.initializer.study, "v");
 		d.setInFront(new Position(x, y-1));
+		CluedoGame.initializer.study.addDoors(d);
 		board[x][y] = new DoorTile(x, y, d, "left");
 
 		board[x][y+height-1] = new RoomTile(x, y+height-1, "left", "bottom", CluedoGame.initializer.study);
@@ -483,6 +490,8 @@ public class CluedoCanvas extends JPanel{
 		Door d2 = new Door(true, x+3, y, CluedoGame.initializer.lib, "v");
 		d1.setInFront(new Position(x-1, y+2));
 		d2.setInFront(new Position(x+3, y-1));
+		CluedoGame.initializer.lib.addDoors(d1);
+		CluedoGame.initializer.lib.addDoors(d2);
 		doors.add(d1);
 		doors.add(d2);
 
@@ -539,6 +548,8 @@ public class CluedoCanvas extends JPanel{
 		Door d2 = new Door(false, x+width-2, y+height-1, CluedoGame.initializer.billRm, "^");
 		d1.setInFront(new Position(x+width-2, y+height));
 		d2.setInFront(new Position(x-1, y+1));
+		CluedoGame.initializer.billRm.addDoors(d1);
+		CluedoGame.initializer.billRm.addDoors(d2);
 		doors.add(d1);
 		doors.add(d2);
 
@@ -591,6 +602,7 @@ public class CluedoCanvas extends JPanel{
 
 		Door d = new Door(true, x+1, y+height-1, CluedoGame.initializer.conservatory, "^");
 		d.setInFront(new Position(x+1, y+height));
+		CluedoGame.initializer.conservatory.addDoors(d);
 		board[x+1][y+height-1] = new DoorTile(x+1, y+height-1, d, "bottom");
 
 		board[x][y] = new RoomTile(x, y, "top", "left", CluedoGame.initializer.conservatory);
@@ -646,6 +658,10 @@ public class CluedoCanvas extends JPanel{
 		d2.setInFront(new Position(x+width, 5));
 		d3.setInFront(new Position(x+1, y+height));
 		d4.setInFront(new Position(x+width-2, y+height)); 
+		CluedoGame.initializer.ballRm.addDoors(d1);
+		CluedoGame.initializer.ballRm.addDoors(d2);
+		CluedoGame.initializer.ballRm.addDoors(d3);
+		CluedoGame.initializer.ballRm.addDoors(d4);
 		doors.add(d1);
 		doors.add(d2);
 		doors.add(d3);
@@ -726,7 +742,7 @@ public class CluedoCanvas extends JPanel{
 		for(Player p : currentPlayers){
 			int x = p.getCharacter().getStartPos().getX();
 			int y = p.getCharacter().getStartPos().getY();
-			board[x][y].setPlayer(p);
+			((StartTile)board[x][y]).setPlayer(p);
 			p.setPos(x, y);
 		}
 	}
@@ -764,8 +780,8 @@ public class CluedoCanvas extends JPanel{
 
 	/**
 	 * Moves player to another room.
-	 * @param p
-	 * @param rm
+	 * @param p - current player
+	 * @param rm - room player wants to move to
 	 */
 	public void moveToRoom(Player p, Room rm){
 		if(p.position() != null){
@@ -826,11 +842,16 @@ public class CluedoCanvas extends JPanel{
 			}else if(board[x][y] instanceof WallTile){
 				throw new CluedoGame.InvalidMove("Cannot move into wall.");
 			}else if(board[x][y] instanceof RoomTile){
-				if(((RoomTile) board[x][y]).getDir().equals(direction) && !p.isInRoom()){
-					throw new CluedoGame.InvalidMove("Cannot move into wall.");
+				RoomTile r = (RoomTile) board[x][y];
+				if(r.getDir() != null){
+					if(r.getDir().equals(direction) && !p.isInRoom()){
+						throw new CluedoGame.InvalidMove("Cannot move into wall.");
+					}
 				}
-				if(((RoomTile) board[x][y]).getDir2().equals(direction) && !p.isInRoom()){
-					throw new CluedoGame.InvalidMove("Cannot move into wall.");
+				if(r.getDir2() != null){
+					if(r.getDir2().equals(direction) && !p.isInRoom()){
+						throw new CluedoGame.InvalidMove("Cannot move into wall.");
+					}
 				}
 			}else if((board[x][y] instanceof StairsTile) && !p.isInRoom()){
 				throw new CluedoGame.InvalidMove("Player is not in room to take the stairs.");
@@ -851,15 +872,19 @@ public class CluedoCanvas extends JPanel{
 
 					}
 				}
-				if(board[x][y] instanceof RoomTile){
-					Room r = ((RoomTile)board[x][y]).getRoom();
-					Door d = findClosestDoor(r, p);
-					p.setDoor(d);
-				}
 			}
 		} catch (InvalidMove e) {
 			System.err.println(e.getMessage());
 			return false;
+		}
+		
+		if(board[x][y] instanceof RoomTile){
+			Room r = ((RoomTile)board[x][y]).getRoom();
+			Door d = findClosestDoor(r, p);
+			p.setDoor(d);
+		}else if(board[x][y] instanceof DoorTile){
+			Door d = ((DoorTile)board[x][y]).getDoor();
+			p.setDoor(d);
 		}
 		return true;
 	}

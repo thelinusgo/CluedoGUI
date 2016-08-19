@@ -17,6 +17,8 @@ import cluedo.arguments.Accusation;
 import cluedo.arguments.Suggestion;
 import cluedo.assets.*;
 import cluedo.assets.Character;
+import cluedo.assets.tiles.DoorTile;
+import cluedo.assets.tiles.StairsTile;
 import cluedo.assets.tiles.Tile;
 import cluedo.cards.Card;
 import cluedo.cards.CharacterCard;
@@ -71,19 +73,17 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * Flag for stating whether asking was a success or not.
 	 */
 	public boolean askSuccess; 
-	
+
 	/**
 	 * Field that determines the choice of the player.
 	 */
 	private String option;
+
 	/**
-	 * This sets the option field to a value.
-	 * @param val
+	 * Check if dice has been rolled this round.
 	 */
-	public void setOption(String val){
-		this.option = val;
-	}
-	
+	public boolean rolled = false;
+
 	/**
 	 * If a player has asked or not.
 	 */
@@ -97,7 +97,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	/**
 	 * This rolls the dice, obtains the first element in the array.
 	 */
-	private int currentRoll;
+	private int currentRoll = 0;
 
 	/**
 	 * The current player of the round.
@@ -105,7 +105,12 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	private Player currentPlayer; //the current player of the round.
 
 	/** If player has made a move*/
-	private boolean moveMade = false;
+	public boolean moveMade = false;
+
+	/**
+	 * Checks if any button has been pressed
+	 */
+	public boolean btnPressed = false;
 
 	/**
 	 * Stores the cards of players who have been kicked out of the game because they made an incorrect accusation.
@@ -121,6 +126,11 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	private Accusation accusation = null;
 
 	/**
+	 * Stores the index of currentPlayer
+	 */
+	public int index = 0;
+
+	/**
 	 * Store JFrame
 	 */
 	private CluedoJFrame cluedoJFrame;
@@ -134,6 +144,14 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		cluedoCanvas = new CluedoCanvas();
 		board = cluedoCanvas.board;
 		cluedoJFrame = cluedoJF;
+	}
+
+	/**
+	 * This sets the option field to a value.
+	 * @param val
+	 */
+	public void setOption(String val){
+		this.option = val;
 	}
 
 	/**
@@ -166,8 +184,10 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 */
 	public int diceRoll(){
 		Collections.shuffle(singleDie);
-		currentRoll = singleDie.get(0);
-		return currentRoll;
+		int roll = singleDie.get(0);
+		currentRoll += roll;
+		System.out.println(currentRoll);
+		return roll;
 	}
 
 	/**
@@ -180,7 +200,11 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		}
 		initializer.distributeCards(currentPlayers); //distributes the cards out to the players.
 		cluedoCanvas.setPlayerPosition(currentPlayers);
-		cluedoCanvas.drawBoard();
+		currentPlayer = currentPlayers.get(index);
+		cluedoJFrame.currentPlayerText.setText(currentPlayer.getName() + "\r\n");
+		System.out.print("hello");
+		cluedoCanvas.paint(cluedoCanvas.getGraphics());
+		System.out.println("Finished drawing characters");
 	}
 
 
@@ -298,7 +322,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * Runs the game - only if asking players was successful.
 	 * @throws InvalidMove 
 	 */
-	public void runGame() throws InvalidMove{
+	/*public void runGame() throws InvalidMove{
 		if(askSuccess){
 			while(!isGameOver()){
 				for(int i = 0; i < currentPlayers.size(); i++){
@@ -306,12 +330,17 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 					currentPlayer = currentPlayers.get(i);
 					cluedoJFrame.currentPlayerText.setText(currentPlayer.getName() + "\r\n");
 					if(!currentPlayer.out()){
-						System.out.println("Player " + currentPlayer.getName() + " starts.");
-						System.out.println(currentPlayer.getName() + "'s character piece is " + currentPlayer.getCharacterName() + ".");
 						while(!moveMade){
-							doOption(option, currentPlayer);
-							if(moveMade){
-								//board.drawBoard();
+							if(btnPressed){
+								if(!this.isMoveSelection){
+									doOption(option, currentPlayer);
+								}
+								if(moveMade){
+									//board.drawBoard();
+								}
+							}
+							if(gameStarted){
+								break;
 							}
 						}
 					}
@@ -324,24 +353,20 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 				}
 			}
 		}
-	}
+	}*/
 
 	/**
 	 * This method performs a given option, based off the users input.
 	 * m is move, c is current cards, d is show previous player cards, a is accusation and s is for suggestion.
 	 * @param option
-	 * @param p
+	 * @param currentPlayer
 	 * @throws InvalidMove
 	 */
-	public void doOption(String option, Player p) throws InvalidMove{
+	public void doOption() throws InvalidMove{
 		switch(option){
-		case "m":
-			doMove(p);
-			moveMade = true;
-			break;
 		case "c":
 			System.out.println("Your current cards.");
-			for(Card c : p.getCards()){
+			for(Card c : currentPlayer.getCards()){
 				System.out.println(c.toString());
 			}
 			break;
@@ -363,7 +388,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			if(accusation == null){
 				System.out.println("The accusation pieces did not match."); 
 				System.out.println("You can no longer make a move.");
-				showCards.add(p.getCards());
+				showCards.add(currentPlayer.getCards());
 			}
 			moveMade = true;
 			break;
@@ -531,68 +556,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		}*/
 		return null;
 	}
-	/**
-	 * This performs a move, given a player.
-	 * @param p
-	 * @throws InvalidMove
-	 */
-	public void doMove(Player p) throws InvalidMove{
-		p.coordinatesTaken().clear();
-		currentPlayer.setNumberofMoves(diceRoll());
-		System.out.println(currentPlayer.getName() + " rolls a " + currentPlayer.numberofMoves() + ".");
-		System.out.println(currentPlayer.getName() + "  has " + currentPlayer.numberofMoves() + " moves.");
-		/*if(currentPlayer.isInRoom() && currentPlayer.getRoom().hasStairs()){
-			System.out.println("Do you want to take the stairs or do you want to get out of the room?");
-			System.out.println("Press Y for stairs and N for exiting the room");
-			String choice = TextClient.inputString();
-			switch(choice){
-			case "y":
-				cluedoCanvas.moveToRoom(p, p.getRoom().getOtherRoom());
-				break;
-			case "n":
-				cluedoCanvas.exitRoom(p, currentPlayers);
-				break;
-			}
-		}else if(currentPlayer.isInRoom()){
-			System.out.println("You must exit the room now as the room does not have any stairs for you to take.");
-			cluedoCanvas.exitRoom(p, currentPlayers);
-		}else{
-			while(currentPlayer.numberofMoves() > 0){
-				System.out.println(currentPlayer.getName() + " (" + currentPlayer.getCharacterName() + ")" + " currently has " + currentPlayer.numberofMoves() + " moves left.");
-				System.out.println("current location: " + currentPlayer.position().getX() + ", " + currentPlayer.position().getY());
-				TextClient.movementListener(currentPlayer, currentPlayers);
-				if(currentPlayer.isInRoom()){
-					System.out.println("You have entered a room. You will need to wait for your next turn to be able to");
-					System.out.println("take the stairs or exit the room.");
-					break;
-				}
-			}
-			if(currentPlayer.numberofMoves() <= 0){
-				System.out.println(currentPlayer.getName() + " has run out of moves.");
-			}
-		}*/
-	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		if(this.isMoveSelection){
-			try {
-				this.doMove(currentPlayer);
-				if(currentPlayer.numberofMoves() > 0){
-					for(int x = 0; x < board.length; x++){
-						for(int y = 0; y < board.length; y++){
-							Tile t = board[x][y];
-							if(t.contains(e.getPoint())){
-								cluedoCanvas.move(t.x-currentPlayer.position().getX(), t.y-currentPlayer.position().getY(), currentPlayer, currentPlayers);
-							}
-						}
-					}
-				}
-			}catch (InvalidMove e1) {
-				e1.printStackTrace();
-			}
-		}
-	}
 	/**
 	 * This checks if the game over. Returns true if so, returns false otherwise.
 	 * @return
@@ -641,42 +605,94 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		currentPlayer.coordinatesTaken().clear();
+		if(this.isMoveSelection && rolled){
+			currentPlayer.setNumberofMoves(currentRoll);
+			if(currentPlayer.numberofMoves() > 0){
+			try {
+				if(currentPlayer.numberofMoves() > 0){
+					for(int x = 0; x < board.length; x++){
+						for(int y = 0; y < board.length; y++){
+							Tile t = board[x][y];
+							if(t.contains(e.getPoint())){
+								if(!currentPlayer.isInRoom()){
+									cluedoCanvas.move(t.x-currentPlayer.position().getX(), t.y-currentPlayer.position().getY(), currentPlayer, currentPlayers);
+								}else{
+									if(t instanceof DoorTile){
+										cluedoCanvas.exitRoom(currentPlayer, currentPlayers);
+									}else if(t instanceof StairsTile){
+										cluedoCanvas.moveToRoom(currentPlayer, currentPlayer.getRoom().getOtherRoom());
+									}
+								}
+								return;
+							}
+						}
+					}
+				}
+			}catch (InvalidMove e1) {
+				e1.printStackTrace();
+			}
+			}
+		}
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
 
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
-	//	/**
-	//	 * The main method. This must be run/invoked to play the game.
-	//	 * @param args
-	//	 * @throws InvalidMove
-	//	 */
-	//	public static void main(String[] args) throws InvalidMove{
-	//		CluedoGame game = new CluedoGame();
-	//		//game.initialSetup();
-	//		game.runGame();
-	//	}
+	public void reset() {
+		currentRoll = 0;
+		this.argsButtonPressed = false;
+		this.isMoveSelection = false;
+		this.isSuggestionSelection = false;
+		this.rolled = false;
+		index++;
+		if(index >= currentPlayers().size()){
+			index = 0;
+		}
+		currentPlayer = currentPlayers.get(index);
+		cluedoJFrame.currentPlayerText.setText(currentPlayer.getName() + "\r\n");
+	}
+
+	public void resetAll() {
+		currentPlayers = new ArrayList<Player>();
+		initializer = new Initializer();
+		argsButtonPressed = false;
+		isSuggestionSelection = false;
+		isMoveSelection = false;
+		numPlayers = 0; 
+		askSuccess = false;
+		option = "";
+		hasAsked = false;
+		currentRoll = 0;
+		currentPlayer = null; //the current player of the round.
+		moveMade = false;
+		btnPressed = false;
+		showCards = new ArrayList<>();
+		prevOption = "";
+		accusation = null;
+		index = 0;
+	}
 }

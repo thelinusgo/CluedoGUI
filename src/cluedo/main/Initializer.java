@@ -120,12 +120,12 @@ public class Initializer {
 	 */
 	private void initializeCharacters(){
 		/*Fill the ArrayList with people.. */
-		characters[0] = new Character("Miss Scarlet", new Color(255, 77, 77), new Position(24, 7));
-		characters[1] = new Character("Colonel Mustard", new Color(255, 255, 77), new Position(0, 14));
-		characters[2] = new Character("Mrs. White", Color.white, new Position(0, 9));
-		characters[3] = new Character("The Reverend Green", new Color(0, 204, 0), new Position(17, 0));
-		characters[4] = new Character("Mrs. Peacock", new Color(153, 0, 204), new Position(6, 24));
-		characters[5] = new Character("Professor Plum", new Color(0, 102, 204), new Position(19, 24));
+		characters[0] = new Character("Miss Scarlet", new Color(255, 77, 77), new Position(7, 24));
+		characters[1] = new Character("Colonel Mustard", new Color(255, 255, 77), new Position(0, 17));
+		characters[2] = new Character("Mrs. White", Color.white, new Position(9, 0));
+		characters[3] = new Character("The Reverend Green", new Color(0, 204, 0), new Position(14, 0));
+		characters[4] = new Character("Mrs. Peacock", new Color(153, 0, 204), new Position(24, 6));
+		characters[5] = new Character("Professor Plum", new Color(0, 102, 204), new Position(24, 19));
 	
 		/*Allows a List of the characters Names to be used/modified */
 		for(Character c : characters){

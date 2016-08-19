@@ -8,13 +8,13 @@ import java.awt.event.MouseListener;
 
 import cluedo.assets.Player;
 
-public class Tile implements MouseListener{
+public class Tile{
 	
 	protected int xLoc;
 	protected int yLoc;
 	public int x;
 	public int y;
-	private Player player;
+	protected Player player;
 	private Color color = new Color(222, 192, 70); 
 	
 	public static final int TILESIZE = 21;
@@ -45,8 +45,7 @@ public class Tile implements MouseListener{
 		g.drawRect(xLoc, yLoc, TILESIZE, TILESIZE);
 		
 		if(this.player != null){
-			g.setColor(this.player.getCharacter().getColor());
-			g.drawOval(xLoc, yLoc, TILESIZE, TILESIZE);
+			this.player.draw(g, xLoc, yLoc);
 		}
 	}
 
@@ -61,40 +60,8 @@ public class Tile implements MouseListener{
 		return false;
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		int r = this.getColor().getRed();
-		int g = this.getColor().getGreen();
-		int b = this.getColor().getBlue();
-		this.setColor(new Color(r, g, b, 50));
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		int r = this.getColor().getRed();
-		int g = this.getColor().getGreen();
-		int b = this.getColor().getBlue();
-		this.setColor(new Color(r, g, b, 1));
+	public String player() {
+		return this.player.getName();
 	}
 
 

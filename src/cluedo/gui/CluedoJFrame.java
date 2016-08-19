@@ -80,16 +80,16 @@ public class CluedoJFrame extends JFrame {
 	/* Various text panes and text Fields. */
 	private JTextPane current_players_pane;
 	public JTextField currentPlayerText; // this is where one would set the
-											// current Player's name.
+	// current Player's name.
 	private DiceCanvas dicecanvas = new DiceCanvas();
-
+	
 	/*
 	 * The canvas representing the pop up window, for drawing the players hand.
 	 */
 	private CardsCanvas cardcanvas = new CardsCanvas();
 	/* The JFrame for the cardcanvas. */
 	private CardsFrame cardsframe;
-	
+
 
 	/**
 	 * Launch the application.
@@ -160,8 +160,8 @@ public class CluedoJFrame extends JFrame {
 
 		suggestionRadioButton = new JRadioButton("Do Suggestion");
 		panel.add(suggestionRadioButton, "cell 0 2");
-		
-		
+
+
 		accusationRadioButton = new JRadioButton("Do Accusation");
 		panel.add(accusationRadioButton, "cell 0 3");
 
@@ -178,7 +178,7 @@ public class CluedoJFrame extends JFrame {
 		suspectsComboBox.addItem("Mrs. Peacock");
 		suspectsComboBox.addItem("Professor Plum");
 		suspectsComboBox.setEnabled(false);
-		
+
 
 		JLabel label_1 = new JLabel("2.	Choose your Weapons");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -227,10 +227,14 @@ public class CluedoJFrame extends JFrame {
 		btnMakeMove = new JButton("Make Move");
 		panel_1.add(btnMakeMove, "cell 0 3");
 		btnMakeMove.addActionListener(e ->{
+			if(game.moveMade){
+				game.reset();
+				return;
+			}
 			game.isMoveSelection = true;
-			//game.setOption("m");
+			game.btnPressed = true;
 		});
-		
+
 		//Button for when a turn has ended.
 		btnEndTurn = new JButton("End Turn");
 		panel_1.add(btnEndTurn, "cell 0 4,alignx left");
@@ -239,13 +243,13 @@ public class CluedoJFrame extends JFrame {
 		btnDisplayHand = new JButton("Display Hand");
 		btnDisplayHand.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel_1.add(btnDisplayHand, "cell 0 5");
-		
+
 		//Button to roll the dice.
 		btnRollDice = new JButton("Roll Dice");
 		panel_1.add(btnRollDice, "cell 0 6");
-		
+
 		btnShowPrevPlayersCards = new JButton("New button");
-	
+
 		panel_1.add(btnShowPrevPlayersCards, "cell 0 7");
 
 		panel_1.add(dicecanvas, "cell 0 8,aligny top");
@@ -257,13 +261,17 @@ public class CluedoJFrame extends JFrame {
 		panel_1.add(current_players_pane, "cell 0 10,grow");
 
 		contentPane.add(game.cluedoCanvas, BorderLayout.CENTER);
-		
+
 		this.enableRadioButtons(false);
 		/***************************
 		 * START OF ACTION/MOUSE LISTENER STUFF
 		 ***************************/
 		game.cluedoCanvas.addMouseListener(game);
 		btnMakeArgument.addActionListener(e ->{
+			if(game.moveMade){
+				game.reset();
+				return;
+			}
 			game.argsButtonPressed = true;
 			enableRadioButtons(true);
 			if(game.isSuggestionSelection){
@@ -271,38 +279,46 @@ public class CluedoJFrame extends JFrame {
 			}else{
 				enableComboBoxes(false);
 			}
+			game.btnPressed = true;
 		});
-		
+
 		btnEndTurn.addActionListener(e->{
+			game.reset();
 			game.isMoveSelection = false;
 			game.isSuggestionSelection = false;
+			game.argsButtonPressed = false;
 		});
-		
+
 		suggestionRadioButton.addActionListener(e->{
+			if(game.moveMade){
+				game.reset();
+				return;
+			}
 			game.isSuggestionSelection = true;
 			game.setOption("s");
+			game.btnPressed = true;
 		});
-		
+
 		accusationRadioButton.addActionListener(e->{
+			if(game.moveMade){
+				game.reset();
+				return;
+			}
 			game.isSuggestionSelection = false;
 			game.setOption("a");
+			game.btnPressed = true;
 		});
-		
+
 		btnShowPrevPlayersCards.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			game.setOption("d");
+				game.setOption("d");
 			}
 		});
-	
-		
+
+
 		mntmStartGame.addActionListener(e -> {
+			game.resetAll();
 			current_players_pane.setText(game.askPlayers());
-			try {
-				game.runGame();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 		});
 		mntmExitGame.addActionListener(e -> {
 			int value = JOptionPane.showConfirmDialog(null, "Do you want to exit this Game?", "Confirmation",
@@ -315,21 +331,30 @@ public class CluedoJFrame extends JFrame {
 
 		btnDisplayHand.addActionListener(e -> {
 			//cardsframe = new CardsFrame();
+			if(game.moveMade){
+				game.reset();
+				return;
+			}
 			game.setOption("c");
 		});
 
 		btnRollDice.addActionListener(e -> {
-			if(game.isMoveSelection){
+			if(game.moveMade){
+				game.reset();
+				return;
+			}
+			if(game.isMoveSelection && !game.rolled){
 				dicecanvas.setDiceOne(game.diceRoll());
 				dicecanvas.setDiceTwo(game.diceRoll());
 				panel_1.repaint();
+				game.rolled = true;
 			}
 		});
 		/*********************
 		 * END OF ACTION/MOUSE LISTENER STUFF
 		 ***************************/
 	}
-	
+
 	/**
 	 * This enables the radioButtons, once the Argument button has been pressed.
 	 * @param b
@@ -337,11 +362,11 @@ public class CluedoJFrame extends JFrame {
 	private void enableRadioButtons(boolean b){
 		suggestionRadioButton.setEnabled(b);
 		accusationRadioButton.setEnabled(b);
-//		suspectsComboBox.setEnabled(b);
-//		weaponsComboBox.setEnabled(b);
-//		roomsComboBox.setEnabled(b);
+		//		suspectsComboBox.setEnabled(b);
+		//		weaponsComboBox.setEnabled(b);
+		//		roomsComboBox.setEnabled(b);
 	}
-	
+
 	/**
 	 * This enables the appropriate combo boxes, once a radio button has been pressed.
 	 * @param isSuggestion
@@ -359,9 +384,9 @@ public class CluedoJFrame extends JFrame {
 			roomsComboBox.setEnabled(true);
 		}
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 }

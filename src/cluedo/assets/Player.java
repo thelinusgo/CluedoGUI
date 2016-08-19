@@ -1,7 +1,10 @@
 package cluedo.assets;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.*;
 
+import cluedo.assets.tiles.Tile;
 import cluedo.cards.Card;
 import cluedo.main.CluedoGame;
 
@@ -206,6 +209,13 @@ public class Player {
 	 */
 	public void setOut(boolean b) {
 		this.out  = b;
+	}
+	
+	public void draw(Graphics g, int xLoc, int yLoc){
+		g.setColor(character.getColor());
+		g.fillOval(xLoc, yLoc, Tile.TILESIZE, Tile.TILESIZE);
+		g.setColor(Color.black);
+		g.drawOval(xLoc, yLoc, Tile.TILESIZE, Tile.TILESIZE);
 	}
 
 	/**

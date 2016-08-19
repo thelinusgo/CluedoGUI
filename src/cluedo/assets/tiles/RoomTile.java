@@ -11,7 +11,6 @@ import cluedo.assets.Room;
 public class RoomTile extends Tile{
 	private String direction = null;
 	private String direction2 = null;
-	private Player player = null;
 	private Room room = null;
 
 	public RoomTile(int x, int y, String dir, String dir2, Room r){
@@ -22,7 +21,7 @@ public class RoomTile extends Tile{
 	}
 
 	public void setPlayer(Player p){
-		this.player = p;
+		super.setPlayer(p);
 	}
 	
 	public Room getRoom(){
@@ -70,8 +69,7 @@ public class RoomTile extends Tile{
 		g2.setStroke(new BasicStroke(0));
 		*/
 		if(this.player != null){
-			g.setColor(this.player.getCharacter().getColor());
-			g.drawOval(super.xLoc, super.yLoc, super.TILESIZE, super.TILESIZE);
+			this.player.draw(g, xLoc, yLoc);
 		}
 	}
 	

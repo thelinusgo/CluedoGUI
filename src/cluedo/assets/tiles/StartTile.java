@@ -9,7 +9,6 @@ import cluedo.assets.Player;
 public class StartTile extends Tile{
 
 	private Character c;
-	private Player player = null;
 	
 	public StartTile(int x, int y, Character c) {
 		super(x, y);
@@ -17,7 +16,7 @@ public class StartTile extends Tile{
 	}
 	
 	public void setPlayer(Player p){
-		this.player = p;
+		super.setPlayer(p);
 	}
 
 	public void draw(Graphics g){
@@ -25,10 +24,8 @@ public class StartTile extends Tile{
 		g.fillRect(xLoc, yLoc, TILESIZE, TILESIZE);
 		g.setColor(Color.black);
 		g.drawRect(xLoc, yLoc, TILESIZE, TILESIZE);
-		
-		if(this.player != null){
-			g.setColor(this.player .getCharacter().getColor());
-			g.drawOval(super.xLoc, super.yLoc, super.TILESIZE, super.TILESIZE);
+		if(super.player != null){
+			super.player.draw(g, xLoc, yLoc);
 		}
 	}
 }

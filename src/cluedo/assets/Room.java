@@ -134,6 +134,9 @@ public class Room {
 			}
 		}
 		i++;
+		if(i >= playerCoords.length){
+			i = 0;
+		}
 	}
 	
 	/**
