@@ -284,9 +284,6 @@ public class CluedoJFrame extends JFrame {
 
 		btnEndTurn.addActionListener(e->{
 			game.reset();
-			game.isMoveSelection = false;
-			game.isSuggestionSelection = false;
-			game.argsButtonPressed = false;
 		});
 
 		suggestionRadioButton.addActionListener(e->{

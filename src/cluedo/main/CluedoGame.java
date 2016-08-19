@@ -609,29 +609,29 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		if(this.isMoveSelection && rolled){
 			currentPlayer.setNumberofMoves(currentRoll);
 			if(currentPlayer.numberofMoves() > 0){
-			try {
-				if(currentPlayer.numberofMoves() > 0){
-					for(int x = 0; x < board.length; x++){
-						for(int y = 0; y < board.length; y++){
-							Tile t = board[x][y];
-							if(t.contains(e.getPoint())){
-								if(!currentPlayer.isInRoom()){
-									cluedoCanvas.move(t.x-currentPlayer.position().getX(), t.y-currentPlayer.position().getY(), currentPlayer, currentPlayers);
-								}else{
-									if(t instanceof DoorTile){
-										cluedoCanvas.exitRoom(currentPlayer, currentPlayers);
-									}else if(t instanceof StairsTile){
-										cluedoCanvas.moveToRoom(currentPlayer, currentPlayer.getRoom().getOtherRoom());
+				try {
+					if(currentPlayer.numberofMoves() > 0){
+						for(int x = 0; x < board.length; x++){
+							for(int y = 0; y < board.length; y++){
+								Tile t = board[x][y];
+								if(t.contains(e.getPoint())){
+									if(!currentPlayer.isInRoom()){
+										cluedoCanvas.move(t.x-currentPlayer.position().getX(), t.y-currentPlayer.position().getY(), currentPlayer, currentPlayers);
+									}else{
+										if(t instanceof DoorTile){
+											cluedoCanvas.exitRoom(currentPlayer, currentPlayers);
+										}else if(t instanceof StairsTile){
+											cluedoCanvas.moveToRoom(currentPlayer, currentPlayer.getRoom().getOtherRoom());
+										}
 									}
+									return;
 								}
-								return;
 							}
 						}
 					}
+				}catch (InvalidMove e1) {
+					e1.printStackTrace();
 				}
-			}catch (InvalidMove e1) {
-				e1.printStackTrace();
-			}
 			}
 		}
 	}
@@ -668,31 +668,30 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		this.isMoveSelection = false;
 		this.isSuggestionSelection = false;
 		this.rolled = false;
-		index++;
-		if(index >= currentPlayers().size()){
-			index = 0;
+		moveMade = false;
+		btnPressed = false;
+		accusation = null;
+		option = "";
+		prevOption = "";
+		if(!currentPlayers.isEmpty()){
+			index++;
+			if(index >= currentPlayers().size()){
+				index = 0;
+			}
+			currentPlayer = currentPlayers.get(index);
+			cluedoJFrame.currentPlayerText.setText(currentPlayer.getName() + "\r\n");
 		}
-		currentPlayer = currentPlayers.get(index);
-		cluedoJFrame.currentPlayerText.setText(currentPlayer.getName() + "\r\n");
 	}
 
 	public void resetAll() {
 		currentPlayers = new ArrayList<Player>();
 		initializer = new Initializer();
-		argsButtonPressed = false;
-		isSuggestionSelection = false;
-		isMoveSelection = false;
 		numPlayers = 0; 
 		askSuccess = false;
-		option = "";
 		hasAsked = false;
-		currentRoll = 0;
 		currentPlayer = null; //the current player of the round.
-		moveMade = false;
-		btnPressed = false;
 		showCards = new ArrayList<>();
-		prevOption = "";
-		accusation = null;
 		index = 0;
+		this.reset();
 	}
 }
