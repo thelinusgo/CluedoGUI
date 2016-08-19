@@ -44,7 +44,10 @@ public class Player {
 	 * Sets the amount of moves a player may have.
 	 */
 	public void setNumberofMoves(int amount){
-		if(amount > 12 || amount < 2) throw new IllegalArgumentException("player can have only 2-12 moves.");
+		if(amount > 12 || amount < 2){
+			
+			throw new IllegalArgumentException("player can have only 2-12 moves.");
+		}
 		this.numberofMoves = amount;
 	}
 

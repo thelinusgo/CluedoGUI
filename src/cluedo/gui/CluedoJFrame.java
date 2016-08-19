@@ -67,27 +67,24 @@ public class CluedoJFrame extends JFrame {
 	private JButton btnMakeMove;
 	private JButton btnRollDice;
 	private JButton btnDisplayHand;
-	private JButton btnMakeArgument;
+	private JButton btnMakeSuggestion;
+	private JButton btnMakeAccusation;
 	private JButton btnShowPrevPlayersCards;
-
-	/* ComboBoxes used for Suggestion/Accusation. */
-	private JComboBox suspectsComboBox;
-	private JComboBox weaponsComboBox;
-	private JComboBox roomsComboBox;
-	/* RadioButtons */
-	private JRadioButton suggestionRadioButton;
-	private JRadioButton accusationRadioButton;
 	/* Various text panes and text Fields. */
 	private JTextPane current_players_pane;
 	public JTextField currentPlayerText; // this is where one would set the
-	// current Player's name.
+	/**
+	 * The dice canvas - where the dice images are drawn.
+	 */
 	private DiceCanvas dicecanvas = new DiceCanvas();
 	
 	/*
 	 * The canvas representing the pop up window, for drawing the players hand.
 	 */
 	private CardsCanvas cardcanvas = new CardsCanvas();
-	/* The JFrame for the cardcanvas. */
+	/**
+	 * The JFrame for the cardvancas.
+	 */
 	private CardsFrame cardsframe;
 
 
@@ -142,74 +139,13 @@ public class CluedoJFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.EAST);
-		panel.setLayout(
-				new MigLayout("", "[88px,grow]", "[14px][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
-
 		// create JPanel
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.WEST);
-		panel_1.setLayout(new MigLayout("", "[113px,grow]", "[23px][][][][][][][][45px][][][][grow]"));
+		panel_1.setLayout(new MigLayout("", "[113px,grow]", "[23px][][][][][][][][45px][][][][][grow]"));
 
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
-
-		btnMakeArgument = new JButton("MAKE ARGUMENT");
-		panel.add(btnMakeArgument, "cell 0 1,alignx center");
-
-		suggestionRadioButton = new JRadioButton("Do Suggestion");
-		panel.add(suggestionRadioButton, "cell 0 2");
-
-
-		accusationRadioButton = new JRadioButton("Do Accusation");
-		panel.add(accusationRadioButton, "cell 0 3");
-
-		JLabel label = new JLabel("1. Choose your Suspects");
-		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel.add(label, "cell 0 4");
-
-		suspectsComboBox = new JComboBox();
-		panel.add(suspectsComboBox, "cell 0 5,growx");
-		suspectsComboBox.addItem("Miss Scarlett");
-		suspectsComboBox.addItem("Colonel Mustard");
-		suspectsComboBox.addItem("Mrs. White");
-		suspectsComboBox.addItem("The Reverend Green");
-		suspectsComboBox.addItem("Mrs. Peacock");
-		suspectsComboBox.addItem("Professor Plum");
-		suspectsComboBox.setEnabled(false);
-
-
-		JLabel label_1 = new JLabel("2.	Choose your Weapons");
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel.add(label_1, "cell 0 6");
-
-		weaponsComboBox = new JComboBox();
-		panel.add(weaponsComboBox, "cell 0 7,growx");
-		weaponsComboBox.addItem("Knife");
-		weaponsComboBox.addItem("Rope");
-		weaponsComboBox.addItem("Revolver");
-		weaponsComboBox.addItem("Wrench");
-		weaponsComboBox.addItem("Pipe");
-		weaponsComboBox.addItem("Candlestick");
-		weaponsComboBox.setEnabled(false);
-
-		JLabel label_2 = new JLabel("3.	Choose your Rooms");
-		label_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel.add(label_2, "cell 0 8");
-
-		roomsComboBox = new JComboBox();
-		panel.add(roomsComboBox, "cell 0 9,growx");
-		roomsComboBox.addItem("Kitchen");
-		roomsComboBox.addItem("Ball Room");
-		roomsComboBox.addItem("Conservatory");
-		roomsComboBox.addItem("Billard Room");
-		roomsComboBox.addItem("Library");
-		roomsComboBox.addItem("Study");
-		roomsComboBox.addItem("Hall");
-		roomsComboBox.addItem("Lounge");
-		roomsComboBox.addItem("Dining Room");
-		roomsComboBox.setEnabled(false);
 
 		JLabel currentPlyrLabel = new JLabel("Current Player:");
 		currentPlyrLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -240,70 +176,41 @@ public class CluedoJFrame extends JFrame {
 		panel_1.add(btnEndTurn, "cell 0 4,alignx left");
 
 		//Button to display the current players hand.
-		btnDisplayHand = new JButton("Display Hand");
+		btnDisplayHand = new JButton("Display your Hand");
 		btnDisplayHand.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel_1.add(btnDisplayHand, "cell 0 5");
 
 		//Button to roll the dice.
-		btnRollDice = new JButton("Roll Dice");
+		btnRollDice = new JButton("Roll the Dice");
 		panel_1.add(btnRollDice, "cell 0 6");
 
-		btnShowPrevPlayersCards = new JButton("New button");
+		btnShowPrevPlayersCards = new JButton("Previous Players Cards");
 
 		panel_1.add(btnShowPrevPlayersCards, "cell 0 7");
 
 		panel_1.add(dicecanvas, "cell 0 8,aligny top");
-
-		JLabel lblListOfPlayers = new JLabel("List of available players: ");
-		panel_1.add(lblListOfPlayers, "cell 0 9");
+				
+				btnMakeSuggestion = new JButton("Make Suggestion");
+				panel_1.add(btnMakeSuggestion, "cell 0 9");
+				
+				btnMakeAccusation = new JButton("Make Accusation");
+				panel_1.add(btnMakeAccusation, "cell 0 10");
+		
+				JLabel lblListOfPlayers = new JLabel("List of available players: ");
+				panel_1.add(lblListOfPlayers, "cell 0 11");
 		current_players_pane = new JTextPane();
 		current_players_pane.setEditable(false);
-		panel_1.add(current_players_pane, "cell 0 10,grow");
+		panel_1.add(current_players_pane, "cell 0 12,grow");
 
 		contentPane.add(game.cluedoCanvas, BorderLayout.CENTER);
 
-		this.enableRadioButtons(false);
 		/***************************
 		 * START OF ACTION/MOUSE LISTENER STUFF
 		 ***************************/
 		game.cluedoCanvas.addMouseListener(game);
-		btnMakeArgument.addActionListener(e ->{
-			if(game.moveMade){
-				game.reset();
-				return;
-			}
-			game.argsButtonPressed = true;
-			enableRadioButtons(true);
-			if(game.isSuggestionSelection){
-				enableComboBoxes(true);
-			}else{
-				enableComboBoxes(false);
-			}
-			game.btnPressed = true;
-		});
 
 		btnEndTurn.addActionListener(e->{
 			game.reset();
-		});
-
-		suggestionRadioButton.addActionListener(e->{
-			if(game.moveMade){
-				game.reset();
-				return;
-			}
-			game.isSuggestionSelection = true;
-			game.setOption("s");
-			game.btnPressed = true;
-		});
-
-		accusationRadioButton.addActionListener(e->{
-			if(game.moveMade){
-				game.reset();
-				return;
-			}
-			game.isSuggestionSelection = false;
-			game.setOption("a");
-			game.btnPressed = true;
 		});
 
 		btnShowPrevPlayersCards.addActionListener(new ActionListener() {
@@ -351,36 +258,7 @@ public class CluedoJFrame extends JFrame {
 		 * END OF ACTION/MOUSE LISTENER STUFF
 		 ***************************/
 	}
-
-	/**
-	 * This enables the radioButtons, once the Argument button has been pressed.
-	 * @param b
-	 */
-	private void enableRadioButtons(boolean b){
-		suggestionRadioButton.setEnabled(b);
-		accusationRadioButton.setEnabled(b);
-		//		suspectsComboBox.setEnabled(b);
-		//		weaponsComboBox.setEnabled(b);
-		//		roomsComboBox.setEnabled(b);
-	}
-
-	/**
-	 * This enables the appropriate combo boxes, once a radio button has been pressed.
-	 * @param isSuggestion
-	 */
-	private void enableComboBoxes(boolean isSuggestion){
-		if(isSuggestion){
-			accusationRadioButton.setEnabled(false);
-			suspectsComboBox.setEnabled(true);
-			weaponsComboBox.setEnabled(true);
-			roomsComboBox.setEnabled(false);
-		}else{
-			suggestionRadioButton.setEnabled(false);
-			suspectsComboBox.setEnabled(true);
-			weaponsComboBox.setEnabled(true);
-			roomsComboBox.setEnabled(true);
-		}
-	}
+	
 
 
 

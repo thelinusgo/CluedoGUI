@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import cluedo.assets.Door;
@@ -772,6 +773,7 @@ public class CluedoCanvas extends JPanel{
 			}
 			p.moveNStep(directionX, directionY);
 			board[p.position().getX()][p.position().getY()].setPlayer(p);
+			
 		}else{
 			isValidMove = false;
 		}

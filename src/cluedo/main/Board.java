@@ -1,6 +1,9 @@
 package cluedo.main;
 import java.io.*;
 import java.util.*;
+
+import javax.swing.JOptionPane;
+
 import cluedo.assets.*;
 import cluedo.main.CluedoGame.InvalidMove;
 
@@ -723,20 +726,27 @@ public class Board {
 		int y = position.getY();
 		try {
 			if(x > 24 || x < 0 || y > 24 || y < 0){
+				JOptionPane.showMessageDialog(null, "Cannot go out of bounds!", "Move WARNING", JOptionPane.WARNING_MESSAGE);
 				throw new CluedoGame.InvalidMove("Cannot go out of bounds!");
 			}else if(board[x][y].equals("|#|") || board[x][y].equals("#|")){
+				JOptionPane.showMessageDialog(null, "Cannot move into wall.", "Move WARNING", JOptionPane.WARNING_MESSAGE);
 				throw new CluedoGame.InvalidMove("Cannot move into wall.");
 			}else if(board[x][y].equals("|X|") || board[x][y].equals("X|")){
+				JOptionPane.showMessageDialog(null, "Cannot move into wall.", "Move WARNING", JOptionPane.WARNING_MESSAGE);
 				throw new CluedoGame.InvalidMove("Cannot move into wall.");
 			}else if((board[x][y].equals("S|") || board[x][y].equals("|S|")) && !p.isInRoom()){
+				JOptionPane.showMessageDialog(null, "Player is not in room to take the stairs.", "Move WARNING", JOptionPane.WARNING_MESSAGE);
 				throw new CluedoGame.InvalidMove("Player is not in room to take the stairs.");
 			}else if(board[x][y].equals("*|")){
+				JOptionPane.showMessageDialog(null, "Cannot move into envelope space.", "Move WARNING", JOptionPane.WARNING_MESSAGE);
 				throw new CluedoGame.InvalidMove("Cannot move into envelope space.");
 			}else{
 				for(Door d : doors){
 					if(!d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && (directionX > 0 || directionX < 0) && directionY == 0){
+						JOptionPane.showMessageDialog(null, "Going through door the wrong way!", "Move WARNING", JOptionPane.WARNING_MESSAGE);
 						throw new CluedoGame.InvalidMove("Going through door the wrong way!");
 					}else if(d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && directionX == 0 && (directionY > 0 || directionY < 0)){
+						JOptionPane.showMessageDialog(null, "Going through door the wrong way!", "Move WARNING", JOptionPane.WARNING_MESSAGE);
 						throw new CluedoGame.InvalidMove("Going through door the wrong way!");
 					}else if(x == d.getPosition().getX() && y == d.getPosition().getY()){
 						p.setDoor(d);
@@ -746,6 +756,7 @@ public class Board {
 
 				for(Position pos : p.coordinatesTaken()){
 					if(pos.getX() == x && pos.getY() == y){
+						JOptionPane.showMessageDialog(null, "You cannot move into the same square within this move.", "Move WARNING", JOptionPane.WARNING_MESSAGE);
 						throw new CluedoGame.InvalidMove("You cannot move into the same square within this move.");
 					}
 				}
@@ -753,6 +764,7 @@ public class Board {
 				for(Player player : currentPlayers){
 					if(!player.getName().equals(p.getName())){
 						if(position.equals(player.position())){
+							JOptionPane.showMessageDialog(null, "Cannot move into existing player's square!", "Move WARNING", JOptionPane.WARNING_MESSAGE);
 							throw new CluedoGame.InvalidMove("Cannot move into existing player's square!");
 						}
 

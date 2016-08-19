@@ -189,7 +189,18 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		System.out.println(currentRoll);
 		return roll;
 	}
-
+	
+	/**
+	 * Repaints the Canvas and the JFrame whenever a move is made.
+	 */
+	public void cleanCanvas(){
+		cluedoJFrame.repaint();
+		cluedoCanvas.repaint();
+		System.out.println("canvas is being repainted");
+	}
+	
+	
+	
 	/**
 	 * Initialize the current players - give them random cards
 	 */
@@ -241,7 +252,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 
 	/**
 	 * Asks the players for their name, and their preferred character.. Brings up a JOptionPane to request user
-	 * input.
+	 * input. This then calls askCharacters .
 	 * 
 	 */
 	public String askPlayers() {
@@ -594,6 +605,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	public static class InvalidMove extends Exception {
 		public InvalidMove(String msg) {
 			super(msg);
+			JOptionPane.showMessageDialog(null, msg, "GAME WARNING" ,JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -605,6 +617,11 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		if(this.currentPlayer == null){
+			//handle when the current player is null.
+			JOptionPane.showMessageDialog(null, "You do not have a current active player.", "Move ERROR", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		currentPlayer.coordinatesTaken().clear();
 		if(this.isMoveSelection && rolled){
 			currentPlayer.setNumberofMoves(currentRoll);
@@ -617,11 +634,14 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 								if(t.contains(e.getPoint())){
 									if(!currentPlayer.isInRoom()){
 										cluedoCanvas.move(t.x-currentPlayer.position().getX(), t.y-currentPlayer.position().getY(), currentPlayer, currentPlayers);
+										this.cleanCanvas();
 									}else{
 										if(t instanceof DoorTile){
 											cluedoCanvas.exitRoom(currentPlayer, currentPlayers);
+											this.cleanCanvas();
 										}else if(t instanceof StairsTile){
 											cluedoCanvas.moveToRoom(currentPlayer, currentPlayer.getRoom().getOtherRoom());
+											this.cleanCanvas();
 										}
 									}
 									return;
@@ -634,6 +654,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 				}
 			}
 		}
+		this.cleanCanvas();
 	}
 
 
