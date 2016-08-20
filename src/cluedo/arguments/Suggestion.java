@@ -74,6 +74,8 @@ public class Suggestion extends Argument {
 			correct = true;
 		}else if(!wpcorrect){
 			Room r1 = roomCard.getObject();
+			
+			//TODO: casey, I believe there is a major bug in here.
 			Room r2 = wp.getObject().getRoom();
 			Weapon w1 = wp.getObject();
 			Weapon w2 = r1.getWeapon();

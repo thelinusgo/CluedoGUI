@@ -197,14 +197,12 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	}
 	
 	/**
-	 * Repaints the Canvas and the JFrame whenever a move is made. This ensures that the canvas is updated appropriately whenever it is cleaned.
+	 * Repaints all canvases whenever this is called. This ensures that the canvas is updated appropriately whenever it is cleaned.
 	 */
-	private void cleanCanvas(){
+	public void cleanCanvas(){
 		cluedoJFrame.repaint();
 		cluedoCanvas.repaint();
 	}
-	
-	
 	
 	/**
 	 * Initialize the current players - give them random cards
@@ -218,6 +216,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		cluedoCanvas.setPlayerPosition(currentPlayers);
 		currentPlayer = currentPlayers.get(index);
 		cluedoJFrame.currentPlayerText.setText(currentPlayer.getName() + "\r\n");
+		cluedoJFrame.setPlayerColor(currentPlayer);
 		System.out.print("hello\n");
 		cluedoCanvas.paint(cluedoCanvas.getGraphics());
 		System.out.println("Finished drawing characters");
@@ -715,6 +714,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			}
 			currentPlayer = currentPlayers.get(index);
 			cluedoJFrame.currentPlayerText.setText(currentPlayer.getName() + "\r\n");
+			cluedoJFrame.setPlayerColor(currentPlayer);
 		}
 	}
 

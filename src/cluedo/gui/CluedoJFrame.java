@@ -24,8 +24,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JSplitPane;
@@ -79,8 +83,19 @@ public class CluedoJFrame extends JFrame {
 
 	private JPanel leftPanel;
 
+	/*Represents the player Colors */
+	private ImageIcon green = new ImageIcon("green.png");
+	private ImageIcon white = new ImageIcon("white.png");
+	private ImageIcon yellow = new ImageIcon("yellow.png");
+	private ImageIcon red = new ImageIcon("red.png");
+	private ImageIcon purple = new ImageIcon("purple.png");
+	private ImageIcon blue = new ImageIcon("blue.png");
+	private ImageIcon no_player = new ImageIcon("no_player.png");
+	
+	
+	
 	/**
-	 * The dice canvas - where the dice images are drawn.
+	 * The dice canvas - where the dice ImageIcons are drawn.
 	 */
 	private DiceCanvas dicecanvas = new DiceCanvas();
 
@@ -92,6 +107,7 @@ public class CluedoJFrame extends JFrame {
 	 * The JFrame for the cardvancas.
 	 */
 	private CardsFrame cardsframe;
+	private JLabel playerColor;
 
 	/**
 	 * Launch the application.
@@ -119,6 +135,10 @@ public class CluedoJFrame extends JFrame {
 		this.setResizable(false);
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
+		
+		/**
+		 * Initialize the player color icons.
+		 */
 
 		/* Stuff that goes under the File Tab */
 		mnFile = new JMenu("File");
@@ -148,7 +168,7 @@ public class CluedoJFrame extends JFrame {
 		// create JPanel
 		leftPanel = new JPanel();
 		contentPane.add(leftPanel, BorderLayout.WEST);
-		leftPanel.setLayout(new MigLayout("", "[113px,grow]", "[23px][][][][][][][][45px][][][][][grow]"));
+		leftPanel.setLayout(new MigLayout("", "[113px,grow]", "[23px][::50px][][][][][][][45px][][][][][grow]"));
 
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
@@ -160,7 +180,7 @@ public class CluedoJFrame extends JFrame {
 		currentPlayerText = new JTextField();
 		currentPlayerText.setText("null\r\n");
 		currentPlayerText.setEditable(false);
-		leftPanel.add(currentPlayerText, "cell 0 1,growx");
+		leftPanel.add(currentPlayerText, "flowx,cell 0 1");
 		currentPlayerText.setColumns(10);
 		btnStartTurn = new JButton("Start Turn");
 		leftPanel.add(btnStartTurn, "cell 0 2,alignx left");
@@ -200,11 +220,57 @@ public class CluedoJFrame extends JFrame {
 		current_players_pane = new JTextPane();
 		current_players_pane.setEditable(false);
 		leftPanel.add(current_players_pane, "cell 0 12,grow");
+		
+		playerColor = new JLabel(no_player);
+		leftPanel.add(playerColor, "cell 0 1");
 
 		contentPane.add(game.cluedoCanvas, BorderLayout.CENTER);
 
 		// this sets up the action listeners.
 		this.setupActionListeners();
+	}
+	
+	/**
+	 * This sets the players current color.
+	 * @param p
+	 */
+	public void setPlayerColor(Player p){
+		if(p == null){ 
+			playerColor.setIcon(no_player);	 
+			return;
+		}
+		String value = p.getCharacter().name();
+	
+		switch(value){
+		case "Miss Scarlet":
+			playerColor.setIcon(red);	 
+			game.cleanCanvas();
+			break;
+		case "Colonel Mustard":
+			playerColor.setIcon(yellow);
+			game.cleanCanvas();
+			break;
+		case "Mrs. White":
+			playerColor.setIcon(white);	 
+			game.cleanCanvas();
+			break;
+		case "The Reverend Green":
+			playerColor.setIcon(green);	 
+			game.cleanCanvas();
+			break;
+		case "Mrs. Peacock":
+			playerColor.setIcon(purple);	 
+			game.cleanCanvas();
+			break;
+		case "Professor Plum":
+			playerColor.setIcon(blue);	 
+			game.cleanCanvas();
+			break;
+		default:
+			playerColor.setIcon(no_player);	 
+			game.cleanCanvas();
+			break;
+		}
 	}
 
 	/**
@@ -260,6 +326,7 @@ public class CluedoJFrame extends JFrame {
 
 		mntmStartGame.addActionListener(e -> {
 			game.resetAll();
+			this.setPlayerColor(game.currentPlayer());
 			current_players_pane.setText(game.askPlayers());
 		});
 		mntmExitGame.addActionListener(e -> {
