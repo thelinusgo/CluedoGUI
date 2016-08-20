@@ -124,8 +124,8 @@ public class Initializer {
 		characters[1] = new Character("Colonel Mustard", new Color(255, 255, 77), new Position(0, 17));
 		characters[2] = new Character("Mrs. White", Color.white, new Position(9, 0));
 		characters[3] = new Character("The Reverend Green", new Color(0, 204, 0), new Position(14, 0));
-		characters[4] = new Character("Mrs. Peacock", new Color(153, 0, 204), new Position(24, 6));
-		characters[5] = new Character("Professor Plum", new Color(0, 102, 204), new Position(24, 19));
+		characters[4] = new Character("Mrs. Peacock", new Color(153, 0, 204), new Position(23, 6));
+		characters[5] = new Character("Professor Plum", new Color(0, 102, 204), new Position(23, 19));
 	
 		/*Allows a List of the characters Names to be used/modified */
 		for(Character c : characters){

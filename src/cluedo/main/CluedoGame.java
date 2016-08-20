@@ -192,7 +192,8 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		Collections.shuffle(singleDie);
 		int roll = singleDie.get(0);
 		currentRoll += roll;
-		//System.out.println(currentRoll);
+		currentPlayer.coordinatesTaken().clear();
+		currentPlayer.setNumberofMoves(currentRoll);
 		return roll;
 	}
 	
@@ -638,26 +639,27 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			JOptionPane.showMessageDialog(null, "You do not have a current active player.", "Move ERROR", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		currentPlayer.coordinatesTaken().clear();
-		if(this.isMoveSelection && rolled){
-			currentPlayer.setNumberofMoves(currentRoll);
+		if(this.isMoveSelection && rolled && !moveMade){
 			if(currentPlayer.numberofMoves() > 0){
 				try {
 					if(currentPlayer.numberofMoves() > 0){
 						for(int x = 0; x < board.length; x++){
-							for(int y = 0; y < board.length; y++){
+							for(int y = 0; y < board[0].length; y++){
 								Tile t = board[x][y];
 								if(t.contains(e.getPoint())){
 									if(!currentPlayer.isInRoom()){
 										cluedoCanvas.move(t.x-currentPlayer.position().getX(), t.y-currentPlayer.position().getY(), currentPlayer, currentPlayers);
 										this.cleanCanvas();
+										moveMade = true;
 									}else{
 										if(t instanceof DoorTile){
 											cluedoCanvas.exitRoom(currentPlayer, currentPlayers);
 											this.cleanCanvas();
+											moveMade = true;
 										}else if(t instanceof StairsTile){
 											cluedoCanvas.moveToRoom(currentPlayer, currentPlayer.getRoom().getOtherRoom());
 											this.cleanCanvas();
+											moveMade = true;
 										}
 									}
 									return;

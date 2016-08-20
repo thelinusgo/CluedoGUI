@@ -28,4 +28,8 @@ public class StartTile extends Tile{
 			super.player.draw(g, xLoc, yLoc);
 		}
 	}
+	
+	public Color getColor(){
+		return c.getColor();
+	}
 }

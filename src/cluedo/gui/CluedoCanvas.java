@@ -54,7 +54,7 @@ public class CluedoCanvas extends JPanel{
 	/**
 	 * Represents the board in 2d array form.
 	 */
-	public Tile[][] board = new Tile[25][25];
+	public Tile[][] board = new Tile[24][25];
 
 	/**
 	 * Stores the list of doors on the board.
@@ -127,8 +127,10 @@ public class CluedoCanvas extends JPanel{
 		g.setColor(new Color(128, 189, 147));
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(15));
-		g.drawRect(32, 20, 25*Tile.TILESIZE+10, 25*Tile.TILESIZE+10);
+		g.drawRect(35, 20, 24*Tile.TILESIZE+10, 25*Tile.TILESIZE+10);
 		g2.setStroke(new BasicStroke(0));
+		
+		this.drawBoard();
 		//Draw images of rooms
 		g.drawImage(kitchenIm, xCanvas+kitchen.x*Tile.TILESIZE, yCanvas+kitchen.y*Tile.TILESIZE, kitchen.width*Tile.TILESIZE, kitchen.height*Tile.TILESIZE, null);
 		g.drawImage(ballroomIm, xCanvas+ballRm.x*Tile.TILESIZE, yCanvas+ballRm.y*Tile.TILESIZE, ballRm.width*Tile.TILESIZE, ballRm.height*Tile.TILESIZE, null);
@@ -138,9 +140,8 @@ public class CluedoCanvas extends JPanel{
 		g.drawImage(studyIm, xCanvas+study.x*Tile.TILESIZE, yCanvas+study.y*Tile.TILESIZE, study.width*Tile.TILESIZE, study.height*Tile.TILESIZE, null);
 		g.drawImage(libraryIm, xCanvas+library.x*Tile.TILESIZE, yCanvas+library.y*Tile.TILESIZE, library.width*Tile.TILESIZE+8, library.height*Tile.TILESIZE, null);
 		g.drawImage(billiardRoomIm, xCanvas+billiardRm.x*Tile.TILESIZE, yCanvas+billiardRm.y*Tile.TILESIZE, billiardRm.width*Tile.TILESIZE+10, billiardRm.height*Tile.TILESIZE, null);
-		g.drawImage(conservatoryIm, xCanvas+conservatory.x*Tile.TILESIZE, yCanvas+conservatory.y*Tile.TILESIZE, conservatory.width*Tile.TILESIZE, conservatory.height*Tile.TILESIZE, null);
+		g.drawImage(conservatoryIm, xCanvas+conservatory.x*Tile.TILESIZE, yCanvas+conservatory.y*Tile.TILESIZE, conservatory.width*Tile.TILESIZE+10, conservatory.height*Tile.TILESIZE, null);
 		g.drawImage(cluedoIm, xCanvas+this.cluedo.x*Tile.TILESIZE, yCanvas+this.cluedo.y*Tile.TILESIZE, cluedo.width*Tile.TILESIZE, cluedo.height*Tile.TILESIZE, null);
-		this.drawBoard();
 	}
 
 	private void initialise(){
@@ -157,14 +158,15 @@ public class CluedoCanvas extends JPanel{
 		this.ballRm = this.drawBallRoom();
 		this.drawDoors();
 		this.drawStart();
+		
 		this.cluedo = this.drawCluedo();
 		board[0][7] = new Tile(0, 7);
-		board[16][24] = new Tile(16, 24);
+		
 	}
 
 	private void drawPath(){
 		for(int x = 0; x < board.length; x++){
-			for(int y = 0; y < board.length; y++){
+			for(int y = 0; y < board[0].length; y++){
 				board[x][y] = new Tile(x, y);
 			}
 		}
@@ -176,9 +178,9 @@ public class CluedoCanvas extends JPanel{
 	private void drawBorder(){
 		for(int i = 0; i < this.board.length; i++){
 			board[i][0] = new WallTile(i, 0);
-			board[i][board.length-1] = new WallTile(i, board.length-1);
+			board[i][board[0].length-1] = new WallTile(i, board[0].length-1);
 		}
-		for(int i = 0; i < this.board.length; i++){
+		for(int i = 0; i < this.board[0].length; i++){
 			board[0][i] = new WallTile(0, i);
 			board[board.length-1][i] = new WallTile(board.length-1, i);
 		}
@@ -406,7 +408,7 @@ public class CluedoCanvas extends JPanel{
 	private Rectangle drawStudy() {
 		int x = 17;
 		int y = 21;
-		int width = 8;
+		int width = 7;
 		int height = 4;
 
 		/*Boarder*/
@@ -454,7 +456,7 @@ public class CluedoCanvas extends JPanel{
 	 * Draws the library.
 	 */
 	private Rectangle drawLibrary() {
-		int x = 18;
+		int x = 17;
 		int y = 14;
 		int width = 7;
 		int height = 5;
@@ -512,7 +514,7 @@ public class CluedoCanvas extends JPanel{
 	 * Draws the billiard room.
 	 */
 	private Rectangle drawBilliard() {
-		int x = 19;
+		int x = 18;
 		int y = 8;
 		int width = 6;
 		int height = 5;
@@ -568,7 +570,7 @@ public class CluedoCanvas extends JPanel{
 	private Rectangle drawConservatory() {
 		int x = 18;
 		int y = 1;
-		int width = 7;
+		int width = 6;
 		int height = 5;
 
 		/*Boarder*/
@@ -690,7 +692,7 @@ public class CluedoCanvas extends JPanel{
 	private Rectangle drawCluedo() {
 		int x = 10;
 		int y = 10;
-		int width = 6;
+		int width = 5;
 		int height = 7;
 
 		//area
@@ -722,14 +724,15 @@ public class CluedoCanvas extends JPanel{
 		board[9][0] = new StartTile(9, 0, CluedoGame.initializer.getCharacters()[2]);
 		board[14][0] = new StartTile(14, 0, CluedoGame.initializer.getCharacters()[3]);
 		board[0][17] = new StartTile(0, 17, CluedoGame.initializer.getCharacters()[1]);
-		board[7][board.length-1] = new StartTile(7, board.length-1, CluedoGame.initializer.getCharacters()[0]);
-		board[board.length-1][board.length-6] = new StartTile(board.length-1, board.length-6, CluedoGame.initializer.getCharacters()[5]);
-		board[board.length-1][6] = new StartTile(board.length-1, 6, CluedoGame.initializer.getCharacters()[4]);
+		board[7][24] = new StartTile(7, 24, CluedoGame.initializer.getCharacters()[0]);
+		board[23][19] = new StartTile(23, 19, CluedoGame.initializer.getCharacters()[5]);
+		board[23][6] = new StartTile(23, 6, CluedoGame.initializer.getCharacters()[4]);
+		
 	}
 
 	public void drawBoard(){
 		for(int x = 0; x < board.length; x++){
-			for(int y = 0; y < board.length; y++){
+			for(int y = 0; y < board[0].length; y++){
 				board[x][y].draw(g);
 			}
 		}
