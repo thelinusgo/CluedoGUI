@@ -526,6 +526,9 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	
 	/**
 	 * This code allows us to select from a collection of Rooms.
+	 * @param roomCard collection
+	 * @param currentPlayer p
+	 * @return RoomCard
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private RoomCard askRooms(Collection<RoomCard> roomCol, Player p){

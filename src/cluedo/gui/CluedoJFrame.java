@@ -129,19 +129,20 @@ public class CluedoJFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public CluedoJFrame() {
+		super("Canus Studios Present: The Game of Cluedo");
 		game = new CluedoGame(this);// create a new instance of the game.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 775, 700);
 		this.setResizable(false);
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
 		/**
 		 * Initialize the player color icons.
 		 */
 
 		/* Stuff that goes under the File Tab */
 		mnFile = new JMenu("File");
+		mnFile.setMnemonic('F');
 		menuBar.add(mnFile);
 
 		mntmStartGame = new JMenuItem("Start Game");
@@ -152,6 +153,7 @@ public class CluedoJFrame extends JFrame {
 
 		/* Stuff that goes into the HELP tab */
 		mnHelp = new JMenu("Help");
+		mnHelp.setMnemonic('H');
 		menuBar.add(mnHelp);
 
 		mntmGameInstructions = new JMenuItem("Game Instructions");
@@ -167,8 +169,9 @@ public class CluedoJFrame extends JFrame {
 
 		// create JPanel
 		leftPanel = new JPanel();
+		leftPanel.setToolTipText("The current player.");
 		contentPane.add(leftPanel, BorderLayout.WEST);
-		leftPanel.setLayout(new MigLayout("", "[113px,grow]", "[23px][::50px][][][][][][][45px][][][][][grow]"));
+		leftPanel.setLayout(new MigLayout("", "[113px]", "[23px][::50px][][][][][][][45px][][][][][grow]"));
 
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
@@ -178,46 +181,56 @@ public class CluedoJFrame extends JFrame {
 		leftPanel.add(currentPlyrLabel, "cell 0 0");
 
 		currentPlayerText = new JTextField();
+		currentPlayerText.setToolTipText("This is the current player, and his color on the board.");
 		currentPlayerText.setText("null\r\n");
 		currentPlayerText.setEditable(false);
 		leftPanel.add(currentPlayerText, "flowx,cell 0 1");
 		currentPlayerText.setColumns(10);
 		btnStartTurn = new JButton("Start Turn");
-		leftPanel.add(btnStartTurn, "cell 0 2,alignx left");
+		btnStartTurn.setToolTipText("Press this to begin your turn.");
+		leftPanel.add(btnStartTurn, "cell 0 2,growx");
 
 		// Button for when a move is made.
 		btnMakeMove = new JButton("Make Move");
-		leftPanel.add(btnMakeMove, "cell 0 3");
+		btnMakeMove.setToolTipText("Press this to make a move.");
+		leftPanel.add(btnMakeMove, "cell 0 3,growx");
 		
 
 		// Button for when a turn has ended.
 		btnEndTurn = new JButton("End Turn");
-		leftPanel.add(btnEndTurn, "cell 0 4,alignx left");
+		btnEndTurn.setToolTipText("Press this to end your turn.");
+		leftPanel.add(btnEndTurn, "cell 0 4,growx");
 
 		// Button to display the current players hand.
 		btnDisplayHand = new JButton("Display your Hand");
+		btnDisplayHand.setToolTipText("Press this to show what cards in hand you have.");
 		btnDisplayHand.setHorizontalAlignment(SwingConstants.RIGHT);
-		leftPanel.add(btnDisplayHand, "cell 0 5");
+		leftPanel.add(btnDisplayHand, "cell 0 5,growx");
 
 		// Button to roll the dice.
 		btnRollDice = new JButton("Roll the Dice");
-		leftPanel.add(btnRollDice, "cell 0 6");
+		btnRollDice.setToolTipText("Press this to roll the die.");
+		leftPanel.add(btnRollDice, "cell 0 6,growx");
 
 		btnShowPrevPlayersCards = new JButton("Previous Players Cards");
+		btnShowPrevPlayersCards.setToolTipText("Press this to show previous players cards.");
 
 		leftPanel.add(btnShowPrevPlayersCards, "cell 0 7");
 
-		leftPanel.add(dicecanvas, "cell 0 8,aligny top");
+		leftPanel.add(dicecanvas, "cell 0 8,alignx center,aligny top");
 
 		btnMakeSuggestion = new JButton("Make Suggestion");
-		leftPanel.add(btnMakeSuggestion, "cell 0 9");
+		btnMakeSuggestion.setToolTipText("Press this button to make a Suggestion.");
+		leftPanel.add(btnMakeSuggestion, "cell 0 9,growx");
 
 		btnMakeAccusation = new JButton("Make Accusation");
-		leftPanel.add(btnMakeAccusation, "cell 0 10");
+		btnMakeAccusation.setToolTipText("Press this button to make an accusation.");
+		leftPanel.add(btnMakeAccusation, "cell 0 10,growx");
 
 		JLabel lblListOfPlayers = new JLabel("List of available players: ");
 		leftPanel.add(lblListOfPlayers, "cell 0 11");
 		current_players_pane = new JTextPane();
+		current_players_pane.setToolTipText("The list of available players.");
 		current_players_pane.setEditable(false);
 		leftPanel.add(current_players_pane, "cell 0 12,grow");
 		
@@ -285,7 +298,7 @@ public class CluedoJFrame extends JFrame {
 		btnMakeSuggestion.addActionListener(e -> {
 		Suggestion sug = game.makeSuggestion(game.currentPlayer());
 		if(sug == null){
-			System.err.println("Why is the suggestion null? Look at me (line 222)");
+			System.err.println("Why is the suggestion null? Look at me (line 301)");
 			return;
 		}
 		if(sug.checkSuggestion(game.currentPlayers())){
@@ -352,6 +365,15 @@ public class CluedoJFrame extends JFrame {
 				game.reset();
 				return;
 			}
+			
+			if(game.currentPlayer() == null){
+				JOptionPane.showMessageDialog(null, "You must have a current Player to roll the dice!", "Game ERROR", JOptionPane.ERROR_MESSAGE);
+			}
+			
+			if(game.rolled && game.moveMade){
+				JOptionPane.showMessageDialog(null, "You have already rolled! Let the next player go.", "Game ERROR", JOptionPane.ERROR_MESSAGE);
+			}
+			
 			if (game.isMoveSelection && !game.rolled) {
 				dicecanvas.setDiceOne(game.diceRoll());
 				dicecanvas.setDiceTwo(game.diceRoll());
