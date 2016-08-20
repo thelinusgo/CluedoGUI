@@ -431,69 +431,39 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * This makes an accusation.
 	 * @param p
 	 * @return
+	 * @throws InvalidMove 
 	 */
 	public Suggestion makeSuggestion(Player p){
+		if(p == null){
+			JOptionPane.showMessageDialog(null, "You must have a current player to make an accusation", "GAME ERROR" ,JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
 		if(!p.isInRoom()){
 			JOptionPane.showMessageDialog(null, "You must be in a room to make a suggestion", "GAME WARNING", JOptionPane.WARNING_MESSAGE);
 			return null;
 		}
 		
+		JOptionPane.showMessageDialog(null, "What cards do you want to nominate?", "ACCUSATION", JOptionPane.INFORMATION_MESSAGE);
 		
-		/*if(!p.isInRoom()){
-			System.err.println("ERROR: Sorry, you must be in a room to make a suggestion.");
-			return null;
-		}
-		System.out.println("-----------SUGGESTION!-------------");
-		System.out.println("What cards do you want to nominate?");
-		System.out.println("----------------------------------");
-		System.out.println("AVAILABLE CARDS:");
-		//the objects for creating a suggestion.
-		//TODO: needs to be based on room he's in..
-		WeaponCard weapon = null;
-		CharacterCard character = null;
-		RoomCard room = new RoomCard(p.getRoom());
-		int indexChoice;
-
-		List<WeaponCard> weapons = Initializer.getWeaponCards();
-		List<CharacterCard> suspects = Initializer.getCharacterCards();
-
-		System.out.println("Instructions: Enter index of the item you want to nominate.");
-		for(int i = 0; i < 2;){
-			if(i == 0){
-				System.out.println("Step 1) Choose from available weapons: ");
-				int index = 0;
-				for(WeaponCard ww : weapons){
-					System.out.println(index + " "  + ww.toString());				
-					index++;
-				}
-				indexChoice = TextClient.askIndex(weapons);
-				weapon = (WeaponCard) weapons.get(indexChoice);
-				i++;
-			}
-			else if(i == 1){
-				System.out.println("Step 2) Choose from available Suspects: ");
-				int index = 0;
-				for(CharacterCard cc : suspects){
-					System.out.println(index + " "  + cc.toString());
-					index++;
-				}
-				indexChoice = TextClient.askIndex(weapons);
-				character = (CharacterCard) suspects.get(indexChoice);
-				i++;
+		Set<WeaponCard> weapons = new HashSet<>();
+		Set<CharacterCard> suspects = new HashSet<>();
+		
+		for(Card c : p.getCards()){
+			if(c instanceof WeaponCard){
+				weapons.add((WeaponCard)c);
+			}else if(c instanceof CharacterCard){
+				suspects.add((CharacterCard)c);
 			}
 		}
-		System.out.println("----------------------------------");
-		System.out.println(" CONFIRMED Suggestion Pieces:     ");
-		System.out.println(" weapon: " + weapon);
-		System.out.println(" character: " + character);
-		System.out.println(" room: " + room);
-		System.out.println("----------------------------------");
-		return new Suggestion(weapon, room, character, p);*/
-		return null;
+		
+		WeaponCard weapon = this.askWeapons(weapons, p);
+		CharacterCard character = this.askSuspects(suspects, p);
+		
+		return new Suggestion(weapon, new RoomCard(p.getRoom()), character, p);
 	}
 
 	/**
-	 * This makes an accusation. TODO: need to fix bug where
+	 * This makes an accusation. TODO: need to fix bug where it displays duplicate values and the accusation status is incorrect.
 	 * @param p
 	 * @return
 	 */
@@ -523,9 +493,12 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		if(ac.accusationStatus()){
 			return ac;
 		}
-		
+		p.setOut(true);
 		return null;
 	}
+	
+
+	
 	
 	/**
 	 * This code allows us to select from a collection of weapons.

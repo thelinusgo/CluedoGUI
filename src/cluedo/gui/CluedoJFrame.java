@@ -11,6 +11,7 @@ import cluedo.assets.Player;
 import cluedo.assets.Position;
 import cluedo.cards.Card;
 import cluedo.arguments.Accusation;
+import cluedo.arguments.Suggestion;
 import cluedo.assets.Character;
 import cluedo.main.CluedoGame;
 import cluedo.main.Initializer;
@@ -207,7 +208,7 @@ public class CluedoJFrame extends JFrame {
 	}
 
 	/**
-	 * This method sets up and initializes the action listeners.
+	 * This method sets up and initializes the action listeners. If you want to add an action listener for a Swing component, you would do it here.
 	 */
 	private void setupActionListeners() {
 		/***************************
@@ -216,7 +217,16 @@ public class CluedoJFrame extends JFrame {
 		game.cluedoCanvas.addMouseListener(game);
 
 		btnMakeSuggestion.addActionListener(e -> {
-			game.makeSuggestion(game.currentPlayer());
+		Suggestion sug = game.makeSuggestion(game.currentPlayer());
+		if(sug == null){
+			System.err.println("Why is the suggestion null? Look at me (line 222)");
+			return;
+		}
+		if(sug.checkSuggestion(game.currentPlayers())){
+			JOptionPane.showMessageDialog(null, "At least one extra card was found", "NOTICE", JOptionPane.INFORMATION_MESSAGE);
+		}else if(!sug.checkSuggestion(game.currentPlayers())){
+			JOptionPane.showMessageDialog(null, "No extra cards were found.", "WARNING", JOptionPane.WARNING_MESSAGE);
+		}
 		});
 
 		btnMakeAccusation.addActionListener(e -> {
@@ -225,7 +235,6 @@ public class CluedoJFrame extends JFrame {
 				for(Card c : Initializer.getEnvelope().getCards()){
 					System.out.println(c.toString());
 				}
-				
 				
 				Accusation status = game.makeAccusation(game.currentPlayer());
 				if(status == null){
