@@ -161,6 +161,12 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	public static List<Player> currentPlayers(){
 		return currentPlayers;
 	}
+	
+	public Player currentPlayer(){
+		return this.currentPlayer;
+	}
+	
+	
 	/**
 	 * Returns the number of players that are playing.
 	 * @return
@@ -186,17 +192,16 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		Collections.shuffle(singleDie);
 		int roll = singleDie.get(0);
 		currentRoll += roll;
-		System.out.println(currentRoll);
+		//System.out.println(currentRoll);
 		return roll;
 	}
 	
 	/**
-	 * Repaints the Canvas and the JFrame whenever a move is made.
+	 * Repaints the Canvas and the JFrame whenever a move is made. This ensures that the canvas is updated appropriately whenever it is cleaned.
 	 */
-	public void cleanCanvas(){
+	private void cleanCanvas(){
 		cluedoJFrame.repaint();
 		cluedoCanvas.repaint();
-		System.out.println("canvas is being repainted");
 	}
 	
 	
@@ -213,7 +218,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		cluedoCanvas.setPlayerPosition(currentPlayers);
 		currentPlayer = currentPlayers.get(index);
 		cluedoJFrame.currentPlayerText.setText(currentPlayer.getName() + "\r\n");
-		System.out.print("hello");
+		System.out.print("hello\n");
 		cluedoCanvas.paint(cluedoCanvas.getGraphics());
 		System.out.println("Finished drawing characters");
 	}
@@ -270,7 +275,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 					isInteger = true;
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "You must enter Integer values only.");
+				JOptionPane.showMessageDialog(null, "You must enter Integer values only.", "GAME ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		return askCharacters(Integer.parseInt(numPlayers));
@@ -600,7 +605,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	}
 
 	/**
-	 * Indicates an attempt to make an invalid move.
+	 * Indicates an attempt to make an invalid move. Whenever an invalid move is thrown, it also brings up a Warning Dialog.
 	 */
 	public static class InvalidMove extends Exception {
 		public InvalidMove(String msg) {

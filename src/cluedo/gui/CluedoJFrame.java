@@ -73,11 +73,14 @@ public class CluedoJFrame extends JFrame {
 	/* Various text panes and text Fields. */
 	private JTextPane current_players_pane;
 	public JTextField currentPlayerText; // this is where one would set the
+
+	private JPanel leftPanel;
+
 	/**
 	 * The dice canvas - where the dice images are drawn.
 	 */
 	private DiceCanvas dicecanvas = new DiceCanvas();
-	
+
 	/*
 	 * The canvas representing the pop up window, for drawing the players hand.
 	 */
@@ -86,7 +89,6 @@ public class CluedoJFrame extends JFrame {
 	 * The JFrame for the cardvancas.
 	 */
 	private CardsFrame cardsframe;
-
 
 	/**
 	 * Launch the application.
@@ -110,7 +112,8 @@ public class CluedoJFrame extends JFrame {
 	public CluedoJFrame() {
 		game = new CluedoGame(this);// create a new instance of the game.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 942, 700);
+		setBounds(100, 100, 775, 700);
+		this.setResizable(false);
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -140,30 +143,30 @@ public class CluedoJFrame extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 
 		// create JPanel
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.WEST);
-		panel_1.setLayout(new MigLayout("", "[113px,grow]", "[23px][][][][][][][][45px][][][][][grow]"));
+		leftPanel = new JPanel();
+		contentPane.add(leftPanel, BorderLayout.WEST);
+		leftPanel.setLayout(new MigLayout("", "[113px,grow]", "[23px][][][][][][][][45px][][][][][grow]"));
 
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
 
 		JLabel currentPlyrLabel = new JLabel("Current Player:");
 		currentPlyrLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_1.add(currentPlyrLabel, "cell 0 0");
+		leftPanel.add(currentPlyrLabel, "cell 0 0");
 
 		currentPlayerText = new JTextField();
 		currentPlayerText.setText("null\r\n");
 		currentPlayerText.setEditable(false);
-		panel_1.add(currentPlayerText, "cell 0 1,growx");
+		leftPanel.add(currentPlayerText, "cell 0 1,growx");
 		currentPlayerText.setColumns(10);
 		btnStartTurn = new JButton("Start Turn");
-		panel_1.add(btnStartTurn, "cell 0 2,alignx left");
+		leftPanel.add(btnStartTurn, "cell 0 2,alignx left");
 
-		//Button for when a move is made.
+		// Button for when a move is made.
 		btnMakeMove = new JButton("Make Move");
-		panel_1.add(btnMakeMove, "cell 0 3");
-		btnMakeMove.addActionListener(e ->{
-			if(game.moveMade){
+		leftPanel.add(btnMakeMove, "cell 0 3");
+		btnMakeMove.addActionListener(e -> {
+			if (game.moveMade) {
 				game.reset();
 				return;
 			}
@@ -171,45 +174,61 @@ public class CluedoJFrame extends JFrame {
 			game.btnPressed = true;
 		});
 
-		//Button for when a turn has ended.
+		// Button for when a turn has ended.
 		btnEndTurn = new JButton("End Turn");
-		panel_1.add(btnEndTurn, "cell 0 4,alignx left");
+		leftPanel.add(btnEndTurn, "cell 0 4,alignx left");
 
-		//Button to display the current players hand.
+		// Button to display the current players hand.
 		btnDisplayHand = new JButton("Display your Hand");
 		btnDisplayHand.setHorizontalAlignment(SwingConstants.RIGHT);
-		panel_1.add(btnDisplayHand, "cell 0 5");
+		leftPanel.add(btnDisplayHand, "cell 0 5");
 
-		//Button to roll the dice.
+		// Button to roll the dice.
 		btnRollDice = new JButton("Roll the Dice");
-		panel_1.add(btnRollDice, "cell 0 6");
+		leftPanel.add(btnRollDice, "cell 0 6");
 
 		btnShowPrevPlayersCards = new JButton("Previous Players Cards");
 
-		panel_1.add(btnShowPrevPlayersCards, "cell 0 7");
+		leftPanel.add(btnShowPrevPlayersCards, "cell 0 7");
 
-		panel_1.add(dicecanvas, "cell 0 8,aligny top");
-				
-				btnMakeSuggestion = new JButton("Make Suggestion");
-				panel_1.add(btnMakeSuggestion, "cell 0 9");
-				
-				btnMakeAccusation = new JButton("Make Accusation");
-				panel_1.add(btnMakeAccusation, "cell 0 10");
-		
-				JLabel lblListOfPlayers = new JLabel("List of available players: ");
-				panel_1.add(lblListOfPlayers, "cell 0 11");
+		leftPanel.add(dicecanvas, "cell 0 8,aligny top");
+
+		btnMakeSuggestion = new JButton("Make Suggestion");
+		leftPanel.add(btnMakeSuggestion, "cell 0 9");
+
+		btnMakeAccusation = new JButton("Make Accusation");
+		leftPanel.add(btnMakeAccusation, "cell 0 10");
+
+		JLabel lblListOfPlayers = new JLabel("List of available players: ");
+		leftPanel.add(lblListOfPlayers, "cell 0 11");
 		current_players_pane = new JTextPane();
 		current_players_pane.setEditable(false);
-		panel_1.add(current_players_pane, "cell 0 12,grow");
+		leftPanel.add(current_players_pane, "cell 0 12,grow");
 
 		contentPane.add(game.cluedoCanvas, BorderLayout.CENTER);
 
+		// this sets up the action listeners.
+		setupActionListeners();
+	}
+
+	/**
+	 * This method sets up and initializes the action listeners.
+	 */
+	private void setupActionListeners() {
 		/***************************
 		 * START OF ACTION/MOUSE LISTENER STUFF
 		 ***************************/
 		game.cluedoCanvas.addMouseListener(game);
 
-		btnEndTurn.addActionListener(e->{
+		btnMakeSuggestion.addActionListener(e -> {
+			game.makeSuggestion(game.currentPlayer());
+		});
+
+		btnMakeAccusation.addActionListener(e -> {
+
+		});
+
+		btnEndTurn.addActionListener(e -> {
 			game.reset();
 		});
 
@@ -218,7 +237,6 @@ public class CluedoJFrame extends JFrame {
 				game.setOption("d");
 			}
 		});
-
 
 		mntmStartGame.addActionListener(e -> {
 			game.resetAll();
@@ -234,8 +252,8 @@ public class CluedoJFrame extends JFrame {
 				"This game was created by Casey Huang and Linus Go for their SWEN 222 Project. \n (c) 2016 All rights reserved."));
 
 		btnDisplayHand.addActionListener(e -> {
-			//cardsframe = new CardsFrame();
-			if(game.moveMade){
+			// cardsframe = new CardsFrame();
+			if (game.moveMade) {
 				game.reset();
 				return;
 			}
@@ -243,14 +261,14 @@ public class CluedoJFrame extends JFrame {
 		});
 
 		btnRollDice.addActionListener(e -> {
-			if(game.moveMade){
+			if (game.moveMade) {
 				game.reset();
 				return;
 			}
-			if(game.isMoveSelection && !game.rolled){
+			if (game.isMoveSelection && !game.rolled) {
 				dicecanvas.setDiceOne(game.diceRoll());
 				dicecanvas.setDiceTwo(game.diceRoll());
-				panel_1.repaint();
+				leftPanel.repaint();
 				game.rolled = true;
 			}
 		});
@@ -258,10 +276,4 @@ public class CluedoJFrame extends JFrame {
 		 * END OF ACTION/MOUSE LISTENER STUFF
 		 ***************************/
 	}
-	
-
-
-
-
-
 }
