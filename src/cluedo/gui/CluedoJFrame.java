@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 
 import cluedo.assets.Player;
 import cluedo.assets.Position;
+import cluedo.cards.Card;
+import cluedo.arguments.Accusation;
 import cluedo.assets.Character;
 import cluedo.main.CluedoGame;
 import cluedo.main.Initializer;
@@ -165,14 +167,7 @@ public class CluedoJFrame extends JFrame {
 		// Button for when a move is made.
 		btnMakeMove = new JButton("Make Move");
 		leftPanel.add(btnMakeMove, "cell 0 3");
-		btnMakeMove.addActionListener(e -> {
-			if (game.moveMade) {
-				game.reset();
-				return;
-			}
-			game.isMoveSelection = true;
-			game.btnPressed = true;
-		});
+		
 
 		// Button for when a turn has ended.
 		btnEndTurn = new JButton("End Turn");
@@ -208,7 +203,7 @@ public class CluedoJFrame extends JFrame {
 		contentPane.add(game.cluedoCanvas, BorderLayout.CENTER);
 
 		// this sets up the action listeners.
-		setupActionListeners();
+		this.setupActionListeners();
 	}
 
 	/**
@@ -225,7 +220,23 @@ public class CluedoJFrame extends JFrame {
 		});
 
 		btnMakeAccusation.addActionListener(e -> {
-
+			try {
+				
+				for(Card c : Initializer.getEnvelope().getCards()){
+					System.out.println(c.toString());
+				}
+				
+				
+				Accusation status = game.makeAccusation(game.currentPlayer());
+				if(status == null){
+					JOptionPane.showMessageDialog(null, "The accusation was incorrect.", "ACCUSATION INCORRECT", JOptionPane.ERROR_MESSAGE);
+				}else{
+					JOptionPane.showMessageDialog(null, "The accusation was Correct. Nice work!", "ACCUSATION CORRECT", JOptionPane.INFORMATION_MESSAGE);
+				}
+				
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		});
 
 		btnEndTurn.addActionListener(e -> {
@@ -271,6 +282,15 @@ public class CluedoJFrame extends JFrame {
 				leftPanel.repaint();
 				game.rolled = true;
 			}
+		});
+		
+		btnMakeMove.addActionListener(e -> {
+			if (game.moveMade) {
+				game.reset();
+				return;
+			}
+			game.isMoveSelection = true;
+			game.btnPressed = true;
 		});
 		/*********************
 		 * END OF ACTION/MOUSE LISTENER STUFF

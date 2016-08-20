@@ -433,6 +433,12 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * @return
 	 */
 	public Suggestion makeSuggestion(Player p){
+		if(!p.isInRoom()){
+			JOptionPane.showMessageDialog(null, "You must be in a room to make a suggestion", "GAME WARNING", JOptionPane.WARNING_MESSAGE);
+			return null;
+		}
+		
+		
 		/*if(!p.isInRoom()){
 			System.err.println("ERROR: Sorry, you must be in a room to make a suggestion.");
 			return null;
@@ -487,92 +493,122 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	}
 
 	/**
-	 * This makes an accusation.
+	 * This makes an accusation. TODO: need to fix bug where
 	 * @param p
 	 * @return
 	 */
-	public Accusation makeAccusation(Player p){
-		/*System.out.println("-----------ACCUSATION!-------------");
-		System.out.println("What cards do you want to nominate?");
-		System.out.println("----------------------------------");
-		System.out.println("AVAILABLE CARDS:");
-
-		//the objects for creating a suggestion.
-		WeaponCard weapon = null;
-		CharacterCard character = null;
-		RoomCard room = null;
-		int indexChoice = -1;
-
-		//sublists containing cards of a certain category.
-		List<WeaponCard> weapons = Initializer.getWeaponCards();
-		List<RoomCard> rooms = Initializer.getRoomCards();
-		List<CharacterCard> suspects = Initializer.getCharacterCards();
-		System.out.println("Instructions: Enter index of the item you want to nominate.");
-		for(int i = 0; i < 3;){
-			if(i == 0){
-				System.out.println("Step 1) Choose from available weapons: ");
-				int index = 0;
-				for(WeaponCard ww : weapons){
-					System.out.println(index + " "  + ww.toString());				
-					index++;
-				}
-				indexChoice = TextClient.askIndex(weapons);
-				weapon = (WeaponCard) weapons.get(indexChoice);
-				i++;
-			}else if(i == 1){
-				System.out.println("Step 2) Choose from available Rooms: ");
-				int index = 0;
-				for(RoomCard rr : rooms){
-					System.out.println(index + " "  + rr.toString());
-					index++;
-				}
-				indexChoice = TextClient.askIndex(rooms);
-				room = (RoomCard) rooms.get(indexChoice);
-				i++;
-			}else{
-				System.out.println("Step 3) Choose from available Suspects: ");
-				int index = 0;
-				for(CharacterCard cc : suspects){
-					System.out.println(index + " "  + cc.toString());
-					index++;
-				}
-				indexChoice = TextClient.askIndex(suspects);
-				character = (CharacterCard) suspects.get(indexChoice);
-				i++;
-			}
+	@SuppressWarnings("rawtypes")
+	public Accusation makeAccusation(Player p) throws CluedoGame.InvalidMove{
+		if(p == null){
+			JOptionPane.showMessageDialog(null, "You must have a current player to make an accusation", "GAME ERROR" ,JOptionPane.ERROR_MESSAGE);
+			return null;
 		}
-
-		Card[] env = Initializer.getEnvelope().getCards();
-
-		int count = 0;
-		for(Card card : env){
-			if(card instanceof WeaponCard){
-				if(card.equals(weapon)){
-					count++;
-				}
-			}else if(card instanceof CharacterCard){
-				if(card.equals(character)){
-					count++;
-				}
-			}else if(card instanceof RoomCard){
-				if(card.equals(room)){
-					count++;
-				}
-			}
+		
+		JOptionPane.showMessageDialog(null, "What cards do you want to nominate?", "ACCUSATION", JOptionPane.INFORMATION_MESSAGE);
+		
+		final Set<WeaponCard> weapons = new HashSet<>(Initializer.getWeaponCards());
+		final Set<RoomCard> rooms = new HashSet<>(Initializer.getRoomCards());
+		final Set<CharacterCard> suspects = new HashSet<>(Initializer.getCharacterCards());
+		WeaponCard weapon = this.askWeapons(weapons, p);
+		RoomCard room = this.askRooms(rooms, p);
+		CharacterCard character = this.askSuspects(suspects, p);
+		
+		Card[] solutionEnvelope = Initializer.getEnvelope().getCards();
+		System.out.println("Envelope:");
+		for(Card c : solutionEnvelope){
+			System.out.println(c.toString());
 		}
-		System.out.println("----------------------------------");
-		System.out.println(" CONFIRMED Accusation Pieces:     ");
-		System.out.println(" weapon: " + weapon);
-		System.out.println(" character: " + character);
-		System.out.println(" room: " + room);
-		System.out.println("----------------------------------");
-		Accusation ac = new Accusation(weapon, room, character, p,  Initializer.getEnvelope());
+		
+		Accusation ac = new Accusation(weapon, room, character, p, Initializer.getEnvelope());
 		if(ac.accusationStatus()){
 			return ac;
-		}*/
+		}
+		
 		return null;
 	}
+	
+	/**
+	 * This code allows us to select from a collection of weapons.
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private WeaponCard askWeapons(Collection <WeaponCard> weaponCol, Player p) {
+		JPanel panel = new JPanel();
+		panel.add(new JLabel("Please make a selection:"));
+		DefaultComboBoxModel model = new DefaultComboBoxModel();
+		for(WeaponCard wep : weaponCol){
+			model.addElement(wep.toString());
+		}
+		JComboBox comboBox = new JComboBox(model);
+		panel.add(comboBox);
 
+		int result = JOptionPane.showConfirmDialog(null, panel, "	1)	Choose a Weapon", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		switch (result) {
+		case JOptionPane.OK_OPTION:
+			System.out.println("You selected " + comboBox.getSelectedItem());
+			return new WeaponCard(new Weapon((String)comboBox.getSelectedItem()));
+		default:
+			return null;
+		}
+
+	} 
+	
+	/**
+	 * This code allows us to select from a collection of Rooms.
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private RoomCard askRooms(Collection<RoomCard> roomCol, Player p){
+		JPanel panel = new JPanel();
+		panel.add(new JLabel("Please make a selection:"));
+		DefaultComboBoxModel model = new DefaultComboBoxModel();
+		for(RoomCard roomCard : roomCol){
+		model.addElement(roomCard.toString());
+		}
+		JComboBox comboBox = new JComboBox(model);
+		panel.add(comboBox);
+		int result = JOptionPane.showConfirmDialog(null, panel, "	2)	Choose a Room", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		switch (result) {
+		case JOptionPane.OK_OPTION:
+			System.out.println("You selected " + comboBox.getSelectedItem());
+			return new RoomCard(new Room((String)comboBox.getSelectedItem()));
+		default:
+			return null;
+		}
+	}
+	
+	/**
+	 * This code allows us to select from a collection of Suspects.
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private CharacterCard askSuspects(Collection<CharacterCard> charCol, Player p){
+		
+		JPanel panel = new JPanel();
+		panel.add(new JLabel("Please make a selection:"));
+		DefaultComboBoxModel model = new DefaultComboBoxModel();
+		for(CharacterCard cc: charCol){
+			model.addElement(cc.toString());
+		}
+		JComboBox comboBox = new JComboBox(model);
+		panel.add(comboBox);
+		int result = JOptionPane.showConfirmDialog(null, panel, "	3)	Choose a suspect.", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		switch (result) {
+		case JOptionPane.OK_OPTION:
+			System.out.println("You selected " + comboBox.getSelectedItem());
+			for(CharacterCard cc : charCol){
+				if(cc.toString().equals(comboBox.getSelectedItem())){
+					System.out.println("they do match");
+					return cc;
+				}
+			}
+
+		default:
+			return null;
+		}
+	}
+	
+	
+	
+	
+	
 	/**
 	 * This checks if the game over. Returns true if so, returns false otherwise.
 	 * @return
