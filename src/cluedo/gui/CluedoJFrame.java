@@ -52,10 +52,7 @@ import java.awt.Color;
  * @author linus + casey
  *
  */
-public class CluedoJFrame extends JFrame {
-	
-	private static CluedoJFrame frame;
-	
+public class CluedoJFrame extends JFrame {	
 	
 	/* The left panel of the Class. */
 	private JPanel contentPane;
@@ -120,8 +117,8 @@ public class CluedoJFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new CluedoJFrame();
-					frame.setVisible(true);
+					CluedoJFrame theFrame = new CluedoJFrame();
+					theFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
