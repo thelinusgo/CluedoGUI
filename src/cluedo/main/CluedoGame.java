@@ -31,7 +31,7 @@ import cluedo.gui.CardsCanvas;
 import cluedo.gui.CluedoCanvas;
 import cluedo.gui.CluedoJFrame;
 /**
- * Creates a new instance of a Board, and runs the textClient.
+ * The heart of the Cluedo Game.
  * @author Casey & Linus
  *
  */

@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import cluedo.assets.Player;
 import cluedo.cards.Card;
+import cluedo.main.CluedoGame;
 
 /**
  * Canvas used to display the cards that a current Player has.
@@ -36,6 +37,15 @@ public class CardsCanvas extends JPanel{
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 	}
+	
+	/**
+	 * Repaints the canvas.
+	 */
+	public void cleanCanvas(){
+		this.repaint();
+	}
+	
+	
 
 	@Override
 	public Dimension getPreferredSize(){
@@ -49,9 +59,10 @@ public class CardsCanvas extends JPanel{
 		g.drawString("Weapons:", 5, 27);
 		g.drawString("Rooms:", 5, 52+Card.CARD_HT);
 		g.drawString("Characters: " , 5, (3*Card.CARD_HT)-35);
-		this.drawCards();
-		hasbeenPainted = true;
-
+		this.drawCards();		
+		
+		
+		
 	}
 
 	public void drawCards(){
@@ -61,7 +72,5 @@ public class CardsCanvas extends JPanel{
 			Card c = cards.get(i);
 			c.draw(this.getGraphics(), i);
 		}
-		
-
 	}
 }
