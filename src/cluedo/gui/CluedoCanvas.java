@@ -129,8 +129,6 @@ public class CluedoCanvas extends JPanel{
 		g2.setStroke(new BasicStroke(15));
 		g.drawRect(35, 20, 24*Tile.TILESIZE+10, 25*Tile.TILESIZE+10);
 		g2.setStroke(new BasicStroke(0));
-		
-		this.drawBoard();
 		//Draw images of rooms
 		g.drawImage(kitchenIm, xCanvas+kitchen.x*Tile.TILESIZE, yCanvas+kitchen.y*Tile.TILESIZE, kitchen.width*Tile.TILESIZE, kitchen.height*Tile.TILESIZE, null);
 		g.drawImage(ballroomIm, xCanvas+ballRm.x*Tile.TILESIZE, yCanvas+ballRm.y*Tile.TILESIZE, ballRm.width*Tile.TILESIZE, ballRm.height*Tile.TILESIZE, null);
@@ -142,6 +140,7 @@ public class CluedoCanvas extends JPanel{
 		g.drawImage(billiardRoomIm, xCanvas+billiardRm.x*Tile.TILESIZE, yCanvas+billiardRm.y*Tile.TILESIZE, billiardRm.width*Tile.TILESIZE+10, billiardRm.height*Tile.TILESIZE, null);
 		g.drawImage(conservatoryIm, xCanvas+conservatory.x*Tile.TILESIZE, yCanvas+conservatory.y*Tile.TILESIZE, conservatory.width*Tile.TILESIZE+10, conservatory.height*Tile.TILESIZE, null);
 		g.drawImage(cluedoIm, xCanvas+this.cluedo.x*Tile.TILESIZE, yCanvas+this.cluedo.y*Tile.TILESIZE, cluedo.width*Tile.TILESIZE, cluedo.height*Tile.TILESIZE, null);
+		this.drawBoard();
 	}
 
 	private void initialise(){
@@ -760,7 +759,6 @@ public class CluedoCanvas extends JPanel{
 	 * @throws InvalidMove
 	 */
 	public void move(int directionX, int directionY, Player p, List<Player> currentPlayers) throws InvalidMove{
-		List<Room> rooms = CluedoGame.initializer.getRooms();
 		int x = p.position().getX() + directionX;
 		int y = p.position().getY() + directionY;
 		if(isValidMove(new Position(x, y), directionX, directionY, p, currentPlayers)){
