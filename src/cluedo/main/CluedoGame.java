@@ -263,6 +263,9 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	public void cleanCanvas(){
 		cluedoJFrame.repaint();
 		cluedoCanvas.repaint();
+		if(cluedoJFrame.getCardsframe() != null){
+		cluedoJFrame.getCardsframe().repaint();
+		}	
 	}
 
 	/**
