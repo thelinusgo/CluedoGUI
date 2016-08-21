@@ -29,8 +29,6 @@ public class Player {
 	private List<Position> coordinates = new ArrayList<Position>();
 	private Door door;
 	private boolean out;
-	
-	private CardsCanvas cardsCanvas;
 
 	/**
 	 * Create a Player with a given name, a hand, a current character, and their x and y position.
@@ -84,13 +82,6 @@ public class Player {
 	 */
 	public void addCard(Card c){
 		this.hand.add(c);
-	}
-	
-	/**
-	 * Sets up the card canvas for this player.
-	 */
-	public void setCardCanvas(){
-		cardsCanvas = new CardsCanvas(this.hand);
 	}
 
 	/**
@@ -237,9 +228,5 @@ public class Player {
 	 */
 	public String toString(){
 		return "Name: " + this.name + ", Character Piece: " + this.character.name();
-	}
-
-	public CardsCanvas getCardsCanvas() {
-		return cardsCanvas;
 	}
 }

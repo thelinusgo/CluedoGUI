@@ -372,10 +372,7 @@ public class CluedoJFrame extends JFrame {
 				return;
 			}
 			cardsframe = new CardsFrame(game.currentPlayer().getCards());
-			cardsframe.canvas().cleanCanvas();
-			//game.currentPlayer().setCardCanvas();
-			
-			
+			//cardsframe.canvas().cleanCanvas();
 		});
 
 		btnRollDice.addActionListener(e -> {

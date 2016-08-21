@@ -516,12 +516,9 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 
 		JOptionPane.showMessageDialog(null, "What cards do you want to nominate?", "ACCUSATION", JOptionPane.INFORMATION_MESSAGE);
 
-		final Set<WeaponCard> weapons = new HashSet<>(Initializer.getWeaponCards());
-		final Set<RoomCard> rooms = new HashSet<>(Initializer.getRoomCards());
-		final Set<CharacterCard> suspects = new HashSet<>(Initializer.getCharacterCards());
-		WeaponCard weapon = this.askWeapons(weapons, p);
-		RoomCard room = this.askRooms(rooms, p);
-		CharacterCard character = this.askSuspects(suspects, p);
+		WeaponCard weapon = this.askWeapons(Initializer.getWeaponCards(), p);
+		RoomCard room = this.askRooms(Initializer.getRoomCards(), p);
+		CharacterCard character = this.askSuspects(Initializer.getCharacterCards(), p);
 
 		Card[] solutionEnvelope = Initializer.getEnvelope().getCards();
 		System.out.println("Envelope:");
@@ -544,7 +541,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * This code allows us to select from a collection of weapons.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private WeaponCard askWeapons(Collection <WeaponCard> weaponCol, Player p) {
+	private WeaponCard askWeapons(WeaponCard[] weaponCol, Player p) {
 		JPanel panel = new JPanel();
 		panel.add(new JLabel("Please make a selection:"));
 		DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -570,7 +567,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * @param name - name of card
 	 * @return
 	 */
-	private WeaponCard findWeaponCard(Collection <WeaponCard> weaponCol, String name){
+	private WeaponCard findWeaponCard(WeaponCard[] weaponCol, String name){
 		for(WeaponCard wc : weaponCol){
 			if(wc.getName().equals(name)){
 				return wc;
@@ -586,7 +583,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * @return RoomCard
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private RoomCard askRooms(Collection<RoomCard> roomCol, Player p){
+	private RoomCard askRooms(RoomCard[] roomCol, Player p){
 		JPanel panel = new JPanel();
 		panel.add(new JLabel("Please make a selection:"));
 		DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -611,7 +608,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * @param name - name of card
 	 * @return
 	 */
-	private RoomCard findRoomCard(Collection<RoomCard> roomCol, String name){
+	private RoomCard findRoomCard(RoomCard[] roomCol, String name){
 		for(RoomCard rc : roomCol){
 			if(rc.getName().equals(name)){
 				return rc;
@@ -624,7 +621,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * This code allows us to select from a collection of Suspects.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private CharacterCard askSuspects(Collection<CharacterCard> charCol, Player p){
+	private CharacterCard askSuspects(CharacterCard[] charCol, Player p){
 
 		JPanel panel = new JPanel();
 		panel.add(new JLabel("Please make a selection:"));
