@@ -4,7 +4,7 @@ import cluedo.cards.Card;
 import cluedo.cards.CharacterCard;
 import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
-import cluedo.main.CluedoGame;
+import cluedo.main.CluedoGameController;
 import cluedo.assets.*;
 import cluedo.assets.Character;
 
@@ -67,7 +67,7 @@ public class Suggestion extends Argument {
 			for(Player player : currentPlayers){
 				if(!player.equals(super.getCurrentPlayer())){
 					if(player.getCharacter().equals(cc.getObject())){
-						CluedoGame.cluedoCanvas.moveToRoom(player, roomCard.getObject());
+						CluedoGameController.cluedoCanvas.moveToRoom(player, roomCard.getObject());
 					}
 				}
 			}

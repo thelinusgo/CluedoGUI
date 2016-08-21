@@ -41,15 +41,15 @@ public class Initializer {
 	private long seed = System.nanoTime();
 
 	/*Initialise Rooms NB: not all rooms have weapons.  */
-	public Room kitchen = new Room(CluedoGame.kitchenCard, "Kitchen", 0, 1, 6, 6, true);
-	public Room diningrm = new Room(CluedoGame.diningCard, "Dining Room", 0, 9, 8, 7, false);
-	public Room ballRm = new Room(CluedoGame.ballCard, "Ball Room", 8, 1, 8, 7, false);
-	public Room conservatory = new Room(CluedoGame.conservatoryCard, "Conservatory", 18, 1, 7, 5, true);
-	public Room billRm = new Room(CluedoGame.billiardCard, "Billiard Room", 19, 8, 6, 5, false);
-	public Room lib = new Room(CluedoGame.libraryCard, "Library", 18, 14, 7, 5, false);
-	public Room study = new Room(CluedoGame.studyCard, "Study", 17, 21, 8, 4, true);
-	public Room hall = new Room(CluedoGame.hallCard, "Hall", 9, 18, 6, 7, false);
-	public Room lounge = new Room(CluedoGame.loungeCard, "Lounge", 0, 19, 7, 6, true);
+	public Room kitchen = new Room(CluedoGameController.kitchenCard, "Kitchen", 0, 1, 6, 6, true);
+	public Room diningrm = new Room(CluedoGameController.diningCard, "Dining Room", 0, 9, 8, 7, false);
+	public Room ballRm = new Room(CluedoGameController.ballCard, "Ball Room", 8, 1, 8, 7, false);
+	public Room conservatory = new Room(CluedoGameController.conservatoryCard, "Conservatory", 18, 1, 7, 5, true);
+	public Room billRm = new Room(CluedoGameController.billiardCard, "Billiard Room", 19, 8, 6, 5, false);
+	public Room lib = new Room(CluedoGameController.libraryCard, "Library", 18, 14, 7, 5, false);
+	public Room study = new Room(CluedoGameController.studyCard, "Study", 17, 21, 8, 4, true);
+	public Room hall = new Room(CluedoGameController.hallCard, "Hall", 9, 18, 6, 7, false);
+	public Room lounge = new Room(CluedoGameController.loungeCard, "Lounge", 0, 19, 7, 6, true);
 
 	/**
 	 * Construct a new Board
@@ -75,12 +75,12 @@ public class Initializer {
 	 */
 	private void initializeWeapons(){
 		/*Fill the arraylist with weapons*/
-		weapons[0] = new Weapon(CluedoGame.candleCard, "Candlestick");
-		weapons[1] = new Weapon(CluedoGame.daggerCard, "Dagger");
-		weapons[2] = new Weapon(CluedoGame.leadPipeCard, "Lead Pipe");
-		weapons[3] = new Weapon(CluedoGame.revolverCard, "Revolver");
-		weapons[4] = new Weapon(CluedoGame.ropeCard, "Rope");
-		weapons[5] = new Weapon(CluedoGame.spannerCard, "Spanner");
+		weapons[0] = new Weapon(CluedoGameController.candleCard, "Candlestick");
+		weapons[1] = new Weapon(CluedoGameController.daggerCard, "Dagger");
+		weapons[2] = new Weapon(CluedoGameController.leadPipeCard, "Lead Pipe");
+		weapons[3] = new Weapon(CluedoGameController.revolverCard, "Revolver");
+		weapons[4] = new Weapon(CluedoGameController.ropeCard, "Rope");
+		weapons[5] = new Weapon(CluedoGameController.spannerCard, "Spanner");
 
 		/*Shuffle it so that a weapon will be in a random room each time. */
 		Collections.shuffle(Arrays.asList(weapons), new Random(seed)); //shuffle it
@@ -121,12 +121,12 @@ public class Initializer {
 	 */
 	private void initializeCharacters(){
 		/*Fill the ArrayList with people.. */
-		characters[0] = new Character(CluedoGame.missScarlett, "Miss Scarlet", new Color(255, 77, 77), new Position(7, 24));
-		characters[1] = new Character(CluedoGame.colonelMustard, "Colonel Mustard", new Color(255, 255, 77), new Position(0, 17));
-		characters[2] = new Character(CluedoGame.mrsWhite, "Mrs. White", Color.white, new Position(9, 0));
-		characters[3] = new Character(CluedoGame.theRevGreen, "The Reverend Green", new Color(0, 204, 0), new Position(14, 0));
-		characters[4] = new Character(CluedoGame.mrsPeacock, "Mrs. Peacock", new Color(153, 0, 204), new Position(23, 6));
-		characters[5] = new Character(CluedoGame.profPlum, "Professor Plum", new Color(0, 102, 204), new Position(23, 19));
+		characters[0] = new Character(CluedoGameController.missScarlett, "Miss Scarlet", new Color(255, 77, 77), new Position(7, 24));
+		characters[1] = new Character(CluedoGameController.colonelMustard, "Colonel Mustard", new Color(255, 255, 77), new Position(0, 17));
+		characters[2] = new Character(CluedoGameController.mrsWhite, "Mrs. White", Color.white, new Position(9, 0));
+		characters[3] = new Character(CluedoGameController.theRevGreen, "The Reverend Green", new Color(0, 204, 0), new Position(14, 0));
+		characters[4] = new Character(CluedoGameController.mrsPeacock, "Mrs. Peacock", new Color(153, 0, 204), new Position(23, 6));
+		characters[5] = new Character(CluedoGameController.profPlum, "Professor Plum", new Color(0, 102, 204), new Position(23, 19));
 	
 		/*Allows a List of the characters Names to be used/modified */
 		for(Character c : characters){
@@ -219,7 +219,7 @@ public class Initializer {
 				Room rm = rooms[i];
 				rm.addCharacter(c);
 				c.addRoom(rm);
-				CluedoGame.cluedoCanvas.moveToRoom(p, rm);
+				CluedoGameController.cluedoCanvas.moveToRoom(p, rm);
 			}
 		}
 	}

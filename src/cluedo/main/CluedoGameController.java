@@ -29,13 +29,12 @@ import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
 import cluedo.gui.CardsCanvas;
 import cluedo.gui.CluedoCanvas;
-import cluedo.gui.CluedoJFrame;
 /**
  * The heart of the Cluedo Game.
  * @author Casey & Linus
  *
  */
-public class CluedoGame implements MouseMotionListener, MouseListener{
+public class CluedoGameController implements MouseMotionListener, MouseListener{
 	//Setup Card Images
 	/*Fields to represent the room Cards. */
 	public static BufferedImage kitchenCard;
@@ -138,7 +137,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	/**
 	 * The current player of the round.
 	 */
-	private Player currentPlayer; //the current player of the round.
+	private static Player currentPlayer; //the current player of the round.
 
 	/** If player has made a move*/
 	public boolean moveMade = false;
@@ -169,12 +168,21 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	/**
 	 * Store JFrame
 	 */
-	private CluedoJFrame cluedoJFrame;
+	private CluedoView cluedoJFrame;
 
 	/**
 	 * Construct a new instance of the cluedo game. Initialize the fields.
 	 */
-	public CluedoGame(CluedoJFrame cluedoJF){
+	
+	
+	public static Player getTheCurrentPlayer(){
+		return currentPlayer;
+	}
+	
+	
+	
+	
+	public CluedoGameController(CluedoView cluedoJF){
 		try {
 			//load in the weapon images.
 			candleCard = ImageIO.read(new File("CandleStick.JPG"));
@@ -394,72 +402,15 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	//////////////////////////
 	/*END OF SPECIAL METHODS*/
 
-	/**
-	 * This method performs a given option, based off the users input.
-	 * m is move, c is current cards, d is show previous player cards, a is accusation and s is for suggestion.
-	 * @param option
-	 * @param currentPlayer
-	 * @throws InvalidMove
-	 */
-	public void doOption() throws InvalidMove{
-		switch(option){
-		case "c":
-			System.out.println("Your current cards.");
-			for(Card c : currentPlayer.getCards()){
-				System.out.println(c.toString());
-			}
-			break;
-		case "d":
-			if(!showCards.isEmpty()){
-				System.out.println("Show all previous players' cards");
-				/*for(List<Card> lc : showCards){
-					for(Card c : lc){
-						System.out.println(c.toString());
-					}
-				}*/
-			}else{
-				System.out.println("No cards to show.");
-			}
-			break;
-		case "a":
-			System.out.println("Player " + currentPlayer.getName() + " wishes to make an accusation.");
-			accusation = makeAccusation(currentPlayer);
-			if(accusation == null){
-				System.out.println("The accusation pieces did not match."); 
-				System.out.println("You can no longer make a move.");
-				for(Card c : currentPlayer.getCards()){
-					showCards.add(c);
-				}
-				cardsCanvas = new CardsCanvas(showCards);
-			}
-			moveMade = true;
-			break;
-		case "s":
 
-			System.out.println("Player " + currentPlayer.getName() + " wishes to make an suggestion.");
-			Suggestion sugg = makeSuggestion(currentPlayer);
-
-			if(sugg == null){
-				break;
-			}
-
-			if(sugg.checkSuggestion(currentPlayers)){
-				System.out.println("At least one extra card was found");
-			}else{
-				System.out.println("no extra cards were found");
-			}
-			prevOption = "s";
-			break;
-		}
-	}
 
 	/**
-	 * This makes an accusation.
+	 * This makes an suggestion, by prompting the user for information..
 	 * @param p
 	 * @return
 	 * @throws InvalidMove 
 	 */
-	public Suggestion makeSuggestion(Player p){
+	public static Suggestion makeSuggestion(Player p){
 		if(p == null){
 			JOptionPane.showMessageDialog(null, "You must have a current player to make an accusation", "GAME ERROR" ,JOptionPane.ERROR_MESSAGE);
 			return null;
@@ -471,8 +422,8 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 
 		JOptionPane.showMessageDialog(null, "What cards do you want to nominate?", "SUGGESTION", JOptionPane.INFORMATION_MESSAGE);
 
-		WeaponCard weapon = this.askWeapons(Initializer.getWeaponCards(), p);
-		CharacterCard character = this.askSuspects(Initializer.getCharacterCards(), p);
+		WeaponCard weapon = askWeapons(Initializer.getWeaponCards(), p);
+		CharacterCard character = askSuspects(Initializer.getCharacterCards(), p);
 		RoomCard room = findRoom(p.getRoom());
 		
 		Suggestion sugg = new Suggestion(weapon, room, character, p);
@@ -491,7 +442,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * @param r
 	 * @return
 	 */
-	private RoomCard findRoom(Room r){
+	private static RoomCard findRoom(Room r){
 		for(RoomCard rc : initializer.getRoomCards()){
 			if(rc.getObject().equals(r)){
 				return rc;
@@ -506,7 +457,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	public Accusation makeAccusation(Player p) throws CluedoGame.InvalidMove{
+	public static Accusation makeAccusation(Player p) throws CluedoGameController.InvalidMove{
 		if(p == null){
 			JOptionPane.showMessageDialog(null, "You must have a current player to make an accusation", "GAME ERROR" ,JOptionPane.ERROR_MESSAGE);
 			return null;
@@ -514,9 +465,9 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 
 		JOptionPane.showMessageDialog(null, "What cards do you want to nominate?", "ACCUSATION", JOptionPane.INFORMATION_MESSAGE);
 
-		WeaponCard weapon = this.askWeapons(Initializer.getWeaponCards(), p);
-		RoomCard room = this.askRooms(Initializer.getRoomCards(), p);
-		CharacterCard character = this.askSuspects(Initializer.getCharacterCards(), p);
+		WeaponCard weapon = askWeapons(Initializer.getWeaponCards(), p);
+		RoomCard room = askRooms(Initializer.getRoomCards(), p);
+		CharacterCard character = askSuspects(Initializer.getCharacterCards(), p);
 
 		Card[] solutionEnvelope = Initializer.getEnvelope().getCards();
 		System.out.println("Envelope:");
@@ -539,7 +490,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * This code allows us to select from a collection of weapons.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private WeaponCard askWeapons(WeaponCard[] weaponCol, Player p) {
+	private static WeaponCard askWeapons(WeaponCard[] weaponCol, Player p) {
 		JPanel panel = new JPanel();
 		panel.add(new JLabel("Please make a selection:"));
 		DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -549,7 +500,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		JComboBox comboBox = new JComboBox(model);
 		panel.add(comboBox);
 
-		int result = JOptionPane.showConfirmDialog(null, panel, "	1)	Choose a Weapon", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int result = JOptionPane.showConfirmDialog(null, panel, "	1)	Choose a Weapon", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
 		switch (result) {
 		case JOptionPane.OK_OPTION:
 			System.out.println("You selected " + comboBox.getSelectedItem());
@@ -565,7 +516,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * @param name - name of card
 	 * @return
 	 */
-	private WeaponCard findWeaponCard(WeaponCard[] weaponCol, String name){
+	private static WeaponCard findWeaponCard(WeaponCard[] weaponCol, String name){
 		for(WeaponCard wc : weaponCol){
 			if(wc.getObject().weaponName().equals(name)){
 				return wc;
@@ -581,7 +532,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * @return RoomCard
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private RoomCard askRooms(RoomCard[] roomCol, Player p){
+	private static RoomCard askRooms(RoomCard[] roomCol, Player p){
 		JPanel panel = new JPanel();
 		panel.add(new JLabel("Please make a selection:"));
 		DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -590,7 +541,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		}
 		JComboBox comboBox = new JComboBox(model);
 		panel.add(comboBox);
-		int result = JOptionPane.showConfirmDialog(null, panel, "	2)	Choose a Room", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int result = JOptionPane.showConfirmDialog(null, panel, "	2)	Choose a Room", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
 		switch (result) {
 		case JOptionPane.OK_OPTION:
 			System.out.println("You selected " + comboBox.getSelectedItem());
@@ -606,7 +557,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * @param name - name of card
 	 * @return
 	 */
-	private RoomCard findRoomCard(RoomCard[] roomCol, String name){
+	private static RoomCard findRoomCard(RoomCard[] roomCol, String name){
 		for(RoomCard rc : roomCol){
 			if(rc.getName().equals(name)){
 				return rc;
@@ -619,7 +570,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * This code allows us to select from a collection of Suspects.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private CharacterCard askSuspects(CharacterCard[] charCol, Player p){
+	private static CharacterCard askSuspects(CharacterCard[] charCol, Player p){
 
 		JPanel panel = new JPanel();
 		panel.add(new JLabel("Please make a selection:"));
@@ -629,7 +580,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		}
 		JComboBox comboBox = new JComboBox(model);
 		panel.add(comboBox);
-		int result = JOptionPane.showConfirmDialog(null, panel, "	3)	Choose a suspect.", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int result = JOptionPane.showConfirmDialog(null, panel, "	3)	Choose a suspect.", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
 		switch (result) {
 		case JOptionPane.OK_OPTION:
 			System.out.println("You selected " + comboBox.getSelectedItem());

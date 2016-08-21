@@ -1,4 +1,4 @@
-package cluedo.gui;
+package cluedo.main;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -10,11 +10,11 @@ import javax.swing.border.EmptyBorder;
 import cluedo.assets.Player;
 import cluedo.assets.Position;
 import cluedo.cards.Card;
+import cluedo.gui.CardsJFrame;
+import cluedo.gui.DiceCanvas;
 import cluedo.arguments.Accusation;
 import cluedo.arguments.Suggestion;
 import cluedo.assets.Character;
-import cluedo.main.CluedoGame;
-import cluedo.main.Initializer;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -52,7 +52,7 @@ import java.awt.Color;
  * @author linus + casey
  *
  */
-public class CluedoJFrame extends JFrame {	
+public class CluedoView extends JFrame {	
 	
 	/* The left panel of the Class. */
 	private JPanel contentPane;
@@ -68,7 +68,7 @@ public class CluedoJFrame extends JFrame {
 	private JMenuItem mntmAboutCluedogui;
 	private JMenu mnHelp;
 	/* Holds an instance of the game.. */
-	private static CluedoGame game;
+	private static CluedoGameController game;
 	/* JButtons */
 	private JButton btnStartTurn;
 	private JButton btnEndTurn;
@@ -117,7 +117,7 @@ public class CluedoJFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CluedoJFrame theFrame = new CluedoJFrame();
+					CluedoView theFrame = new CluedoView();
 					theFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -129,9 +129,9 @@ public class CluedoJFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CluedoJFrame() {
+	public CluedoView() {
 		super("Canus Studios Present: The Game of Cluedo");
-		game = new CluedoGame(this);// create a new instance of the game.
+		game = new CluedoGameController(this);// create a new instance of the game.
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter(){
 			
@@ -333,6 +333,14 @@ public class CluedoJFrame extends JFrame {
 					JOptionPane.showMessageDialog(null, "The accusation was incorrect.", "ACCUSATION INCORRECT", JOptionPane.ERROR_MESSAGE);
 				}else{
 					JOptionPane.showMessageDialog(null, "The accusation was Correct. Nice work!", "ACCUSATION CORRECT", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, game.currentPlayer().getName() + " has won the game.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+					btnStartTurn.setEnabled(false);
+					btnEndTurn.setEnabled(false);
+					btnMakeMove.setEnabled(false);
+					btnRollDice.setEnabled(false);
+					btnMakeSuggestion.setEnabled(false);
+					btnMakeAccusation.setEnabled(false);
+					btnShowPrevPlayersCards.setEnabled(false);
 				}
 				
 			} catch (Exception e1) {

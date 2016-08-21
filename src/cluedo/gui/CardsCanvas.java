@@ -16,7 +16,7 @@ import cluedo.cards.Card;
 import cluedo.cards.CharacterCard;
 import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
-import cluedo.main.CluedoGame;
+import cluedo.main.CluedoGameController;
 
 /**
  * Canvas used to display the cards that a current Player has.

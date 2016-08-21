@@ -8,7 +8,7 @@ import java.util.*;
 import cluedo.assets.tiles.Tile;
 import cluedo.cards.Card;
 import cluedo.gui.CardsCanvas;
-import cluedo.main.CluedoGame;
+import cluedo.main.CluedoGameController;
 
 /**
  * Class that represents a player in Cluedo.
