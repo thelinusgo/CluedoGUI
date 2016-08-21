@@ -469,23 +469,28 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			return null;
 		}
 
-		JOptionPane.showMessageDialog(null, "What cards do you want to nominate?", "ACCUSATION", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, "What cards do you want to nominate?", "SUGGESTION", JOptionPane.INFORMATION_MESSAGE);
 
-		Set<WeaponCard> weapons = new HashSet<>();
-		Set<CharacterCard> suspects = new HashSet<>();
+		WeaponCard weapon = this.askWeapons(Initializer.getWeaponCards(), p);
+		CharacterCard character = this.askSuspects(Initializer.getCharacterCards(), p);
+		Room currentRoom = p.getRoom();
+		
+		Suggestion sugg = new Suggestion(weapon, findRoom(currentRoom), character, p);
+		
+		if(sugg.checkSuggestion(currentPlayers)){
+			System.out.println("At least one extra card was found");
+			JOptionPane.showMessageDialog(null, "At least one extra card was found", "Notice", JOptionPane.INFORMATION_MESSAGE);
 
-		for(Card c : p.getCards()){
-			if(c instanceof WeaponCard){
-				weapons.add((WeaponCard)c);
-			}else if(c instanceof CharacterCard){
-				suspects.add((CharacterCard)c);
-			}
+		}else{
+			JOptionPane.showMessageDialog(null, "no extra cards were found", "Notice", JOptionPane.INFORMATION_MESSAGE);
+			System.out.println("no extra cards were found");
 		}
-
-		WeaponCard weapon = this.askWeapons(weapons, p);
-		CharacterCard character = this.askSuspects(suspects, p);
-
-		return new Suggestion(weapon, findRoom(p.getRoom()), character, p);
+		
+		
+		
+		
+		return sugg;
+		
 	}
 
 	/**
