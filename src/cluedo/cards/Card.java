@@ -86,8 +86,11 @@ public abstract class Card<E> {
 	public E getObject(){
 	return this.item;	
 	}
-
-	public void draw(Graphics g, int i) {
-		
-	}
+	
+	/**
+	 * Draws a Card with the specified dimensions.
+	 * @param g
+	 * @param i
+	 */
+	public abstract void draw(Graphics g, int i);
 }

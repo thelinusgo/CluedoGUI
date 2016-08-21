@@ -16,6 +16,7 @@ import cluedo.cards.Card;
 
 /**
  * Canvas used to display the cards that a current Player has.
+ * This is drawn on an attached JFrame.
  * @author linus
  *
  */
@@ -27,6 +28,7 @@ public class CardsCanvas extends JPanel{
 
 	public CardsCanvas(List<Card> cards){
 		this.cards = cards;
+		
 	}
 
 	@Override
@@ -36,7 +38,7 @@ public class CardsCanvas extends JPanel{
 
 	@Override
 	public Dimension getPreferredSize(){
-		return new Dimension(640,552);
+		return new Dimension(1024,768);
 	}
 
 	@Override
@@ -47,16 +49,16 @@ public class CardsCanvas extends JPanel{
 		g.drawString("Rooms:", 5, 52+Card.CARD_HT);
 		g.drawString("Characters: " , 5, (3*Card.CARD_HT)-35);
 		this.drawCards();
+
 	}
 
 	public void drawCards(){
+		System.out.println("draw cards is being called.");
+		System.out.println("cards size: " + cards.size());
 		for(int i = 0; i < cards.size(); i++){
 			Card c = cards.get(i);
 			c.draw(this.getGraphics(), i);
+			this.repaint();
 		}
 	}
-
-
-
-
 }

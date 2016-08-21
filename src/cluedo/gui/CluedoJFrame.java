@@ -15,7 +15,6 @@ import cluedo.arguments.Suggestion;
 import cluedo.assets.Character;
 import cluedo.main.CluedoGame;
 import cluedo.main.Initializer;
-import cluedo.randomtesting.CardsFrame;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -91,7 +90,7 @@ public class CluedoJFrame extends JFrame {
 	private ImageIcon blue = new ImageIcon("blue.png");
 	private ImageIcon no_player = new ImageIcon("no_player.png");
 	
-	
+	private CardsFrame cardsframe;
 	
 	/**
 	 * The dice canvas - where the dice ImageIcons are drawn.
@@ -351,12 +350,21 @@ public class CluedoJFrame extends JFrame {
 				"This game was created by Casey Huang and Linus Go for their SWEN 222 Project. \n (c) 2016 All rights reserved."));
 
 		btnDisplayHand.addActionListener(e -> {
-			// cardsframe = new CardsFrame();
+			
 			if (game.moveMade) {
 				game.reset();
 				return;
 			}
+			
+			if(game.currentPlayer() == null){
+				JOptionPane.showMessageDialog(null, "Cannot check the hand of a non-existant player!", "Game ERROR", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			cardsframe = new CardsFrame(game.currentPlayer().getCards());
+			game.currentPlayer().setCardCanvas();
+			game.currentPlayer().getCardsCanvas().setVisible(true);
 			game.currentPlayer().getCardsCanvas().repaint();
+		
 		});
 
 		btnRollDice.addActionListener(e -> {
