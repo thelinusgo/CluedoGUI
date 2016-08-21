@@ -20,7 +20,7 @@ public class CardsFrame extends JFrame{
 		canvas = new CardsCanvas(hand);
 		getContentPane().setLayout(new BorderLayout()); // use border layout
 		getContentPane().add(canvas, BorderLayout.CENTER);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		pack(); // pack components tightly together
 		setResizable(false); // prevent us from being resizeable
 		setVisible(true); // make sure we are visible!	
