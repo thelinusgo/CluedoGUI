@@ -139,37 +139,28 @@ public class Initializer {
 	 */
 	private void fillList(){
 		/*Fill the cards arrayList with Room Cards */
-		for(Room r : rooms){
-			cards.add(new RoomCard(r, r.getImage()));
+		for(int i = 0; i < rooms.length; i++){
+			Room r = rooms[i];
+			Card c = new RoomCard(r, r.getImage());
+			cards.add(c);
+			roomCards[i] = (RoomCard) c;
 		}
 
 		/*Fill the cards arrayList with Weapon Cards */
-		for(Weapon w : weapons){
-			cards.add(new WeaponCard(w, w.getImage()));
+		for(int i = 0; i < weapons.length; i++){
+			Weapon w = weapons[i];
+			Card c = new WeaponCard(w, w.getImage());
+			cards.add(c);
+			weaponCards[i] = (WeaponCard) c;
 		}
 
 		/*Fill the cards ArrayList with Player Cards */
-		for(Character c : characters){
-			cards.add(new CharacterCard(c, c.getImage()));
+		for(int i = 0; i < characters.length; i++){
+			Character c = characters[i];
+			Card cd = new CharacterCard(c, c.getImage());
+			cards.add(cd);
+			characterCards[i] = (CharacterCard) cd;
 		}
-		
-		int index_R = 0;
-		int index_W = 0;
-		int index_C = 0;
-		for(int i = 0 ; i < cards.size(); i++){
-			Card c = cards.get(i);
-			if(c instanceof RoomCard){
-				roomCards[index_R] = (RoomCard) c;
-				index_R++;
-			}else if(c instanceof WeaponCard){
-				weaponCards[index_W] = (WeaponCard) c;
-				index_W++;
-			}else if(c instanceof CharacterCard){
-				characterCards[index_C] = (CharacterCard) c;
-				index_C++;
-			}
-		}
-
 		Collections.shuffle(cards, new Random(seed)); 
 	}
 
