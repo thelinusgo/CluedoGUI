@@ -4,9 +4,12 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -24,6 +27,7 @@ import cluedo.cards.Card;
 import cluedo.cards.CharacterCard;
 import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
+import cluedo.gui.CardsCanvas;
 import cluedo.gui.CluedoCanvas;
 import cluedo.gui.CluedoJFrame;
 /**
@@ -32,6 +36,33 @@ import cluedo.gui.CluedoJFrame;
  *
  */
 public class CluedoGame implements MouseMotionListener, MouseListener{
+	//Setup Card Images
+	/*Fields to represent the room Cards. */
+	public static BufferedImage kitchenCard;
+	public static BufferedImage ballCard;
+	public static BufferedImage conservatoryCard;
+	public static BufferedImage billiardCard;
+	public static BufferedImage libraryCard;
+	public static BufferedImage studyCard;
+	public static BufferedImage hallCard;
+	public static BufferedImage loungeCard;
+	public static BufferedImage diningCard;
+
+	/*Fields to represent the weapons.*/
+	public static BufferedImage candleCard;
+	public static BufferedImage daggerCard;
+	public static BufferedImage leadPipeCard;
+	public static BufferedImage revolverCard;
+	public static BufferedImage ropeCard;
+	public static BufferedImage spannerCard;
+
+	/*Fields that represent the Characters */
+	public static BufferedImage missScarlett;
+	public static BufferedImage colonelMustard;
+	public static BufferedImage mrsWhite;
+	public static BufferedImage theRevGreen;
+	public static BufferedImage mrsPeacock;
+	public static BufferedImage profPlum;
 
 	/**
 	 * This boolean represents if the arguments button has been pressed.
@@ -97,7 +128,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	/**
 	 * This rolls the dice, obtains the first element in the array.
 	 */
-	private int currentRoll = 0;
+	public int currentRoll = 0;
 
 	/**
 	 * The current player of the round.
@@ -139,6 +170,32 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * Construct a new instance of the cluedo game. Initialize the fields.
 	 */
 	public CluedoGame(CluedoJFrame cluedoJF){
+		try {
+			//load in the weapon images.
+			candleCard = ImageIO.read(new File("CandleStick.JPG"));
+			daggerCard = ImageIO.read(new File("Knife.JPG"));
+			leadPipeCard = ImageIO.read(new File("LeadPipe.JPG"));
+			revolverCard = ImageIO.read(new File("Revolver.JPG"));
+			ropeCard = ImageIO.read(new File("Rope.JPG"));
+			spannerCard = ImageIO.read(new File("Wrench.JPG"));
+			//the rooms...
+			kitchenCard = ImageIO.read(new File("Kitchen.JPG"));
+			ballCard = ImageIO.read(new File("Ballroom.JPG"));
+			libraryCard = ImageIO.read(new File("Library.JPG"));
+			studyCard = ImageIO.read(new File("Study.JPG"));
+			hallCard = ImageIO.read(new File("Hall.JPG"));
+			loungeCard = ImageIO.read(new File("Lounge.JPG"));
+			diningCard = ImageIO.read(new File("DiningRoom.JPG"));
+			//the character cards.
+			missScarlett = ImageIO.read(new File("MissScarlet.JPG"));
+			colonelMustard = ImageIO.read(new File("ColonelMustard.JPG"));
+			mrsWhite = ImageIO.read(new File("MrsWhite.JPG"));
+			theRevGreen = ImageIO.read(new File("MrGreen.JPG"));
+			mrsPeacock = ImageIO.read(new File("MrsPeacock.JPG"));
+			profPlum = ImageIO.read(new File("ProfessorPlum.JPG"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		currentPlayers = new ArrayList<Player>();
 		initializer = new Initializer();
 		cluedoCanvas = new CluedoCanvas();
@@ -161,12 +218,12 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	public static List<Player> currentPlayers(){
 		return currentPlayers;
 	}
-	
+
 	public Player currentPlayer(){
 		return this.currentPlayer;
 	}
-	
-	
+
+
 	/**
 	 * Returns the number of players that are playing.
 	 * @return
@@ -192,11 +249,9 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		Collections.shuffle(singleDie);
 		int roll = singleDie.get(0);
 		currentRoll += roll;
-		currentPlayer.coordinatesTaken().clear();
-		currentPlayer.setNumberofMoves(currentRoll);
 		return roll;
 	}
-	
+
 	/**
 	 * Repaints all canvases whenever this is called. This ensures that the canvas is updated appropriately whenever it is cleaned.
 	 */
@@ -204,7 +259,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		cluedoJFrame.repaint();
 		cluedoCanvas.repaint();
 	}
-	
+
 	/**
 	 * Initialize the current players - give them random cards
 	 */
@@ -218,9 +273,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		currentPlayer = currentPlayers.get(index);
 		cluedoJFrame.currentPlayerText.setText(currentPlayer.getName() + "\r\n");
 		cluedoJFrame.setPlayerColor(currentPlayer);
-		System.out.print("hello\n");
 		cluedoCanvas.paint(cluedoCanvas.getGraphics());
-		System.out.println("Finished drawing characters");
 	}
 
 
@@ -333,44 +386,6 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	//////////////////////////
 	/*END OF SPECIAL METHODS*/
 
-
-	/**
-	 * Runs the game - only if asking players was successful.
-	 * @throws InvalidMove 
-	 */
-	/*public void runGame() throws InvalidMove{
-		if(askSuccess){
-			while(!isGameOver()){
-				for(int i = 0; i < currentPlayers.size(); i++){
-					moveMade = false;
-					currentPlayer = currentPlayers.get(i);
-					cluedoJFrame.currentPlayerText.setText(currentPlayer.getName() + "\r\n");
-					if(!currentPlayer.out()){
-						while(!moveMade){
-							if(btnPressed){
-								if(!this.isMoveSelection){
-									doOption(option, currentPlayer);
-								}
-								if(moveMade){
-									//board.drawBoard();
-								}
-							}
-							if(gameStarted){
-								break;
-							}
-						}
-					}
-					if(isGameOver()){
-						System.out.println("Congratulations!! Player " + currentPlayer.getName() + " won!");
-						System.out.println("Game is over.");
-						printEnvelope();
-						return;
-					}
-				}
-			}
-		}
-	}*/
-
 	/**
 	 * This method performs a given option, based off the users input.
 	 * m is move, c is current cards, d is show previous player cards, a is accusation and s is for suggestion.
@@ -442,12 +457,12 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			JOptionPane.showMessageDialog(null, "You must be in a room to make a suggestion", "GAME WARNING", JOptionPane.WARNING_MESSAGE);
 			return null;
 		}
-		
+
 		JOptionPane.showMessageDialog(null, "What cards do you want to nominate?", "ACCUSATION", JOptionPane.INFORMATION_MESSAGE);
-		
+
 		Set<WeaponCard> weapons = new HashSet<>();
 		Set<CharacterCard> suspects = new HashSet<>();
-		
+
 		for(Card c : p.getCards()){
 			if(c instanceof WeaponCard){
 				weapons.add((WeaponCard)c);
@@ -455,11 +470,25 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 				suspects.add((CharacterCard)c);
 			}
 		}
-		
+
 		WeaponCard weapon = this.askWeapons(weapons, p);
 		CharacterCard character = this.askSuspects(suspects, p);
-		
-		return new Suggestion(weapon, new RoomCard(p.getRoom()), character, p);
+
+		return new Suggestion(weapon, findRoom(p.getRoom()), character, p);
+	}
+
+	/**
+	 * Finds the roomCard with given room object.
+	 * @param r
+	 * @return
+	 */
+	private RoomCard findRoom(Room r){
+		for(RoomCard rc : initializer.getRoomCards()){
+			if(rc.getObject().equals(r)){
+				return rc;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -473,22 +502,22 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			JOptionPane.showMessageDialog(null, "You must have a current player to make an accusation", "GAME ERROR" ,JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		
+
 		JOptionPane.showMessageDialog(null, "What cards do you want to nominate?", "ACCUSATION", JOptionPane.INFORMATION_MESSAGE);
-		
+
 		final Set<WeaponCard> weapons = new HashSet<>(Initializer.getWeaponCards());
 		final Set<RoomCard> rooms = new HashSet<>(Initializer.getRoomCards());
 		final Set<CharacterCard> suspects = new HashSet<>(Initializer.getCharacterCards());
 		WeaponCard weapon = this.askWeapons(weapons, p);
 		RoomCard room = this.askRooms(rooms, p);
 		CharacterCard character = this.askSuspects(suspects, p);
-		
+
 		Card[] solutionEnvelope = Initializer.getEnvelope().getCards();
 		System.out.println("Envelope:");
 		for(Card c : solutionEnvelope){
 			System.out.println(c.toString());
 		}
-		
+
 		Accusation ac = new Accusation(weapon, room, character, p, Initializer.getEnvelope());
 		if(ac.accusationStatus()){
 			return ac;
@@ -496,10 +525,10 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		p.setOut(true);
 		return null;
 	}
-	
 
-	
-	
+
+
+
 	/**
 	 * This code allows us to select from a collection of weapons.
 	 */
@@ -518,13 +547,27 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		switch (result) {
 		case JOptionPane.OK_OPTION:
 			System.out.println("You selected " + comboBox.getSelectedItem());
-			return new WeaponCard(new Weapon((String)comboBox.getSelectedItem()));
+			return findWeaponCard(weaponCol, ((String)comboBox.getSelectedItem()));
 		default:
 			return null;
 		}
+	}
 
-	} 
-	
+	/**
+	 * Finds the card that the player selected given the name of the card.
+	 * @param weaponCol
+	 * @param name - name of card
+	 * @return
+	 */
+	private WeaponCard findWeaponCard(Collection <WeaponCard> weaponCol, String name){
+		for(WeaponCard wc : weaponCol){
+			if(wc.getName().equals(name)){
+				return wc;
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * This code allows us to select from a collection of Rooms.
 	 * @param roomCard collection
@@ -537,7 +580,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		panel.add(new JLabel("Please make a selection:"));
 		DefaultComboBoxModel model = new DefaultComboBoxModel();
 		for(RoomCard roomCard : roomCol){
-		model.addElement(roomCard.toString());
+			model.addElement(roomCard.toString());
 		}
 		JComboBox comboBox = new JComboBox(model);
 		panel.add(comboBox);
@@ -545,18 +588,33 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		switch (result) {
 		case JOptionPane.OK_OPTION:
 			System.out.println("You selected " + comboBox.getSelectedItem());
-			return new RoomCard(new Room((String)comboBox.getSelectedItem()));
+			return findRoomCard(roomCol, ((String)comboBox.getSelectedItem()));
 		default:
 			return null;
 		}
 	}
-	
+
+	/**
+	 * Finds the card that the player selected given the name of the card.
+	 * @param roomCol
+	 * @param name - name of card
+	 * @return
+	 */
+	private RoomCard findRoomCard(Collection<RoomCard> roomCol, String name){
+		for(RoomCard rc : roomCol){
+			if(rc.getName().equals(name)){
+				return rc;
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * This code allows us to select from a collection of Suspects.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private CharacterCard askSuspects(Collection<CharacterCard> charCol, Player p){
-		
+
 		JPanel panel = new JPanel();
 		panel.add(new JLabel("Please make a selection:"));
 		DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -580,11 +638,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			return null;
 		}
 	}
-	
-	
-	
-	
-	
+
 	/**
 	 * This checks if the game over. Returns true if so, returns false otherwise.
 	 * @return
@@ -650,7 +704,6 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 									if(!currentPlayer.isInRoom()){
 										cluedoCanvas.move(t.x-currentPlayer.position().getX(), t.y-currentPlayer.position().getY(), currentPlayer, currentPlayers);
 										this.cleanCanvas();
-										moveMade = true;
 									}else{
 										if(t instanceof DoorTile){
 											cluedoCanvas.exitRoom(currentPlayer, currentPlayers);
@@ -666,6 +719,8 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 								}
 							}
 						}
+					}else {
+						moveMade = true;
 					}
 				}catch (InvalidMove e1) {
 					e1.printStackTrace();

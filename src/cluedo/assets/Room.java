@@ -1,5 +1,6 @@
 package cluedo.assets;
 
+import java.awt.Image;
 import java.util.*;
 
 /**
@@ -9,6 +10,11 @@ import java.util.*;
  */
 public class Room {
 
+	/**
+	 * The image of this room's card
+	 */
+	private Image image;
+	
 	/**
 	 * The name of the Room.
 	 */
@@ -87,7 +93,8 @@ public class Room {
 	 * @param height
 	 * @param hS
 	 */
-	public Room(String n, int x, int y, int width, int height, boolean hS){
+	public Room(Image im, String n, int x, int y, int width, int height, boolean hS){
+		this.image = im;
 		this.name = n;
 		this.x = x;
 		this.y = y;
@@ -99,7 +106,15 @@ public class Room {
 		addPlayerCoords();
 		this.hasStairs = hS;
 	}
-
+	
+	/**
+	 * Returns the image of this room's card.
+	 * @return
+	 */
+	public Image getImage(){
+		return this.image;
+	}
+	
 	/**
 	 * Determines where the player would be placed in room.
 	 */

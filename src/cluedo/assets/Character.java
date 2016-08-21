@@ -1,6 +1,7 @@
 package cluedo.assets;
 
 import java.awt.Color;
+import java.awt.Image;
 
 /**
  * Class that represents a player in the game. Contains a name.
@@ -12,6 +13,11 @@ public class Character {
 	 * The name of this character.
 	 */
 	private String name;
+	
+	/**
+	 * The image of this character's card
+	 */
+	private Image image;
 	
 	/**
 	 * The room that this character object is in (if in a room).
@@ -37,11 +43,20 @@ public class Character {
 	 * Construct a new character with a given name.
 	 * @param name
 	 */
-	public Character(String name, Color c, Position startPos){
+	public Character(Image im, String name, Color c, Position startPos){
+		this.image = im;
 		this.name = name;
 		this.color = c;
 		this.startPos = startPos;
 		this.player = null;
+	}
+	
+	/**
+	 * Returns the image of this character's card.
+	 * @return
+	 */
+	public Image getImage(){
+		return this.image;
 	}
 	
 	/**

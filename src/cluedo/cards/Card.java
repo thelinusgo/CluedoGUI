@@ -1,5 +1,8 @@
 package cluedo.cards;
 
+import java.awt.Graphics;
+import java.awt.Image;
+
 import cluedo.assets.Room;
 
 /**
@@ -15,12 +18,33 @@ public abstract class Card<E> {
 	private E item; //This represents the Item being held in the card.
 	
 	/**
+	 * The image of this card
+	 */
+	protected Image image;
+	
+	/**
+	 * x position of card to be drawn.
+	 */
+	protected static final int X_OFFSET = 5;
+	
+	/**
+	 * Width of card size
+	 */
+	protected static final int CARD_WD = 90;
+	
+	/**
+	 * Height of card sizes
+	 */
+	public static final int CARD_HT = 125;
+	
+	/**
 	 * Construct a new Card with the given item inside.
 	 * @param itm
 	 */
-	public Card(E itm){
+	public Card(E itm, Image im){
 		assert itm != null : "Item in card CANNOT be null!";
 		this.item = itm;
+		this.image = im;
 	}
 	
 	/**
@@ -61,5 +85,9 @@ public abstract class Card<E> {
 	 */
 	public E getObject(){
 	return this.item;	
+	}
+
+	public void draw(Graphics g, int i) {
+		
 	}
 }

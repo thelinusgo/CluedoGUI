@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
+import cluedo.gui.CardsCanvas;
 import cluedo.gui.DiceCanvas;
 /**
  * This class represents the pop up window that comes up, when a player views his hand.
@@ -21,6 +22,10 @@ public class CardsFrame extends JFrame{
 		pack(); // pack components tightly together
 		setResizable(false); // prevent us from being resizeable
 		setVisible(true); // make sure we are visible!
+	}
+	
+	public void showCards(){
+		
 	}
 	
 //	public static void main(String... args){

@@ -15,7 +15,6 @@ import cluedo.arguments.Suggestion;
 import cluedo.assets.Character;
 import cluedo.main.CluedoGame;
 import cluedo.main.Initializer;
-import cluedo.randomtesting.CardsCanvas;
 import cluedo.randomtesting.CardsFrame;
 
 import javax.swing.JMenuBar;
@@ -98,15 +97,15 @@ public class CluedoJFrame extends JFrame {
 	 * The dice canvas - where the dice ImageIcons are drawn.
 	 */
 	private DiceCanvas dicecanvas = new DiceCanvas();
-
-	/*
+/*
+	
 	 * The canvas representing the pop up window, for drawing the players hand.
-	 */
+	 
 	private CardsCanvas cardcanvas = new CardsCanvas();
-	/**
+	*//**
 	 * The JFrame for the cardvancas.
-	 */
-	private CardsFrame cardsframe;
+	 *//*
+	private CardsFrame cardsframe;*/
 	private JLabel playerColor;
 
 	/**
@@ -357,7 +356,7 @@ public class CluedoJFrame extends JFrame {
 				game.reset();
 				return;
 			}
-			game.setOption("c");
+			game.currentPlayer().getCardsCanvas().repaint();
 		});
 
 		btnRollDice.addActionListener(e -> {
@@ -377,6 +376,8 @@ public class CluedoJFrame extends JFrame {
 			if (game.isMoveSelection && !game.rolled) {
 				dicecanvas.setDiceOne(game.diceRoll());
 				dicecanvas.setDiceTwo(game.diceRoll());
+				game.currentPlayer().coordinatesTaken().clear();
+				game.currentPlayer().setNumberofMoves(game.currentRoll);
 				leftPanel.repaint();
 				game.rolled = true;
 			}

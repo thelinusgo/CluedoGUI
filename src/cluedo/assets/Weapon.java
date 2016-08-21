@@ -1,4 +1,7 @@
 package cluedo.assets;
+
+import java.awt.Image;
+
 /**
  * Class that represents a Weapon.
  * A weapon belongs to a room.
@@ -7,9 +10,14 @@ package cluedo.assets;
  */
 public class Weapon{
 	/**
-	 * the name of the weapon.
+	 * The name of the weapon.
 	 */
 	private String weaponName;
+	
+	/**
+	 * The image of this weapon's card
+	 */
+	private Image image;
 	
 	/**
 	 * The room that this weapon is in.
@@ -20,9 +28,18 @@ public class Weapon{
 	 * Create a new weapon. The string name cannot be null.
 	 * @param w
 	 */
-	public Weapon(String w){
+	public Weapon(Image im, String w){
 		assert w!=null: "weapon name cannot be null";
 		this.weaponName = w;
+		this.image = im;
+	}
+	
+	/**
+	 * Returns the image of this weapon's card.
+	 * @return
+	 */
+	public Image getImage(){
+		return this.image;
 	}
 	
 	/**

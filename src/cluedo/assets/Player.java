@@ -1,11 +1,13 @@
 package cluedo.assets;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.util.*;
 
 import cluedo.assets.tiles.Tile;
 import cluedo.cards.Card;
+import cluedo.gui.CardsCanvas;
 import cluedo.main.CluedoGame;
 
 /**
@@ -27,6 +29,8 @@ public class Player {
 	private List<Position> coordinates = new ArrayList<Position>();
 	private Door door;
 	private boolean out;
+	
+	private CardsCanvas cardsCanvas;
 
 	/**
 	 * Create a Player with a given name, a hand, a current character, and their x and y position.
@@ -38,6 +42,7 @@ public class Player {
 		hand = new ArrayList<>();
 		door = null;
 		out = false;
+		cardsCanvas = new CardsCanvas(this);
 	}
 
 	/**
@@ -226,5 +231,9 @@ public class Player {
 	 */
 	public String toString(){
 		return "Name: " + this.name + ", Character Piece: " + this.character.name();
+	}
+
+	public CardsCanvas getCardsCanvas() {
+		return cardsCanvas;
 	}
 }
