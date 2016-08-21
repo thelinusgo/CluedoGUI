@@ -88,6 +88,11 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 * An instance of the CluedoCanvas.
 	 */
 	public static CluedoCanvas cluedoCanvas;
+	
+	/**
+	 * An instance of the CardsCanvas.
+	 */
+	public CardsCanvas cardsCanvas;
 
 	/**
 	 * An instance of the board
@@ -146,7 +151,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	/**
 	 * Stores the cards of players who have been kicked out of the game because they made an incorrect accusation.
 	 */
-	private List<List<Card>> showCards = new ArrayList<>();
+	private List<Card> showCards = new ArrayList<>();
 
 	/**Stores player's previous option*/
 	private String prevOption = "";
@@ -404,11 +409,11 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		case "d":
 			if(!showCards.isEmpty()){
 				System.out.println("Show all previous players' cards");
-				for(List<Card> lc : showCards){
+				/*for(List<Card> lc : showCards){
 					for(Card c : lc){
 						System.out.println(c.toString());
 					}
-				}
+				}*/
 			}else{
 				System.out.println("No cards to show.");
 			}
@@ -419,7 +424,10 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			if(accusation == null){
 				System.out.println("The accusation pieces did not match."); 
 				System.out.println("You can no longer make a move.");
-				showCards.add(currentPlayer.getCards());
+				for(Card c : currentPlayer.getCards()){
+					showCards.add(c);
+				}
+				cardsCanvas = new CardsCanvas(showCards);
 			}
 			moveMade = true;
 			break;

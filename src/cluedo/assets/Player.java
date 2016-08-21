@@ -42,7 +42,6 @@ public class Player {
 		hand = new ArrayList<>();
 		door = null;
 		out = false;
-		cardsCanvas = new CardsCanvas(this);
 	}
 
 	/**
@@ -85,6 +84,13 @@ public class Player {
 	 */
 	public void addCard(Card c){
 		this.hand.add(c);
+	}
+	
+	/**
+	 * Sets up the card canvas for this player.
+	 */
+	public void setCardCanvas(){
+		cardsCanvas = new CardsCanvas(this.hand);
 	}
 
 	/**

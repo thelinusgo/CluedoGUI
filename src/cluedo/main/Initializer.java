@@ -251,6 +251,10 @@ public class Initializer {
 			Player currentPlayer = currentPlayers.get(i);
 			currentPlayer.addCard(characterCards.get(j));
 		}
+		
+		for(Player p : currentPlayers){
+			p.setCardCanvas();
+		}
 	}
 
 	/**

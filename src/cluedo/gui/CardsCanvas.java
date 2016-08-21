@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -20,12 +21,12 @@ import cluedo.cards.Card;
  */
 public class CardsCanvas extends JPanel{
 	/**
-	 * This cardCanvas player.
+	 * List of cards to display on the canvas.
 	 */
-	private Player player;
+	private List<Card> cards;
 
-	public CardsCanvas(Player p){
-		this.player = p;
+	public CardsCanvas(List<Card> cards){
+		this.cards = cards;
 	}
 
 	@Override
@@ -49,8 +50,8 @@ public class CardsCanvas extends JPanel{
 	}
 
 	public void drawCards(){
-		for(int i = 0; i < player.getCards().size(); i++){
-			Card c = player.getCards().get(i);
+		for(int i = 0; i < cards.size(); i++){
+			Card c = cards.get(i);
 			c.draw(this.getGraphics(), i);
 		}
 	}
