@@ -152,15 +152,21 @@ public class Initializer {
 		for(Character c : characters){
 			cards.add(new CharacterCard(c, c.getImage()));
 		}
-
+		
+		int index_R = 0;
+		int index_W = 0;
+		int index_C = 0;
 		for(int i = 0 ; i < cards.size(); i++){
 			Card c = cards.get(i);
 			if(c instanceof RoomCard){
-				roomCards[i] = (RoomCard) c;
+				roomCards[index_R] = (RoomCard) c;
+				index_R++;
 			}else if(c instanceof WeaponCard){
-				weaponCards[i] = (WeaponCard) c;
+				weaponCards[index_W] = (WeaponCard) c;
+				index_W++;
 			}else if(c instanceof CharacterCard){
-				characterCards[i] = (CharacterCard) c;
+				characterCards[index_C] = (CharacterCard) c;
+				index_C++;
 			}
 		}
 
