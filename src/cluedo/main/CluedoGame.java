@@ -482,8 +482,9 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			JOptionPane.showMessageDialog(null, "At least one extra card was found", "Notice", JOptionPane.INFORMATION_MESSAGE);
 
 		}else{
-			JOptionPane.showMessageDialog(null, "no extra cards were found", "Notice", JOptionPane.INFORMATION_MESSAGE);
 			System.out.println("no extra cards were found");
+			JOptionPane.showMessageDialog(null, "no extra cards were found", "Notice", JOptionPane.INFORMATION_MESSAGE);
+
 		}
 		
 		
