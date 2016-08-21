@@ -25,10 +25,11 @@ public class CardsCanvas extends JPanel{
 	 * List of cards to display on the canvas.
 	 */
 	private List<Card> cards;
+	public boolean hasbeenPainted = false;
 
 	public CardsCanvas(List<Card> cards){
 		this.cards = cards;
-		
+		hasbeenPainted = false;
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class CardsCanvas extends JPanel{
 
 	@Override
 	public Dimension getPreferredSize(){
-		return new Dimension(1024,768);
+		return new Dimension(1200,900);
 	}
 
 	@Override
@@ -49,6 +50,7 @@ public class CardsCanvas extends JPanel{
 		g.drawString("Rooms:", 5, 52+Card.CARD_HT);
 		g.drawString("Characters: " , 5, (3*Card.CARD_HT)-35);
 		this.drawCards();
+		hasbeenPainted = true;
 
 	}
 
@@ -58,7 +60,8 @@ public class CardsCanvas extends JPanel{
 		for(int i = 0; i < cards.size(); i++){
 			Card c = cards.get(i);
 			c.draw(this.getGraphics(), i);
-			this.repaint();
 		}
+		
+
 	}
 }

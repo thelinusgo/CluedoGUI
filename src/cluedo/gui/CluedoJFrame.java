@@ -242,6 +242,17 @@ public class CluedoJFrame extends JFrame {
 	}
 	
 	/**
+	 * This gets the cardsFrame object that is tied to this CluedoJFrame instance.
+	 * @return
+	 */
+	public CardsFrame getCardsframe(){
+		return this.cardsframe;
+	}
+	
+	
+	
+	
+	/**
 	 * This sets the players current color.
 	 * @param p
 	 */
@@ -361,10 +372,10 @@ public class CluedoJFrame extends JFrame {
 				return;
 			}
 			cardsframe = new CardsFrame(game.currentPlayer().getCards());
+			game.cleanCanvas();
 			game.currentPlayer().setCardCanvas();
-			game.currentPlayer().getCardsCanvas().setVisible(true);
-			game.currentPlayer().getCardsCanvas().repaint();
-		
+			//game.currentPlayer().getCardsCanvas().setVisible(true);
+			game.cleanCanvas();
 		});
 
 		btnRollDice.addActionListener(e -> {
