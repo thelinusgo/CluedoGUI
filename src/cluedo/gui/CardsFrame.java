@@ -22,7 +22,4 @@ public class CardsFrame extends JFrame{
 		setResizable(false); // prevent us from being resizeable
 		setVisible(true); // make sure we are visible!
 	}
-	
-	
-
 }
