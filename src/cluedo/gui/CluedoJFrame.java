@@ -26,6 +26,8 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
@@ -51,6 +53,10 @@ import java.awt.Color;
  *
  */
 public class CluedoJFrame extends JFrame {
+	
+	private static CluedoJFrame frame;
+	
+	
 	/* The left panel of the Class. */
 	private JPanel contentPane;
 
@@ -114,7 +120,7 @@ public class CluedoJFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CluedoJFrame frame = new CluedoJFrame();
+					frame = new CluedoJFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -129,7 +135,19 @@ public class CluedoJFrame extends JFrame {
 	public CluedoJFrame() {
 		super("Canus Studios Present: The Game of Cluedo");
 		game = new CluedoGame(this);// create a new instance of the game.
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter(){
+			
+			@Override
+			public void windowClosing(WindowEvent e){
+				int value = JOptionPane.showConfirmDialog(null, "Do you want to exit this Game?", "Confirmation",
+						JOptionPane.YES_NO_OPTION);
+				if (value == 0)
+					System.exit(0);
+			}
+			
+			
+		});
 		setBounds(100, 100, 775, 700);
 		this.setResizable(false);
 		menuBar = new JMenuBar();
@@ -304,6 +322,10 @@ public class CluedoJFrame extends JFrame {
 		 ***************************/
 		game.cluedoCanvas.addMouseListener(game);
 
+		
+				
+		
+		
 		btnMakeSuggestion.addActionListener(e -> {
 		Suggestion sug = game.makeSuggestion(game.currentPlayer());
 		if(sug == null){
