@@ -329,11 +329,7 @@ public class CluedoJFrame extends JFrame {
 			System.err.println("Why is the suggestion null? Look at me (line 301)");
 			return;
 		}
-		if(sug.checkSuggestion(game.currentPlayers())){
-			JOptionPane.showMessageDialog(null, "At least one extra card was found", "NOTICE", JOptionPane.INFORMATION_MESSAGE);
-		}else if(!sug.checkSuggestion(game.currentPlayers())){
-			JOptionPane.showMessageDialog(null, "No extra cards were found.", "WARNING", JOptionPane.WARNING_MESSAGE);
-		}
+		
 		});
 
 		btnMakeAccusation.addActionListener(e -> {

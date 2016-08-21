@@ -125,10 +125,7 @@ public class CluedoCanvas extends JPanel{
 	public void paint(Graphics g){
 		this.g = g;
 		g.setColor(new Color(128, 189, 147));
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setStroke(new BasicStroke(15));
-		g.drawRect(35, 20, 24*Tile.TILESIZE+10, 25*Tile.TILESIZE+10);
-		g2.setStroke(new BasicStroke(0));
+		g.fillRect(30, 20, 24*Tile.TILESIZE+25, 25*Tile.TILESIZE+20);
 		//Draw images of rooms
 		g.drawImage(kitchenIm, xCanvas+kitchen.x*Tile.TILESIZE, yCanvas+kitchen.y*Tile.TILESIZE, kitchen.width*Tile.TILESIZE, kitchen.height*Tile.TILESIZE, null);
 		g.drawImage(ballroomIm, xCanvas+ballRm.x*Tile.TILESIZE, yCanvas+ballRm.y*Tile.TILESIZE, ballRm.width*Tile.TILESIZE, ballRm.height*Tile.TILESIZE, null);

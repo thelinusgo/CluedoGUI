@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import cluedo.assets.*;
 import cluedo.assets.Character;
 import cluedo.cards.Card;
@@ -105,15 +107,13 @@ public class Initializer {
 		study.setRoom(kitchen);
 		lounge.setRoom(conservatory);
 		Collections.shuffle(Arrays.asList(rooms)); //shuffle it
-
+		Collections.shuffle(Arrays.asList(weapons));
 		for(int i = 0; i < weapons.length; i++){
 			Room r = rooms[i];
 			Weapon w = weapons[i];
 			r.addWeapon(w);
 			w.addRoom(r);
 		}
-
-		Collections.shuffle(Arrays.asList(weapons), new Random(seed));
 	}
 
 	/**
@@ -195,6 +195,9 @@ public class Initializer {
 		envelope.add(weaponCard);
 		envelope.add(characterCard);
 		envelope.add(roomCard);
+		for(Card c : envelope.getCards()){
+			System.out.println(c.toString());
+		}
 
 		/*Finally, remove these cards from their arrayList */
 		cards.remove(roomCard);

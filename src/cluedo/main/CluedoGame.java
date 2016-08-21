@@ -278,6 +278,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		}
 		initializer.distributeCards(currentPlayers); //distributes the cards out to the players.
 		cluedoCanvas.setPlayerPosition(currentPlayers);
+		initializer.setCharacters();
 		currentPlayer = currentPlayers.get(index);
 		cluedoJFrame.currentPlayerText.setText(currentPlayer.getName() + "\r\n");
 		cluedoJFrame.setPlayerColor(currentPlayer);
@@ -473,23 +474,15 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 
 		WeaponCard weapon = this.askWeapons(Initializer.getWeaponCards(), p);
 		CharacterCard character = this.askSuspects(Initializer.getCharacterCards(), p);
-		Room currentRoom = p.getRoom();
+		RoomCard room = findRoom(p.getRoom());
 		
-		Suggestion sugg = new Suggestion(weapon, findRoom(currentRoom), character, p);
+		Suggestion sugg = new Suggestion(weapon, room, character, p);
 		
-		if(sugg.checkSuggestion(currentPlayers)){
-			System.out.println("At least one extra card was found");
-			JOptionPane.showMessageDialog(null, "At least one extra card was found", "Notice", JOptionPane.INFORMATION_MESSAGE);
-
+		if(sugg.checkSuggestion(currentPlayers())){
+			JOptionPane.showMessageDialog(null, "At least one extra card was found", "NOTICE", JOptionPane.INFORMATION_MESSAGE);
 		}else{
-			System.out.println("no extra cards were found");
-			JOptionPane.showMessageDialog(null, "no extra cards were found", "Notice", JOptionPane.INFORMATION_MESSAGE);
-
+			JOptionPane.showMessageDialog(null, "No extra cards were found.", "WARNING", JOptionPane.WARNING_MESSAGE);
 		}
-		
-		
-		
-		
 		return sugg;
 		
 	}
@@ -552,7 +545,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		panel.add(new JLabel("Please make a selection:"));
 		DefaultComboBoxModel model = new DefaultComboBoxModel();
 		for(WeaponCard wep : weaponCol){
-			model.addElement(wep.toString());
+			model.addElement(wep.getObject().weaponName());
 		}
 		JComboBox comboBox = new JComboBox(model);
 		panel.add(comboBox);
@@ -575,7 +568,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	 */
 	private WeaponCard findWeaponCard(WeaponCard[] weaponCol, String name){
 		for(WeaponCard wc : weaponCol){
-			if(wc.getName().equals(name)){
+			if(wc.getObject().weaponName().equals(name)){
 				return wc;
 			}
 		}
@@ -594,7 +587,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		panel.add(new JLabel("Please make a selection:"));
 		DefaultComboBoxModel model = new DefaultComboBoxModel();
 		for(RoomCard roomCard : roomCol){
-			model.addElement(roomCard.toString());
+			model.addElement(roomCard.getName());
 		}
 		JComboBox comboBox = new JComboBox(model);
 		panel.add(comboBox);
@@ -633,7 +626,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		panel.add(new JLabel("Please make a selection:"));
 		DefaultComboBoxModel model = new DefaultComboBoxModel();
 		for(CharacterCard cc: charCol){
-			model.addElement(cc.toString());
+			model.addElement(cc.getObject().name());
 		}
 		JComboBox comboBox = new JComboBox(model);
 		panel.add(comboBox);
@@ -642,8 +635,7 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 		case JOptionPane.OK_OPTION:
 			System.out.println("You selected " + comboBox.getSelectedItem());
 			for(CharacterCard cc : charCol){
-				if(cc.toString().equals(comboBox.getSelectedItem())){
-					System.out.println("they do match");
+				if(cc.getObject().name().equals(comboBox.getSelectedItem())){
 					return cc;
 				}
 			}
@@ -794,7 +786,6 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 
 	public void resetAll() {
 		currentPlayers = new ArrayList<Player>();
-		initializer = new Initializer();
 		numPlayers = 0; 
 		askSuccess = false;
 		hasAsked = false;

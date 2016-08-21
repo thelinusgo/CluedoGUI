@@ -22,45 +22,6 @@ public class StairsTile extends Tile{
 	}
 	
 	public void draw(Graphics g){
-		/*g.setColor(new Color(255, 153, 0, 0));
-		g.fillRect(super.xLoc, super.yLoc, super.TILESIZE, super.TILESIZE);
-		g.setColor(new Color(0, 0, 0, 0));
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setStroke(new BasicStroke(2));
-		if(this.direction != null){
-			switch(this.direction){
-			case "right":
-				g.drawLine(super.xLoc+TILESIZE, super.yLoc, super.xLoc+TILESIZE, super.yLoc+TILESIZE);
-				break;
-			case "left":
-				g.drawLine(super.xLoc, super.yLoc, super.xLoc, super.yLoc+TILESIZE);
-				break;
-			case "top":
-				g.drawLine(super.xLoc, super.yLoc, super.xLoc+TILESIZE, super.yLoc);
-				break;
-			case "bottom":
-				g.drawLine(super.xLoc, super.yLoc+TILESIZE, super.xLoc+TILESIZE, super.yLoc+TILESIZE);
-				break;
-			}
-		}
-		if(this.direction2 != null){
-			switch(this.direction2){
-			case "right":
-				g.drawLine(super.xLoc+TILESIZE, super.yLoc, super.xLoc+TILESIZE, super.yLoc+TILESIZE);
-				break;
-			case "left":
-				g.drawLine(super.xLoc, super.yLoc, super.xLoc, super.yLoc+TILESIZE);
-				break;
-			case "top":
-				g.drawLine(super.xLoc, super.yLoc, super.xLoc+TILESIZE, super.yLoc);
-				break;
-			case "bottom":
-				g.drawLine(super.xLoc, super.yLoc+TILESIZE, super.xLoc+TILESIZE, super.yLoc+TILESIZE);
-				break;
-			}
-		}
-		g2.setStroke(new BasicStroke(0));*/
-		
 		if(this.player != null){
 			this.player.draw(g, xLoc, yLoc);
 		}

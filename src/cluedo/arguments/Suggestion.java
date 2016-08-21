@@ -74,7 +74,7 @@ public class Suggestion extends Argument {
 			correct = true;
 		}else if(!wpcorrect){
 			Room r1 = roomCard.getObject();
-			
+
 			//TODO: casey, I believe there is a major bug in here.
 			Room r2 = wp.getObject().getRoom();
 			Weapon w1 = wp.getObject();
@@ -89,8 +89,8 @@ public class Suggestion extends Argument {
 		}
 		return correct;
 	}
-	
-	
+
+
 	/**
 	 * Iterates over all of the players and checks if they have one of the matching suggestion cards.
 	 * @param players
@@ -100,16 +100,16 @@ public class Suggestion extends Argument {
 		wpcorrect = false;
 		charcorrect = false;
 		for(Player p : players){
-			playerHand = p.getCards();
-			for(Card card : playerHand){
-				if(card.equals(super.getCharacterCard())){
-					System.out.println(card.toString());
-					charcorrect = true;
-				}else if(card.equals(super.getWeaponCard())){
-					System.out.println(card.toString());
-					wpcorrect = true;
+				playerHand = p.getCards();
+				for(Card card : playerHand){
+					if(card.equals(super.getCharacterCard())){
+						System.out.println(card.toString());
+						charcorrect = true;
+					}else if(card.equals(super.getWeaponCard())){
+						System.out.println(card.toString());
+						wpcorrect = true;
+					}
 				}
-			}
 		}
 	}
 }
