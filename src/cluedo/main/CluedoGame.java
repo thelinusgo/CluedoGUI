@@ -191,6 +191,8 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 			hallCard = ImageIO.read(new File("Hall.JPG"));
 			loungeCard = ImageIO.read(new File("Lounge.JPG"));
 			diningCard = ImageIO.read(new File("DiningRoom.JPG"));
+			conservatoryCard = ImageIO.read(new File("Conservatory.JPG"));
+			billiardCard = ImageIO.read(new File("BilliardRoom.JPG"));
 			//the character cards.
 			missScarlett = ImageIO.read(new File("MissScarlet.JPG"));
 			colonelMustard = ImageIO.read(new File("ColonelMustard.JPG"));
@@ -263,9 +265,6 @@ public class CluedoGame implements MouseMotionListener, MouseListener{
 	public void cleanCanvas(){
 		cluedoJFrame.repaint();
 		cluedoCanvas.repaint();
-		if(cluedoJFrame.getCardsframe() != null){
-		cluedoJFrame.getCardsframe().repaint();
-		}	
 	}
 
 	/**

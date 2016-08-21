@@ -26,5 +26,6 @@ public class WeaponCard extends Card<Weapon>{
 	
 	public void draw(Graphics g, int i){
 		g.drawImage(image, X_OFFSET+i*CARD_WD, Y_WEP_OFFSET, CARD_WD, CARD_HT, null);
+		g.drawRect(X_OFFSET+i*CARD_WD, Y_WEP_OFFSET, CARD_WD, CARD_HT);
 	}
 }

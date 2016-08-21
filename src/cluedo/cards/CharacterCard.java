@@ -14,7 +14,7 @@ public class CharacterCard extends Card<Character>{
 	/**
 	 * Y position of card.
 	 */
-	private static final int Y_CHAR_OFFSET = 330;
+	private static final int Y_CHAR_OFFSET = 350;
 	
 	/**
 	 * Constructs a new CharacterCard object.
@@ -26,5 +26,6 @@ public class CharacterCard extends Card<Character>{
 
 	public void draw(Graphics g, int i){
 		g.drawImage(image, X_OFFSET+i*CARD_WD, Y_CHAR_OFFSET, CARD_WD, CARD_HT, null);
+		g.drawRect(X_OFFSET+i*CARD_WD, Y_CHAR_OFFSET, CARD_WD, CARD_HT);
 	}
 }

@@ -93,7 +93,7 @@ public class CluedoJFrame extends JFrame {
 	private ImageIcon blue = new ImageIcon("blue.png");
 	private ImageIcon no_player = new ImageIcon("no_player.png");
 	
-	private CardsFrame cardsframe;
+	private CardsJFrame cardsframe;
 	
 	/**
 	 * The dice canvas - where the dice ImageIcons are drawn.
@@ -257,17 +257,6 @@ public class CluedoJFrame extends JFrame {
 	}
 	
 	/**
-	 * This gets the cardsFrame object that is tied to this CluedoJFrame instance.
-	 * @return
-	 */
-	public CardsFrame getCardsframe(){
-		return this.cardsframe;
-	}
-	
-	
-	
-	
-	/**
 	 * This sets the players current color.
 	 * @param p
 	 */
@@ -376,18 +365,12 @@ public class CluedoJFrame extends JFrame {
 				"This game was created by Casey Huang and Linus Go for their SWEN 222 Project. \n (c) 2016 All rights reserved."));
 
 		btnDisplayHand.addActionListener(e -> {
-			
-			if (game.moveMade) {
-				game.reset();
-				return;
-			}
-			
 			if(game.currentPlayer() == null){
 				JOptionPane.showMessageDialog(null, "Cannot check the hand of a non-existant player!", "Game ERROR", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			cardsframe = new CardsFrame(game.currentPlayer().getCards());
-			//cardsframe.canvas().cleanCanvas();
+			cardsframe = new CardsJFrame(game.currentPlayer().getCards());
+			cardsframe.setVisible(true);
 		});
 
 		btnRollDice.addActionListener(e -> {

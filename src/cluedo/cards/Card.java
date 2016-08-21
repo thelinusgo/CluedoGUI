@@ -30,12 +30,12 @@ public abstract class Card<E> {
 	/**
 	 * Width of card size
 	 */
-	protected static final int CARD_WD = 90;
+	protected static final int CARD_WD = 100;
 	
 	/**
 	 * Height of card sizes
 	 */
-	public static final int CARD_HT = 125;
+	public static final int CARD_HT = 135;
 	
 	/**
 	 * Construct a new Card with the given item inside.
