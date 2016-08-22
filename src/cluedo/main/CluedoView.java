@@ -70,8 +70,6 @@ public class CluedoView extends JFrame {
 	private JMenu mnHelp;
 	/* Holds an instance of the game.. */
 	private static CluedoGameController game;
-	/* JButtons */
-	private JButton btnStartTurn;
 	private JButton btnEndTurn;
 	private JButton btnMakeMove;
 	private JButton btnRollDice;
@@ -189,11 +187,8 @@ public class CluedoView extends JFrame {
 		currentPlayerText.setToolTipText("This is the current player, and his color on the board.");
 		currentPlayerText.setText("null\r\n");
 		currentPlayerText.setEditable(false);
-		leftPanel.add(currentPlayerText, "flowx,cell 0 1");
+		leftPanel.add(currentPlayerText, "flowx,cell 0 1 1 2");
 		currentPlayerText.setColumns(10);
-		btnStartTurn = new JButton("Start Turn");
-		btnStartTurn.setToolTipText("Press this to begin your turn.");
-		leftPanel.add(btnStartTurn, "cell 0 2,growx");
 
 		// Button for when a move is made.
 		btnMakeMove = new JButton("Make Move");
@@ -203,7 +198,7 @@ public class CluedoView extends JFrame {
 		// Button for when a turn has ended.
 		btnEndTurn = new JButton("End Turn");
 		btnEndTurn.setToolTipText("Press this to end your turn.");
-		leftPanel.add(btnEndTurn, "cell 0 4,growx");
+		leftPanel.add(btnEndTurn, "cell 0 4 1 2,growx");
 
 		// Button to display the current players hand.
 		btnDisplayHand = new JButton("Display your Hand");
@@ -325,12 +320,18 @@ public class CluedoView extends JFrame {
 				if (status == null) {
 					JOptionPane.showMessageDialog(null, "The accusation was incorrect.", "ACCUSATION INCORRECT",
 							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "The current player has been removed from the game, and will be prevented from moving.", "GAME Notice." ,JOptionPane.ERROR_MESSAGE);
+					game.currentPlayer().setOut(true);
+					game.currentPlayers().remove(game.currentPlayer());
+					game.reset();
+					dicecanvas.setDiceOne(0);
+					dicecanvas.setDiceTwo(0);
+					leftPanel.repaint();		
 				} else {
 					JOptionPane.showMessageDialog(null, "The accusation was Correct. Nice work!", "ACCUSATION CORRECT",
 							JOptionPane.INFORMATION_MESSAGE);
 					JOptionPane.showMessageDialog(null, game.currentPlayer().getName() + " has won the game.",
 							"Congratulations", JOptionPane.INFORMATION_MESSAGE);
-					btnStartTurn.setEnabled(false);
 					btnEndTurn.setEnabled(false);
 					btnMakeMove.setEnabled(false);
 					btnRollDice.setEnabled(false);

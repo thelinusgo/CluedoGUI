@@ -483,7 +483,8 @@ public class CluedoGameController implements MouseListener{
 		if(ac.accusationStatus()){
 			return ac;
 		}
-		p.setOut(true);
+	
+		
 		for(Card c : p.getCards()){
 			getShowCards().add(c);
 		}
@@ -745,7 +746,7 @@ public class CluedoGameController implements MouseListener{
 	 */
 	public static class InvalidMove extends Exception {
 		public InvalidMove(String msg) {
-			super(msg);
+			super(" ");
 			JOptionPane.showMessageDialog(null, msg, "GAME WARNING" ,JOptionPane.WARNING_MESSAGE);
 		}
 	}
