@@ -56,6 +56,14 @@ public class DiceCanvas extends JPanel{
 		this.diceTwo = value;
 	}
 	
+	public void resetDice(){
+		this.diceOne = 0;
+		this.diceTwo = 0;
+	}
+	
+	
+	
+	
 	@Override
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
