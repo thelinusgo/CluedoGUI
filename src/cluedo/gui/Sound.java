@@ -28,7 +28,7 @@ public class Sound {
     	    clip.start();
     	}
     	catch (Exception e) {
-    	    //whatevers
+
     	}
 	}
 }
