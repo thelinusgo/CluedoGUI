@@ -14,7 +14,6 @@ import sun.audio.*;
 public class Sound {
 	public static void music(){
 		try {
-    	    File yourFile;
     	    AudioInputStream stream;
     	    AudioFormat format;
     	    DataLine.Info info;
