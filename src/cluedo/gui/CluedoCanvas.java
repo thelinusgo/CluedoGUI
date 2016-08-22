@@ -154,10 +154,10 @@ public class CluedoCanvas extends JPanel{
 		this.ballRm = this.drawBallRoom();
 		this.drawDoors();
 		this.drawStart();
-		
+
 		this.cluedo = this.drawCluedo();
 		board[0][7] = new Tile(0, 7);
-		
+
 	}
 
 	private void drawPath(){
@@ -723,7 +723,7 @@ public class CluedoCanvas extends JPanel{
 		board[7][24] = new StartTile(7, 24, CluedoGameController.initializer.getCharacters()[0]);
 		board[23][19] = new StartTile(23, 19, CluedoGameController.initializer.getCharacters()[5]);
 		board[23][6] = new StartTile(23, 6, CluedoGameController.initializer.getCharacters()[4]);
-		
+
 	}
 
 	public void drawBoard(){
@@ -771,7 +771,7 @@ public class CluedoCanvas extends JPanel{
 			}
 			p.moveNStep(directionX, directionY);
 			board[p.position().getX()][p.position().getY()].setPlayer(p);
-			
+
 		}else{
 			isValidMove = false;
 		}
@@ -815,8 +815,12 @@ public class CluedoCanvas extends JPanel{
 		p.setIsInRoom(false);
 		p.setRoom(null);
 		p.setDoor(null);
-		if(x == p.position().getX() && y == p.position().getY()){
-			JOptionPane.showMessageDialog(null, "Cannot exit room.", "GAME WARNING" ,JOptionPane.WARNING_MESSAGE);
+		for(Player player : currentPlayers){
+			if(!player.equals(p)){
+				if(x == player.position().getX() && y == player.position().getY()){
+					JOptionPane.showMessageDialog(null, "Cannot exit room.", "GAME WARNING" ,JOptionPane.WARNING_MESSAGE);
+				}
+			}
 		}
 	}
 
@@ -876,7 +880,7 @@ public class CluedoCanvas extends JPanel{
 			System.err.println(e.getMessage());
 			return false;
 		}
-		
+
 		if(board[x][y] instanceof RoomTile){
 			Room r = ((RoomTile)board[x][y]).getRoom();
 			Door d = findClosestDoor(r, p);
@@ -901,7 +905,7 @@ public class CluedoCanvas extends JPanel{
 		}
 		return minDoor;
 	}
-	
+
 	public Tile[][] board(){
 		return board;
 	}
