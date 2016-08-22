@@ -403,12 +403,7 @@ public class CluedoView extends JFrame {
 			}
 
 			if (game.isMoveSelection && !game.rolled) {
-				dicecanvas.setDiceOne(game.diceRoll());
-				dicecanvas.setDiceTwo(game.diceRoll());
-				game.currentPlayer().coordinatesTaken().clear();
-				game.currentPlayer().setNumberofMoves(game.currentRoll);
-				leftPanel.repaint();
-				game.rolled = true;
+				game.setDiceMoves(this);
 			}
 		});
 

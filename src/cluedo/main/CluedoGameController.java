@@ -293,6 +293,24 @@ public class CluedoGameController implements MouseListener{
 	}
 	
 	/**
+	 * Set dice Roll. This should only be called inside the CluedoView class.
+	 */
+	public void setDiceMoves(CluedoView theView){
+		theView.dicecanvas.setDiceOne(diceRoll());
+		theView.dicecanvas.setDiceTwo(diceRoll());
+		currentPlayer.coordinatesTaken().clear();
+		currentPlayer.setNumberofMoves(currentRoll);
+		theView.leftPanel.repaint();
+		rolled = true;
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
 	 * Initialize the current players - give them random cards
 	 */
 	public void initialSetup(){
