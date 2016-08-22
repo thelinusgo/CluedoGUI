@@ -389,6 +389,16 @@ public class CluedoView extends JFrame {
 			cardsframe = new CardsJFrame(game.currentPlayer().getCards());
 			cardsframe.setVisible(true);
 		});
+		
+		btnShowPreviousplayersCards.addActionListener(e -> {
+			if (game.getShowCards().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "No previous players' cards to show", "Game ERROR",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			cardsframe = new CardsJFrame(game.getShowCards());
+			cardsframe.setVisible(true);
+		});
 
 		btnRollDice.addActionListener(e -> {
 			if (game.moveMade) {

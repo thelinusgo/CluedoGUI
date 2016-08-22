@@ -150,10 +150,7 @@ public class CluedoGameController implements MouseListener{
 	/**
 	 * Stores the cards of players who have been kicked out of the game because they made an incorrect accusation.
 	 */
-	private List<Card> showCards = new ArrayList<>();
-
-	/**Stores player's previous option*/
-	private String prevOption = "";
+	private static List<Card> showCards = new ArrayList<>();
 
 	/**
 	 * Current accusation object.
@@ -479,6 +476,9 @@ public class CluedoGameController implements MouseListener{
 			return ac;
 		}
 		p.setOut(true);
+		for(Card c : p.getCards()){
+			getShowCards().add(c);
+		}
 		return null;
 	}
 
@@ -690,7 +690,6 @@ public class CluedoGameController implements MouseListener{
 		btnPressed = false;
 		accusation = null;
 		option = "";
-		prevOption = "";
 		if(!currentPlayers.isEmpty()){
 			index++;
 			if(index >= currentPlayers().size()){
@@ -711,5 +710,13 @@ public class CluedoGameController implements MouseListener{
 		showCards = new ArrayList<>();
 		index = 0;
 		this.reset();
+	}
+
+	/**
+	 * Returns the previous players' cards if they are out of the game.
+	 * @return the showCards
+	 */
+	public static List<Card> getShowCards() {
+		return showCards;
 	}
 }
