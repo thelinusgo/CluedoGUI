@@ -346,10 +346,14 @@ public class CluedoView extends JFrame {
 		});
 
 		btnEndTurn.addActionListener(e -> {
-			game.reset();
-			dicecanvas.setDiceOne(0);
-			dicecanvas.setDiceTwo(0);
-			leftPanel.repaint();
+			if(!game.isGameOver()){
+				game.reset();
+				dicecanvas.setDiceOne(0);
+				dicecanvas.setDiceTwo(0);
+				leftPanel.repaint();
+			}else{
+				
+			}
 		});
 
 		mntmStartGame.addActionListener(e -> {
