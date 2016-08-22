@@ -45,9 +45,7 @@ public class DiceCanvas extends JPanel{
 		assert firstVal > 0 || firstVal < 6;
 		assert secondVal > 0 || secondVal < 6;
 		this.diceOne = firstVal;
-		System.out.println(diceOne);
 		this.diceTwo = secondVal;
-		System.out.println(diceTwo);
 	}
 	
 	public void setDiceOne(int value){

@@ -50,8 +50,6 @@ public class CardsCanvas extends Canvas{
 	}
 
 	public void drawCards(){
-		System.out.println("draw cards is being called.");
-		System.out.println("cards size: " + cards.size());
 		for(int i = 0; i < cards.size(); i++){
 			Card c = cards.get(i);
 			if(c instanceof RoomCard){

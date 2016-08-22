@@ -195,10 +195,7 @@ public class Initializer {
 		envelope.add(weaponCard);
 		envelope.add(characterCard);
 		envelope.add(roomCard);
-		for(Card c : envelope.getCards()){
-			System.out.println(c.toString());
-		}
-
+		
 		/*Finally, remove these cards from their arrayList */
 		cards.remove(roomCard);
 		cards.remove(weaponCard);
@@ -253,7 +250,6 @@ public class Initializer {
 			Player currentPlayer = currentPlayers.get(i);
 			currentPlayer.addCard(characterCards[j]);
 		}
-		System.out.println(roomCards.length+weaponCards.length+characterCards.length);
 	}
 
 	/**

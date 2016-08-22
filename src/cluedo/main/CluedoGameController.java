@@ -280,7 +280,6 @@ public class CluedoGameController implements MouseListener{
 	 */
 	public void initialSetup(){
 		if(currentPlayers.size() == 0){
-			System.out.println("current players list is empty");
 			return; //silently fail, do nothing if there are no currentPlayers.
 		}
 		initializer.distributeCards(currentPlayers); //distributes the cards out to the players.
@@ -387,7 +386,6 @@ public class CluedoGameController implements MouseListener{
 		int result = JOptionPane.showConfirmDialog(null, panel, "Choose a Character", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 		switch (result) {
 		case JOptionPane.OK_OPTION:
-			System.out.println("You selected " + comboBox.getSelectedItem());
 			for(Character c : characters){
 				if(c.name().equals(comboBox.getSelectedItem())){
 					p.setCharacter(c);
@@ -470,11 +468,7 @@ public class CluedoGameController implements MouseListener{
 		CharacterCard character = askSuspects(Initializer.getCharacterCards(), p);
 
 		Card[] solutionEnvelope = Initializer.getEnvelope().getCards();
-		System.out.println("Envelope:");
-		for(Card c : solutionEnvelope){
-			System.out.println(c.toString());
-		}
-
+		
 		Accusation ac = new Accusation(weapon, room, character, p, Initializer.getEnvelope());
 		if(ac.accusationStatus()){
 			return ac;
@@ -503,7 +497,6 @@ public class CluedoGameController implements MouseListener{
 		int result = JOptionPane.showConfirmDialog(null, panel, "	1)	Choose a Weapon", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
 		switch (result) {
 		case JOptionPane.OK_OPTION:
-			System.out.println("You selected " + comboBox.getSelectedItem());
 			return findWeaponCard(weaponCol, ((String)comboBox.getSelectedItem()));
 		default:
 			return null;
@@ -544,7 +537,6 @@ public class CluedoGameController implements MouseListener{
 		int result = JOptionPane.showConfirmDialog(null, panel, "	2)	Choose a Room", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
 		switch (result) {
 		case JOptionPane.OK_OPTION:
-			System.out.println("You selected " + comboBox.getSelectedItem());
 			return findRoomCard(roomCol, ((String)comboBox.getSelectedItem()));
 		default:
 			return null;
@@ -583,7 +575,6 @@ public class CluedoGameController implements MouseListener{
 		int result = JOptionPane.showConfirmDialog(null, panel, "	3)	Choose a suspect.", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
 		switch (result) {
 		case JOptionPane.OK_OPTION:
-			System.out.println("You selected " + comboBox.getSelectedItem());
 			for(CharacterCard cc : charCol){
 				if(cc.getObject().name().equals(comboBox.getSelectedItem())){
 					return cc;
@@ -614,16 +605,6 @@ public class CluedoGameController implements MouseListener{
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * This prints out the contents of the envelope.
-	 */
-	public void printEnvelope(){
-		System.out.println("The envelope consisted of these cards: ");
-		for(Card c : initializer.getEnvelope().getCards()){
-			System.out.println(c.toString());
-		}
 	}
 
 	/**

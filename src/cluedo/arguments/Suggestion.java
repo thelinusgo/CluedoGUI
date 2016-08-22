@@ -103,10 +103,8 @@ public class Suggestion extends Argument {
 				playerHand = p.getCards();
 				for(Card card : playerHand){
 					if(card.equals(super.getCharacterCard())){
-						System.out.println(card.toString());
 						charcorrect = true;
 					}else if(card.equals(super.getWeaponCard())){
-						System.out.println(card.toString());
 						wpcorrect = true;
 					}
 				}

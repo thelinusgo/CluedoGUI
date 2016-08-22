@@ -337,11 +337,6 @@ public class CluedoView extends JFrame {
 
 		btnMakeAccusation.addActionListener(e -> {
 			try {
-
-				for (Card c : Initializer.getEnvelope().getCards()) {
-					System.out.println(c.toString());
-				}
-
 				Accusation status = game.makeAccusation(game.currentPlayer());
 				if (status == null) {
 					JOptionPane.showMessageDialog(null, "The accusation was incorrect.", "ACCUSATION INCORRECT",

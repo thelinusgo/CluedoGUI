@@ -824,7 +824,6 @@ public class CluedoCanvas extends JPanel{
 		p.setDoor(null);
 		if(x == p.position().getX() && y == p.position().getY()){
 			JOptionPane.showMessageDialog(null, "Cannot exit room.", "GAME WARNING" ,JOptionPane.WARNING_MESSAGE);
-			System.out.println("Cannot exit room.");
 		}
 	}
 
