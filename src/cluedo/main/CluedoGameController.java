@@ -640,6 +640,9 @@ public class CluedoGameController implements MouseListener{
 									if(!currentPlayer.isInRoom()){
 										cluedoCanvas.move(t.x-currentPlayer.position().getX(), t.y-currentPlayer.position().getY(), currentPlayer, currentPlayers);
 										this.cleanCanvas();
+										if(currentPlayer.isInRoom()){
+											moveMade = true;
+										}
 									}else{
 										if(t instanceof DoorTile){
 											cluedoCanvas.exitRoom(currentPlayer, currentPlayers);
