@@ -323,7 +323,7 @@ public class CluedoView extends JFrame {
 			if (rdbtnMuteSound.isSelected())
 				sound.stopMusic();
 			else
-				sound.music();
+				sound.startMusic();
 		});
 
 		btnMakeSuggestion.addActionListener(e -> {

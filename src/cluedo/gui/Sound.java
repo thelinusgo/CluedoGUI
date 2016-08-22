@@ -25,8 +25,11 @@ public class Sound {
 			AudioInputStream stream;
     	    AudioFormat format;
     	    DataLine.Info info;
+<<<<<<< HEAD
     	    Clip clip;
 
+=======
+>>>>>>> branch 'master' of https://oznaprazzi@bitbucket.org/golinu/cluedogui.git
     	    stream = AudioSystem.getAudioInputStream(new File("Spy_Glass.wav"));
     	    format = stream.getFormat();
     	    info = new DataLine.Info(Clip.class, format);
@@ -34,6 +37,7 @@ public class Sound {
     	    clip.open(stream);
     	    clip.start();
     	}
+
     	catch (Exception e) {
     	System.err.println("The music file is missing!");
     	  e.printStackTrace();
@@ -45,6 +49,10 @@ public class Sound {
 	 */
 	public void stopMusic(){
 		clip.stop();
+	}
+	
+	  public void startMusic(){
+	    clip.start();
 	}
 	
 }
