@@ -45,10 +45,29 @@ public class Character {
 	 */
 	public Character(Image im, String name, Color c, Position startPos){
 		this.image = im;
-		this.name = name;
+		this.name = setName(name);
 		this.color = c;
 		this.startPos = startPos;
 		this.player = null;
+	}
+	
+	private String setName(String name){
+		switch(name){
+		case "Miss Scarlet":
+			return name;
+		case "Colonel Mustard":
+			return name;
+		case "Mrs. White":
+			return name;
+		case "The Reverend Green":
+			return name;
+		case "Mrs. Peacock":
+			return name;
+		case "Professor Plum":
+			return name;
+		default:
+			return null;
+		}
 	}
 	
 	/**

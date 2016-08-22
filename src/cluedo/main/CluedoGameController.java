@@ -1,5 +1,6 @@
 package cluedo.main;
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -29,6 +30,8 @@ import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
 import cluedo.gui.CardsCanvas;
 import cluedo.gui.CluedoCanvas;
+import cluedo.gui.Sound;
+import tests.CluedoTests;
 /**
  * The heart of the Cluedo Game.
  * @author Casey & Linus
@@ -166,6 +169,11 @@ public class CluedoGameController implements MouseListener{
 	 * Store JFrame
 	 */
 	private CluedoView cluedoJFrame;
+	
+	/**
+	 * For playing music.
+	 */
+	private static Sound sound;
 
 	/**
 	 * Construct a new instance of the cluedo game. Initialize the fields.
@@ -211,7 +219,7 @@ public class CluedoGameController implements MouseListener{
 		currentPlayers = new ArrayList<Player>();
 		initializer = new Initializer();
 		cluedoCanvas = new CluedoCanvas();
-		board = cluedoCanvas.board;
+		board = cluedoCanvas.board();
 		cluedoJFrame = cluedoJF;
 	}
 
@@ -612,16 +620,6 @@ public class CluedoGameController implements MouseListener{
 		return false;
 	}
 
-	/**
-	 * Indicates an attempt to make an invalid move. Whenever an invalid move is thrown, it also brings up a Warning Dialog.
-	 */
-	public static class InvalidMove extends Exception {
-		public InvalidMove(String msg) {
-			super(msg);
-			JOptionPane.showMessageDialog(null, msg, "GAME WARNING" ,JOptionPane.WARNING_MESSAGE);
-		}
-	}
-
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if(this.currentPlayer == null){
@@ -721,5 +719,34 @@ public class CluedoGameController implements MouseListener{
 	 */
 	public static List<Card> getShowCards() {
 		return showCards;
+	}
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					sound = new Sound();
+					sound.music();
+					CluedoView theFrame = new CluedoView();
+					theFrame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public Sound getSound(){
+		return sound;
+	}
+	
+	/**
+	 * Indicates an attempt to make an invalid move. Whenever an invalid move is thrown, it also brings up a Warning Dialog.
+	 */
+	public static class InvalidMove extends Exception {
+		public InvalidMove(String msg) {
+			super(msg);
+			JOptionPane.showMessageDialog(null, msg, "GAME WARNING" ,JOptionPane.WARNING_MESSAGE);
+		}
 	}
 }

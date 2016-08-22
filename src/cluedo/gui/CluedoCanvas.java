@@ -54,7 +54,7 @@ public class CluedoCanvas extends JPanel{
 	/**
 	 * Represents the board in 2d array form.
 	 */
-	public Tile[][] board = new Tile[24][25];
+	private Tile[][] board = new Tile[24][25];
 
 	/**
 	 * Stores the list of doors on the board.
@@ -766,12 +766,6 @@ public class CluedoCanvas extends JPanel{
 				r.addPlayer(p);
 				p.setRoom(r);
 				p.setIsInRoom(true);
-				int choice = JOptionPane.showConfirmDialog(null, "You have entered a room. Would you like to make a suggestion?", "Make Suggestion?", JOptionPane.YES_NO_OPTION);
-				
-				if(choice == 0){
-					CluedoGameController.makeSuggestion(CluedoGameController.getTheCurrentPlayer());
-				}
-			
 			}else{
 				p.setPos(x, y);
 			}
@@ -781,7 +775,6 @@ public class CluedoCanvas extends JPanel{
 		}else{
 			isValidMove = false;
 		}
-		this.paint(g);
 	}
 
 	/**
@@ -907,5 +900,9 @@ public class CluedoCanvas extends JPanel{
 			}
 		}
 		return minDoor;
+	}
+	
+	public Tile[][] board(){
+		return board;
 	}
 }

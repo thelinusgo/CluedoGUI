@@ -58,8 +58,6 @@ public class CluedoView extends JFrame {
 	/* The left panel of the Class. */
 	private JPanel contentPane;
 
-	private static Sound sound; // the sound object.
-
 	/* Holds the menuBar. */
 	private JMenuBar menuBar;
 
@@ -118,21 +116,7 @@ public class CluedoView extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					sound = new Sound();
-					sound.music();
-					CluedoView theFrame = new CluedoView();
-					theFrame.setVisible(true);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.
@@ -321,9 +305,9 @@ public class CluedoView extends JFrame {
 
 		rdbtnMuteSound.addActionListener(e -> {
 			if (rdbtnMuteSound.isSelected())
-				sound.stopMusic();
+				game.getSound().stopMusic();
 			else
-				sound.startMusic();
+				game.getSound().startMusic();
 		});
 
 		btnMakeSuggestion.addActionListener(e -> {
