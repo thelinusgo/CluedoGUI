@@ -23,11 +23,6 @@ public abstract class Card<E> {
 	protected Image image;
 	
 	/**
-	 * x position of card to be drawn.
-	 */
-	protected static final int X_OFFSET = 5;
-	
-	/**
 	 * Width of card size
 	 */
 	protected static final int CARD_WD = 100;
@@ -92,5 +87,5 @@ public abstract class Card<E> {
 	 * @param g
 	 * @param i
 	 */
-	public abstract void draw(Graphics g, int i);
+	public abstract void draw(Graphics g, int i, int yOffset, int xOffset);
 }

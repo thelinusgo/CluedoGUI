@@ -33,6 +33,27 @@ public class CardsCanvas extends Canvas{
 	private int index_R = 0;
 	private int index_W = 0;
 	private int index_C = 0;
+	
+	/**
+	 * x position of cards to be drawn.
+	 */
+	protected static final int X_OFFSET = 5;
+	
+	/**
+	 * Y position of character card.
+	 */
+	private static final int Y_CHAR_OFFSET = 350;
+	
+	/**
+	 * Y position of room card.
+	 */
+	private static final int Y_ROOM_OFFSET = 57+Card.CARD_HT;
+	
+	/**
+	 * Y position of weapon card.
+	 */
+	private static final int Y_WEP_OFFSET = 37;
+	
 
 	public CardsCanvas(List<Card> cards){
 		this.cards = cards;
@@ -53,13 +74,13 @@ public class CardsCanvas extends Canvas{
 		for(int i = 0; i < cards.size(); i++){
 			Card c = cards.get(i);
 			if(c instanceof RoomCard){
-				((RoomCard)c).draw(this.getGraphics(), index_R);
+				((RoomCard)c).draw(this.getGraphics(), index_R, Y_ROOM_OFFSET, X_OFFSET);
 				index_R++;
 			}else if(c instanceof WeaponCard){
-				((WeaponCard)c).draw(this.getGraphics(), index_W);
+				((WeaponCard)c).draw(this.getGraphics(), index_W, Y_WEP_OFFSET, X_OFFSET);
 				index_W++;
 			}else if(c instanceof CharacterCard){
-				((CharacterCard)c).draw(this.getGraphics(), index_C);
+				((CharacterCard)c).draw(this.getGraphics(), index_C, Y_CHAR_OFFSET, X_OFFSET);
 				index_C++;
 			}
 		}

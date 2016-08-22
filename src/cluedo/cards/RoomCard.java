@@ -11,10 +11,6 @@ import cluedo.assets.Room;
  *
  */
 public class RoomCard extends Card<Room>{
-	/**
-	 * Y position of card.
-	 */
-	private static final int Y_ROOM_OFFSET = 57+CARD_HT;
 	
 	/**
 	 * Constructs a new RoomCard object
@@ -24,8 +20,8 @@ public class RoomCard extends Card<Room>{
 		super(r, im);
 	}
 	
-	public void draw(Graphics g, int i){
-		g.drawImage(image, X_OFFSET+i*CARD_WD, Y_ROOM_OFFSET, CARD_WD, CARD_HT, null);
-		g.drawRect(X_OFFSET+i*CARD_WD, Y_ROOM_OFFSET, CARD_WD, CARD_HT);
+	public void draw(Graphics g, int i, int yOffset, int xOffset){
+		g.drawImage(image, xOffset+i*CARD_WD, yOffset, CARD_WD, CARD_HT, null);
+		g.drawRect(xOffset+i*CARD_WD, yOffset, CARD_WD, CARD_HT);
 	}
 }

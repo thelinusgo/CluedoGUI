@@ -12,11 +12,6 @@ import cluedo.assets.Weapon;
 public class WeaponCard extends Card<Weapon>{
 	
 	/**
-	 * Y position of card.
-	 */
-	private static final int Y_WEP_OFFSET = 37;
-	
-	/**
 	 * Construct a new weapon card, with a given weapon
 	 * @param Weapon w
 	 */
@@ -24,7 +19,7 @@ public class WeaponCard extends Card<Weapon>{
 		super(w, im);
 	}
 	
-	public void draw(Graphics g, int i){
+	public void draw(Graphics g, int i, int Y_WEP_OFFSET, int X_OFFSET){
 		g.drawImage(image, X_OFFSET+i*CARD_WD, Y_WEP_OFFSET, CARD_WD, CARD_HT, null);
 		g.drawRect(X_OFFSET+i*CARD_WD, Y_WEP_OFFSET, CARD_WD, CARD_HT);
 	}

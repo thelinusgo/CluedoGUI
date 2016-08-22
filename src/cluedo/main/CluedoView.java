@@ -303,7 +303,8 @@ public class CluedoView extends JFrame {
 		btnMakeSuggestion.addActionListener(e -> {
 			Suggestion sug = game.makeSuggestion(game.currentPlayer());
 			if (sug == null) {
-				System.err.println("Why is the suggestion null? Look at me (line 336)");
+				JOptionPane.showMessageDialog(null, "The suggestion was incorrect.", "SUGGESTION INCORRECT",
+						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 
