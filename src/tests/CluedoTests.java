@@ -15,6 +15,13 @@ import cluedo.main.*;
 import static org.junit.Assert.*;
 import java.util.*;
 
+import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
+
+import java.awt.AWTException;
+import java.awt.Component;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 
 public class CluedoTests {
 
@@ -26,12 +33,18 @@ public class CluedoTests {
 	@Test
 	public void testValidMove_01() {
 		try {
+			Robot robot = new Robot();
 			Player player = setupMockPlayer("Ralf", "Miss Scarlett", new Position(23, 13));
 			game.board[player.position().getX()][player.position().getY()].setPlayer(player);
 			player.setNumberofMoves(12);
 			game.cluedoCanvas.move(-1, 0, player, game.currentPlayers());
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
 			assertEquals(new Position(22, 13), player.position());
-		} catch (CluedoGameController.InvalidMove e) {
+
+			
+	  
+		} catch (CluedoGameController.InvalidMove | AWTException e) {
 			fail(e.getMessage());
 		}
 	}
@@ -42,12 +55,16 @@ public class CluedoTests {
 	@Test
 	public void testValidMove_02() {
 		try {
+			Robot robot = new Robot();
+
 			Player player = setupMockPlayer("Ralf", "Miss Scarlett", new Position(23, 13));
 			game.board[player.position().getX()][player.position().getY()].setPlayer(player);
 			player.setNumberofMoves(12);
 			game.cluedoCanvas.move(-4, 0, player, game.currentPlayers());
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
 			assertEquals(new Position(19, 13), player.position());
-		} catch (CluedoGameController.InvalidMove e) {
+		} catch (CluedoGameController.InvalidMove | AWTException e) {
 			fail(e.getMessage());
 		}
 	}
@@ -58,12 +75,16 @@ public class CluedoTests {
 	@Test
 	public void testInvalidMove_01(){
 		try{
+			Robot robot = new Robot();
 			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(0,17));
 			game.board[player.position().getX()][player.position().getY()].setPlayer(player); 
 			player.setNumberofMoves(12);
 			game.cluedoCanvas.move(-1, 0, player, game.currentPlayers());
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
+
 			assertEquals(new Position(0, 17), player.position());
-		}catch(CluedoGameController.InvalidMove e){
+		}catch(CluedoGameController.InvalidMove | AWTException e){
 			fail(e.getMessage());
 		}
 	}
@@ -74,12 +95,15 @@ public class CluedoTests {
 	@Test
 	public void testInvalidMove_02(){
 		try{
+			Robot robot = new Robot();
 			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(7,24));
 			game.board[player.position().getX()][player.position().getY()].setPlayer(player);
 			player.setNumberofMoves(12);
 			game.cluedoCanvas.move(1, 0, player, game.currentPlayers());
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
 			assertEquals(new Position(7, 24), player.position());
-		}catch(CluedoGameController.InvalidMove e){
+		}catch(CluedoGameController.InvalidMove | AWTException e){
 			fail(e.getMessage());
 		}
 	}
@@ -91,14 +115,17 @@ public class CluedoTests {
 	public void testValidMove_03(){
 		int diceRoll = game.diceRoll();
 		try{
+			Robot robot = new Robot();
 			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(0,17));
 			game.board[player.position().getX()][player.position().getY()].setPlayer(player); 
 			player.setNumberofMoves(12);
 			for(int i = 0; i < diceRoll; i++){
 				game.cluedoCanvas.move(1, 0, player, game.currentPlayers());
 			}
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
 			assertEquals(new Position(diceRoll, player.position().getY()), player.position());
-		}catch(CluedoGameController.InvalidMove e){
+		}catch(CluedoGameController.InvalidMove | AWTException e){
 			fail(e.getMessage());
 		}
 	}
@@ -109,12 +136,17 @@ public class CluedoTests {
 	@Test
 	public void testGoingInRoom_01(){
 		try{
+			Robot robot = new Robot();
 			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(0,17));
 			game.board[player.position().getX()][player.position().getY()].setPlayer(player);
 			player.setNumberofMoves(12);
 			game.cluedoCanvas.move(6, -2, player, game.currentPlayers());
+	      
+			robot.keyPress(KeyEvent.VK_ENTER);
+	         
+
 			assertTrue(player.isInRoom());
-		}catch(CluedoGameController.InvalidMove e){
+		}catch(CluedoGameController.InvalidMove | AWTException e){
 			fail(e.getMessage());
 		}
 	}
@@ -122,6 +154,7 @@ public class CluedoTests {
 	@Test
 	public void testGoingInRoom_02(){
 		try {
+			Robot robot = new Robot();
 			Player player1 = setupMockPlayer("Ralf", "Professor Plum", new Position(6,18));
 			player1.setNumberofMoves(12);
 			Player player2 = setupMockPlayer("Homer", "Miss Scarlett", new Position(6,17));
@@ -129,6 +162,8 @@ public class CluedoTests {
 			game.cluedoCanvas.move(0, 1, player1, game.currentPlayers());
 			game.cluedoCanvas.move(0, 1, player2, game.currentPlayers());
 			game.cluedoCanvas.move(0, 1, player2, game.currentPlayers());
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
 			Player player3 = setupMockPlayer("Sam", "Colonel Mustard", new Position(6,18));
 			player3.setNumberofMoves(12);
 			Player player4 = setupMockPlayer("Kumar", "Mrs. White", new Position(6,17));
@@ -136,6 +171,9 @@ public class CluedoTests {
 			game.cluedoCanvas.move(0, 1, player3, game.currentPlayers());
 			game.cluedoCanvas.move(0, 1, player4, game.currentPlayers());
 			game.cluedoCanvas.move(0, 1, player4, game.currentPlayers());
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
+
 			Player player5 = setupMockPlayer("Flo", "The Reverend Green", new Position(6,18));
 			player5.setNumberofMoves(12);
 			Player player6 = setupMockPlayer("Peter", "Mrs. Peacock", new Position(6,17));
@@ -143,8 +181,11 @@ public class CluedoTests {
 			game.cluedoCanvas.move(0, 1, player5, game.currentPlayers());
 			game.cluedoCanvas.move(0, 1, player6, game.currentPlayers());
 			game.cluedoCanvas.move(0, 1, player6, game.currentPlayers());
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
+
 			assertEquals(6, player1.getRoom().getMap().size());
-		} catch (CluedoGameController.InvalidMove e) {
+		} catch (CluedoGameController.InvalidMove | AWTException e) {
 			fail(e.getMessage());
 		}
 	}
@@ -152,6 +193,7 @@ public class CluedoTests {
 	@Test
 	public void testGoingInRoom_03(){
 		try{
+			Robot robot = new Robot();
 			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(0,17));
 			game.addPlayer(player);
 			Player player2 = setupMockPlayer("Pete", "Mrs. White", new Position(1,17));
@@ -159,10 +201,15 @@ public class CluedoTests {
 			player.setNumberofMoves(12);
 			game.board[player.position().getX()][player.position().getY()].setPlayer(player);
 			game.cluedoCanvas.move(6, -2, player, game.currentPlayers());
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
 			assertTrue(player.isInRoom());
 			game.cluedoCanvas.exitRoom(player, game.currentPlayers());
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
+
 			assertFalse(player.isInRoom());
-		}catch(CluedoGameController.InvalidMove e){
+		}catch(CluedoGameController.InvalidMove | AWTException e){
 			fail(e.getMessage());
 		}
 	}
@@ -173,15 +220,27 @@ public class CluedoTests {
 	@Test
 	public void testLeavingRoom(){
 		try{
+			Robot robot = new Robot();
 			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(0,17));
 			game.board[player.position().getX()][player.position().getY()].setPlayer(player);
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
 			player.setNumberofMoves(12);
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
 			game.cluedoCanvas.move(6, -2, player, game.currentPlayers()); //moving diagonally but who cares anyway?
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
 			System.out.println(player.position().toString());
 			assertTrue(player.isInRoom());
 			game.cluedoCanvas.exitRoom(player, game.currentPlayers());
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
 			assertTrue(!player.isInRoom());
-		}catch(CluedoGameController.InvalidMove e){
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
+
+		}catch(CluedoGameController.InvalidMove | AWTException e){
 			fail(e.getMessage());
 		}
 	}
@@ -189,18 +248,24 @@ public class CluedoTests {
 	@Test
 	public void testGoingInStairs(){
 		try{
+			Robot robot = new Robot();
 			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(0,17));
 			game.board[player.position().getX()][player.position().getY()].setPlayer(player); 
 			player.setNumberofMoves(12);
 			game.cluedoCanvas.move(6, 2, player, game.currentPlayers()); //moving diagonally but who cares anyway?
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
 			assertTrue(player.isInRoom());
 			//get the room that the player WILL LEAVE
 			Room oldRoom = player.getRoom();
 			game.cluedoCanvas.moveToRoom(player, oldRoom.getOtherRoom());
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
+
 			assertTrue(player.isInRoom());
 			//check that the rooms Other Room equals the old room.
 			assertEquals(player.getRoom().getOtherRoom(), oldRoom);
-		}catch(CluedoGameController.InvalidMove e){
+		}catch(CluedoGameController.InvalidMove | AWTException e){
 			fail(e.getMessage());
 		}	
 	}
@@ -211,13 +276,20 @@ public class CluedoTests {
 	@Test
 	public void testInvalidGoingStairs(){
 		try{
+			Robot robot = new Robot();
 			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(23,6));
 			game.board[player.position().getX()][player.position().getY()].setPlayer(player); 
 			player.setNumberofMoves(12);
+	        robot.delay(200);
+
+	        
+			robot.keyPress(KeyEvent.VK_ENTER);
 			game.cluedoCanvas.move(0, -1, player, game.currentPlayers());
+	        robot.delay(200);
+			robot.keyPress(KeyEvent.VK_ENTER);
 			assertFalse(player.isInRoom());
 			assertEquals(new Position(23, 6), player.position());
-		}catch(CluedoGameController.InvalidMove e){
+		}catch(CluedoGameController.InvalidMove | AWTException e){
 			fail(e.getMessage());
 		}
 	}
@@ -228,9 +300,12 @@ public class CluedoTests {
 	@Test
 	public void testInvalidCharacterName(){
 		try{
+			Robot robot = new Robot();
 			Player player = setupMockPlayer("Ralf", "Professor Pulm", new Position(0,17));
 			assertTrue(player.getCharacterName() == null);
-		}catch(CluedoGameController.InvalidMove e){
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
+		}catch(CluedoGameController.InvalidMove | AWTException e){
 			fail(e.getMessage());
 		}
 	}
@@ -255,18 +330,23 @@ public class CluedoTests {
 	@Test
 	public void testValidSuggestion_01(){
 		try{
+			Robot robot = new Robot();
 			Player player = setupMockPlayer("Ralf", "Miss Scarlett", new Position(0,17));
 			game.board[player.position().getX()][player.position().getY()].setPlayer(player);
 			player.setNumberofMoves(12);
 			game.cluedoCanvas.move(6, -2, player, game.currentPlayers());
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
 			assertTrue(player.getRoom() != null);
 
 			WeaponCard wc = new WeaponCard(new Weapon(null, "Dagger"), null);
 			RoomCard rc = new RoomCard(player.getRoom(), null);
 			CharacterCard cc = new CharacterCard(new Character(null, "Mrs. White", null, null), null);
 			Suggestion sug = new Suggestion(wc, rc, cc, player);
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
 			assertTrue(sug != null);
-		}catch(CluedoGameController.InvalidMove e){
+		}catch(CluedoGameController.InvalidMove | AWTException e){
 			fail(e.getMessage());
 		}
 	}
@@ -278,6 +358,7 @@ public class CluedoTests {
 	@Test
 	public void testValidSuggestion_02(){
 		try{
+			Robot robot = new Robot();
 			Player player1 = setupMockPlayer("A", "Miss Scarlett", new Position(0,17));
 			game.board[player1.position().getX()][player1.position().getY()].setPlayer(player1);
 			player1.setNumberofMoves(12);
@@ -290,6 +371,8 @@ public class CluedoTests {
 			player1.addCard(w1);
 			player1.addCard(r1);
 			game.addPlayer(player1);
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
 			r1.getObject().addWeapon(w1.getObject());
 			r1.getObject().addCharacter(c1.getObject());
 			w1.getObject().addRoom(r1.getObject());
@@ -303,6 +386,8 @@ public class CluedoTests {
 			player2.addCard(w2);
 			player2.addCard(c2);
 			game.addPlayer(player2);
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
 			r2.getObject().addWeapon(w2.getObject());
 			r2.getObject().addCharacter(c2.getObject());
 			w2.getObject().addRoom(r2.getObject());
@@ -313,17 +398,30 @@ public class CluedoTests {
 			player3.addCard(new WeaponCard(new Weapon(null, "Knife"), null));
 			player3.addCard(new RoomCard(new Room("Conservatory"), null));
 			game.addPlayer(player3);
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
+
 
 			game.initializer.setCharacters();
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
+
 			assertTrue(player1.getRoom() != null);
 
 			WeaponCard wc = new WeaponCard(new Weapon(null, "Revolver"), null);
 			RoomCard rc = new RoomCard(player1.getRoom(), null);
 			CharacterCard cc = new CharacterCard(new Character(null, "Colonel Mustard", null, null), null);
 			Suggestion sug = new Suggestion(wc, rc, cc, player1);
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
+
 			assertTrue(sug.checkSuggestion(game.currentPlayers()));
+	        robot.keyPress(KeyEvent.VK_ENTER);
+	         
+
+	        
 			assertEquals(player1.getRoom(), sug.getCharacterCard().getObject().getRoom());
-		}catch(CluedoGameController.InvalidMove e){
+		}catch(CluedoGameController.InvalidMove | AWTException e){
 			fail(e.getMessage());
 		}
 	}
