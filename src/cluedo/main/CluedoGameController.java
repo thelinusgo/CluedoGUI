@@ -334,7 +334,11 @@ public class CluedoGameController implements MouseListener{
 		boolean correctInput = false, isInteger = false;
 
 		while (!correctInput && !isInteger) {
-			numPlayers = (String) (JOptionPane.showInputDialog(null, "How many players would you like?"));
+			numPlayers = (String) (JOptionPane.showInputDialog(null, "How many players would you like?", JOptionPane.OK_OPTION));
+			
+		
+			
+			
 			if (isInteger(numPlayers)) {
 				if (Integer.parseInt(numPlayers) > 6 || Integer.parseInt(numPlayers) < 3) {
 					JOptionPane.showMessageDialog(null, "Number of players has to be in between 3-6 (a number)",
@@ -343,6 +347,7 @@ public class CluedoGameController implements MouseListener{
 					correctInput = true;
 					isInteger = true;
 				}
+			
 			} else {
 				JOptionPane.showMessageDialog(null, "You must enter Integer values only.", "GAME ERROR", JOptionPane.ERROR_MESSAGE);
 			}
@@ -384,7 +389,7 @@ public class CluedoGameController implements MouseListener{
 		JComboBox comboBox = new JComboBox(model);
 		panel.add(comboBox);
 
-		int result = JOptionPane.showConfirmDialog(null, panel, "Choose a Character", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int result = JOptionPane.showConfirmDialog(null, panel, "Choose a Character", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
 		switch (result) {
 		case JOptionPane.OK_OPTION:
 			System.out.println("You selected " + comboBox.getSelectedItem());

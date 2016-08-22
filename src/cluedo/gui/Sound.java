@@ -30,12 +30,8 @@ public class Sound {
     	    clip.start();
     	}
     	catch (Exception e) {
-<<<<<<< HEAD
     	System.err.println("The music file is missing!");
     	  e.printStackTrace();
-=======
-
->>>>>>> branch 'master' of https://golinu@bitbucket.org/golinu/cluedogui.git
     	}
 	}
 	
