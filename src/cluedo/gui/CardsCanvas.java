@@ -21,7 +21,7 @@ import cluedo.main.CluedoGameController;
 /**
  * Canvas used to display the cards that a current Player has.
  * This is drawn on an attached JFrame.
- * @author linus
+ * @author Casey and Linus
  *
  */
 public class CardsCanvas extends Canvas{

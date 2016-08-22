@@ -102,16 +102,7 @@ public class CluedoView extends JFrame {
 	 * The dice canvas - where the dice ImageIcons are drawn.
 	 */
 	DiceCanvas dicecanvas = new DiceCanvas();
-	/*
-	 * 
-	 * The canvas representing the pop up window, for drawing the players hand.
-	 * 
-	 * private CardsCanvas cardcanvas = new CardsCanvas();
-	 *//**
-		 * The JFrame for the cardvancas.
-		 *//*
-		 * private CardsFrame cardsframe;
-		 */
+	
 	private JLabel playerColor;
 	private JButton btnShowPreviousplayersCards;
 	private JRadioButton rdbtnMuteSound;
@@ -126,8 +117,7 @@ public class CluedoView extends JFrame {
 	 */
 	public CluedoView() {
 		super("Canus Studios Present: The Game of Cluedo");
-		game = new CluedoGameController(this);// create a new instance of the
-												// game.
+		game = new CluedoGameController(this);// create a new instance of the game.
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter() {
 

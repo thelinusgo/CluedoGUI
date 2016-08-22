@@ -37,9 +37,6 @@ public class Initializer {
 	private static WeaponCard[] weaponCards = new WeaponCard[6];
 	private static CharacterCard[] characterCards = new CharacterCard[6];
 
-	/** This helps generating a random shuffle for the lists */
-	private long seed = System.nanoTime();
-
 	/*Initialise Rooms NB: not all rooms have weapons.  */
 	public Room kitchen = new Room(CluedoGameController.kitchenCard, "Kitchen", 0, 1, 6, 6, true);
 	public Room diningrm = new Room(CluedoGameController.diningCard, "Dining Room", 0, 9, 8, 7, false);
@@ -83,7 +80,7 @@ public class Initializer {
 		weapons[5] = new Weapon(CluedoGameController.spannerCard, "Spanner");
 
 		/*Shuffle it so that a weapon will be in a random room each time. */
-		Collections.shuffle(Arrays.asList(weapons), new Random(seed)); //shuffle it
+		Collections.shuffle(Arrays.asList(weapons)); //shuffle it
 	}
 
 	/**
@@ -161,7 +158,7 @@ public class Initializer {
 			cards.add(cd);
 			characterCards[i] = (CharacterCard) cd;
 		}
-		Collections.shuffle(cards, new Random(seed)); 
+		Collections.shuffle(cards); 
 	}
 
 	/**
@@ -206,7 +203,7 @@ public class Initializer {
 	 * Store character in room and room in character.
 	 */
 	public void setCharacters(){
-		Collections.shuffle(Arrays.asList(rooms), new Random(seed));
+		Collections.shuffle(Arrays.asList(rooms));
 		for(int i = 0; i < characters.length; i++){
 			Character c = characters[i];
 			if(c.player() == null){
@@ -226,9 +223,9 @@ public class Initializer {
 	 * @param currentPlayers
 	 */
 	public void distributeCards(List<Player> currentPlayers){
-		Collections.shuffle(Arrays.asList(roomCards), new Random(seed)); 
-		Collections.shuffle(Arrays.asList(weaponCards), new Random(seed)); 
-		Collections.shuffle(Arrays.asList(characterCards), new Random(seed)); 
+		Collections.shuffle(Arrays.asList(roomCards)); 
+		Collections.shuffle(Arrays.asList(weaponCards)); 
+		Collections.shuffle(Arrays.asList(characterCards)); 
 		for(int i = 0, j = 0; j < roomCards.length; i++, j++){
 			if(i == currentPlayers.size()){
 				i = 0;

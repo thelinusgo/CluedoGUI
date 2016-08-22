@@ -34,7 +34,7 @@ import cluedo.assets.tiles.WallTile;
 import cluedo.main.CluedoGameController;
 import cluedo.main.CluedoGameController.InvalidMove;
 /**
- * Class that represents the Cluedo Canvas
+ * Class that represents the Cluedo Canvas (Board)
  * @author Casey and Linus
  *
  */
@@ -109,6 +109,7 @@ public class CluedoCanvas extends JPanel{
 			e.printStackTrace();
 		}
 	}
+	
 	@Override
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -122,6 +123,9 @@ public class CluedoCanvas extends JPanel{
 		return new Dimension(800,800);
 	}
 
+	/**
+	 * Paints the board.
+	 */
 	public void paint(Graphics g){
 		this.g = g;
 		g.setColor(new Color(128, 189, 147));
@@ -140,6 +144,9 @@ public class CluedoCanvas extends JPanel{
 		this.drawBoard();
 	}
 
+	/**
+	 * Initialises the 2D array of Tiles.
+	 */
 	private void initialise(){
 		this.drawPath();
 		this.drawBorder();
@@ -160,6 +167,9 @@ public class CluedoCanvas extends JPanel{
 
 	}
 
+	/**
+	 * Draws the path.
+	 */
 	private void drawPath(){
 		for(int x = 0; x < board.length; x++){
 			for(int y = 0; y < board[0].length; y++){
@@ -186,6 +196,7 @@ public class CluedoCanvas extends JPanel{
 
 	/**
 	 * Draws the kitchen.
+	 * @return
 	 */
 	private Rectangle drawKitchen(){
 		int size = 6;
@@ -230,7 +241,9 @@ public class CluedoCanvas extends JPanel{
 
 	/**
 	 * Draws the dining room.
+	 * @return
 	 */
+
 	private Rectangle drawDiningRoom(){
 		int width = 8;
 		int height = 7;
@@ -293,6 +306,7 @@ public class CluedoCanvas extends JPanel{
 
 	/**
 	 * Draws the lounge.
+	 * @return
 	 */
 	private Rectangle drawLounge(){
 		int x = 0;
@@ -342,6 +356,7 @@ public class CluedoCanvas extends JPanel{
 
 	/**
 	 * Draws the hall.
+	 * @return
 	 */
 	private Rectangle drawHall() {
 		int x = 9;
@@ -400,6 +415,7 @@ public class CluedoCanvas extends JPanel{
 
 	/**
 	 * Draws the study room.
+	 * @return
 	 */
 	private Rectangle drawStudy() {
 		int x = 17;
@@ -450,6 +466,7 @@ public class CluedoCanvas extends JPanel{
 
 	/**
 	 * Draws the library.
+	 * @return
 	 */
 	private Rectangle drawLibrary() {
 		int x = 17;
@@ -508,6 +525,7 @@ public class CluedoCanvas extends JPanel{
 
 	/**
 	 * Draws the billiard room.
+	 * @return
 	 */
 	private Rectangle drawBilliard() {
 		int x = 18;
@@ -562,6 +580,7 @@ public class CluedoCanvas extends JPanel{
 
 	/**
 	 * Draws the conservatory.
+	 * @return
 	 */
 	private Rectangle drawConservatory() {
 		int x = 18;
@@ -614,6 +633,7 @@ public class CluedoCanvas extends JPanel{
 
 	/**
 	 * Draws the ball room.
+	 * @return
 	 */
 	private Rectangle drawBallRoom() {
 		int x = 8;
@@ -684,6 +704,7 @@ public class CluedoCanvas extends JPanel{
 
 	/**
 	 * Draws the solution room.
+	 * @return
 	 */
 	private Rectangle drawCluedo() {
 		int x = 10;
@@ -726,6 +747,9 @@ public class CluedoCanvas extends JPanel{
 
 	}
 
+	/**
+	 * Draws the board.
+	 */
 	public void drawBoard(){
 		for(int x = 0; x < board.length; x++){
 			for(int y = 0; y < board[0].length; y++){

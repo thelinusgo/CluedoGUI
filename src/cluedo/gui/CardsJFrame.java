@@ -11,6 +11,12 @@ import javax.swing.border.EmptyBorder;
 import cluedo.cards.Card;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * JFrame to show Cards Canvas
+ * 
+ * @author Casey and Linus
+ *
+ */
 public class CardsJFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -29,5 +35,4 @@ public class CardsJFrame extends JFrame {
 		CardsCanvas panel = new CardsCanvas(cards);
 		contentPane.add(panel, "cell 0 0,grow");
 	}
-
 }
