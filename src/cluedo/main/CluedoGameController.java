@@ -279,7 +279,19 @@ public class CluedoGameController implements MouseListener{
 		cluedoJFrame.repaint();
 		cluedoCanvas.repaint();
 	}
-
+	
+	/**
+	 * Reset the round - after a player has lost.
+	 */
+	public void resetAfterPlayerOut(CluedoView theView){
+		currentPlayer().setOut(true);
+		currentPlayers().remove(this.currentPlayer());
+		reset();
+		theView.dicecanvas.resetDice();
+		theView.current_players_pane.setText(this.getPlayerAndCharacterText());
+		theView.leftPanel.repaint();		
+	}
+	
 	/**
 	 * Initialize the current players - give them random cards
 	 */

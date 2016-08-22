@@ -12,6 +12,7 @@ import cluedo.assets.Position;
 import cluedo.cards.Card;
 import cluedo.gui.CardsJFrame;
 import cluedo.gui.DiceCanvas;
+import cluedo.gui.InstructionsFrame;
 import cluedo.gui.Sound;
 import cluedo.arguments.Accusation;
 import cluedo.arguments.Suggestion;
@@ -77,10 +78,10 @@ public class CluedoView extends JFrame {
 	private JButton btnMakeSuggestion;
 	private JButton btnMakeAccusation;
 	/* Various text panes and text Fields. */
-	private JTextPane current_players_pane;
+	JTextPane current_players_pane;
 	public JTextField currentPlayerText; // this is where one would set the
 
-	private JPanel leftPanel;
+	JPanel leftPanel;
 
 	/* Represents the player Colors */
 	private ImageIcon green = new ImageIcon("green.png");
@@ -96,7 +97,7 @@ public class CluedoView extends JFrame {
 	/**
 	 * The dice canvas - where the dice ImageIcons are drawn.
 	 */
-	private DiceCanvas dicecanvas = new DiceCanvas();
+	DiceCanvas dicecanvas = new DiceCanvas();
 	/*
 	 * 
 	 * The canvas representing the pop up window, for drawing the players hand.
@@ -176,9 +177,6 @@ public class CluedoView extends JFrame {
 		contentPane.add(leftPanel, BorderLayout.WEST);
 		leftPanel.setLayout(new MigLayout("", "[113px]", "[23px][::50px][][][][][][][][][45px][][][][][][grow]"));
 
-		JPanel panel_2 = new JPanel();
-		contentPane.add(panel_2, BorderLayout.SOUTH);
-
 		JLabel currentPlyrLabel = new JLabel("Current Player:");
 		currentPlyrLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		leftPanel.add(currentPlyrLabel, "cell 0 0");
@@ -203,7 +201,6 @@ public class CluedoView extends JFrame {
 		// Button to display the current players hand.
 		btnDisplayHand = new JButton("Display your Hand");
 		btnDisplayHand.setToolTipText("Press this to show what cards in hand you have.");
-		btnDisplayHand.setHorizontalAlignment(SwingConstants.RIGHT);
 		leftPanel.add(btnDisplayHand, "cell 0 6,growx");
 
 		btnShowPreviousplayersCards = new JButton("Previous Players Cards");
@@ -287,6 +284,12 @@ public class CluedoView extends JFrame {
 			break;
 		}
 	}
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * This method sets up and initializes the action listeners. If you want to
@@ -297,7 +300,12 @@ public class CluedoView extends JFrame {
 		 * START OF ACTION/MOUSE LISTENER STUFF
 		 ***************************/
 		game.cluedoCanvas.addMouseListener(game);
+		
 
+		mntmGameInstructions.addActionListener(e->{
+			new InstructionsFrame();
+		});
+		
 		rdbtnMuteSound.addActionListener(e -> {
 			if (rdbtnMuteSound.isSelected())
 				game.getSound().stopMusic();
@@ -321,23 +329,11 @@ public class CluedoView extends JFrame {
 					JOptionPane.showMessageDialog(null, "The accusation was incorrect.", "ACCUSATION INCORRECT",
 							JOptionPane.ERROR_MESSAGE);
 					JOptionPane.showMessageDialog(null, "The current player has been removed from the game, and will be prevented from moving.", "GAME Notice." ,JOptionPane.ERROR_MESSAGE);
-					game.currentPlayer().setOut(true);
-					game.currentPlayers().remove(game.currentPlayer());
-					game.reset();
-					dicecanvas.setDiceOne(0);
-					dicecanvas.setDiceTwo(0);
-					leftPanel.repaint();		
+					game.resetAfterPlayerOut(this);
 				} else {
 					JOptionPane.showMessageDialog(null, "The accusation was Correct. Nice work!", "ACCUSATION CORRECT",
 							JOptionPane.INFORMATION_MESSAGE);
-					JOptionPane.showMessageDialog(null, game.currentPlayer().getName() + " has won the game.",
-							"Congratulations", JOptionPane.INFORMATION_MESSAGE);
-					btnEndTurn.setEnabled(false);
-					btnMakeMove.setEnabled(false);
-					btnRollDice.setEnabled(false);
-					btnMakeSuggestion.setEnabled(false);
-					btnMakeAccusation.setEnabled(false);
-					btnShowPreviousplayersCards.setEnabled(false);
+					do_after_correct_accusation();
 				}
 
 			} catch (Exception e1) {
@@ -348,8 +344,7 @@ public class CluedoView extends JFrame {
 		btnEndTurn.addActionListener(e -> {
 			if(!game.isGameOver()){
 				game.reset();
-				dicecanvas.setDiceOne(0);
-				dicecanvas.setDiceTwo(0);
+				dicecanvas.resetDice();
 				leftPanel.repaint();
 			}else{
 				
@@ -428,5 +423,14 @@ public class CluedoView extends JFrame {
 		/*********************
 		 * END OF ACTION/MOUSE LISTENER STUFF
 		 ***************************/
+	}
+	
+	public void do_after_correct_accusation(){
+		btnEndTurn.setEnabled(false);
+		btnMakeMove.setEnabled(false);
+		btnRollDice.setEnabled(false);
+		btnMakeSuggestion.setEnabled(false);
+		btnMakeAccusation.setEnabled(false);
+		btnShowPreviousplayersCards.setEnabled(false);
 	}
 }
