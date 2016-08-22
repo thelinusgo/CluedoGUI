@@ -12,6 +12,7 @@ import cluedo.assets.Position;
 import cluedo.cards.Card;
 import cluedo.gui.CardsJFrame;
 import cluedo.gui.DiceCanvas;
+import cluedo.gui.GameOverFrame;
 import cluedo.gui.InstructionsFrame;
 import cluedo.gui.Sound;
 import cluedo.arguments.Accusation;
@@ -82,6 +83,9 @@ public class CluedoView extends JFrame {
 	public JTextField currentPlayerText; // this is where one would set the
 
 	JPanel leftPanel;
+	
+	GameOverFrame gameoverframe;
+	
 
 	/* Represents the player Colors */
 	private ImageIcon green = new ImageIcon("green.png");
@@ -348,6 +352,7 @@ public class CluedoView extends JFrame {
 				leftPanel.repaint();
 			}else{
 				game.resetAll();
+				gameoverframe = new GameOverFrame();
 			}
 		});
 
