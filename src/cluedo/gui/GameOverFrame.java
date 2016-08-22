@@ -7,7 +7,7 @@ import java.io.File;
 import javax.swing.JFrame;
 /**
  * The Game over frame that shows up when the game has been lost..
- * @author linus
+ * @author Casey and Linus
  *
  */
 public class GameOverFrame extends JFrame{
@@ -15,7 +15,7 @@ public class GameOverFrame extends JFrame{
 	private GameOverCanvas canvas;
 	
 	public GameOverFrame(){
-			super("Game Over. You lost.");
+			super("Game Over!");
 			canvas = new GameOverCanvas(); // create canvas
 			setLayout(new BorderLayout()); // use border layour
 			add(canvas, BorderLayout.CENTER); // add canvas
@@ -28,8 +28,4 @@ public class GameOverFrame extends JFrame{
 	public static void main(String... args){
 		new GameOverFrame();
 	}
-	
-	
-	
-	
 }

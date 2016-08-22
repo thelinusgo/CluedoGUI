@@ -329,31 +329,27 @@ public class CluedoView extends JFrame {
 		btnMakeAccusation.addActionListener(e -> {
 			try {
 				Accusation status = game.makeAccusation(game.currentPlayer());
+				
 				if (status == null) {
 					JOptionPane.showMessageDialog(null, "The accusation was incorrect.", "ACCUSATION INCORRECT",
 							JOptionPane.ERROR_MESSAGE);
 					JOptionPane.showMessageDialog(null, "The current player has been removed from the game, and will be prevented from moving.", "GAME Notice." ,JOptionPane.ERROR_MESSAGE);
 					game.resetAfterPlayerOut(this);
-				} else {
-					JOptionPane.showMessageDialog(null, "The accusation was Correct. Nice work!", "ACCUSATION CORRECT",
-							JOptionPane.INFORMATION_MESSAGE);
-					do_after_correct_accusation();
 				}
-
+				if(game.isGameOver()){
+					game.resetAll();
+					gameoverframe = new GameOverFrame();
+					return;
+				}
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		});
 
 		btnEndTurn.addActionListener(e -> {
-			if(!game.isGameOver()){
 				game.reset();
 				dicecanvas.resetDice();
 				leftPanel.repaint();
-			}else{
-				game.resetAll();
-				gameoverframe = new GameOverFrame();
-			}
 		});
 
 		mntmStartGame.addActionListener(e -> {

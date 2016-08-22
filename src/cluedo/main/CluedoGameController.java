@@ -633,6 +633,9 @@ public class CluedoGameController implements MouseListener{
 	 */
 	public boolean isGameOver(){
 		if(accusation != null && accusation.accusationStatus()){
+			JOptionPane.showMessageDialog(null, "The accusation was Correct. Nice work!", "ACCUSATION CORRECT",
+					JOptionPane.INFORMATION_MESSAGE);
+			cluedoJFrame.do_after_correct_accusation();
 			return true;
 		}else{
 			int count = currentPlayers.size();
