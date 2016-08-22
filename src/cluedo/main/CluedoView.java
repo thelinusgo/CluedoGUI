@@ -12,6 +12,7 @@ import cluedo.assets.Position;
 import cluedo.cards.Card;
 import cluedo.gui.CardsJFrame;
 import cluedo.gui.DiceCanvas;
+import cluedo.gui.InstructionsFrame;
 import cluedo.gui.Sound;
 import cluedo.arguments.Accusation;
 import cluedo.arguments.Suggestion;
@@ -176,9 +177,6 @@ public class CluedoView extends JFrame {
 		contentPane.add(leftPanel, BorderLayout.WEST);
 		leftPanel.setLayout(new MigLayout("", "[113px]", "[23px][::50px][][][][][][][][][45px][][][][][][grow]"));
 
-		JPanel panel_2 = new JPanel();
-		contentPane.add(panel_2, BorderLayout.SOUTH);
-
 		JLabel currentPlyrLabel = new JLabel("Current Player:");
 		currentPlyrLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		leftPanel.add(currentPlyrLabel, "cell 0 0");
@@ -203,7 +201,6 @@ public class CluedoView extends JFrame {
 		// Button to display the current players hand.
 		btnDisplayHand = new JButton("Display your Hand");
 		btnDisplayHand.setToolTipText("Press this to show what cards in hand you have.");
-		btnDisplayHand.setHorizontalAlignment(SwingConstants.RIGHT);
 		leftPanel.add(btnDisplayHand, "cell 0 6,growx");
 
 		btnShowPreviousplayersCards = new JButton("Previous Players Cards");
@@ -297,7 +294,22 @@ public class CluedoView extends JFrame {
 		 * START OF ACTION/MOUSE LISTENER STUFF
 		 ***************************/
 		game.cluedoCanvas.addMouseListener(game);
-
+		
+		
+		
+		
+		mntmGameInstructions.addActionListener(e->{
+			new InstructionsFrame();
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		rdbtnMuteSound.addActionListener(e -> {
 			if (rdbtnMuteSound.isSelected())
 				game.getSound().stopMusic();
