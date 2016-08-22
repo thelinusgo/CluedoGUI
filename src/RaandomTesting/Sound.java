@@ -12,6 +12,9 @@ import java.io.*;
 
 public class Sound {
 
+	private static Clip clip;
+	
+	
 	public static void main(String[] args) {
         JFrame frame = new JFrame();
         frame.setSize(100, 100);
@@ -34,7 +37,6 @@ public class Sound {
     	    AudioInputStream stream;
     	    AudioFormat format;
     	    DataLine.Info info;
-    	    Clip clip;
 
     	    stream = AudioSystem.getAudioInputStream(new File("Spy_Glass.wav"));
     	    format = stream.getFormat();
@@ -47,4 +49,17 @@ public class Sound {
     	    //whatevers
     	}
     }
+    
+    public void stopMusic(){
+    	clip.stop();
+    }
+    
+    public void startMusic(){
+    	clip.start();
+    }
+    
+    
+    
+    
+    
 }

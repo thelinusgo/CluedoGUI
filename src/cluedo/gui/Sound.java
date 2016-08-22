@@ -12,13 +12,20 @@ import javax.sound.sampled.DataLine;
 import sun.audio.*;
 
 public class Sound {
+	private static Clip clip;
+	private static AudioInputStream stream;
+	private static AudioFormat format;
+	private static DataLine.Info info;
+	
+	/**
+	 * This starts the music being played.
+	 */
 	public static void music(){
 		try {
     	    AudioInputStream stream;
     	    AudioFormat format;
     	    DataLine.Info info;
     	    Clip clip;
-
     	    stream = AudioSystem.getAudioInputStream(new File("Spy_Glass.wav"));
     	    format = stream.getFormat();
     	    info = new DataLine.Info(Clip.class, format);
@@ -27,7 +34,16 @@ public class Sound {
     	    clip.start();
     	}
     	catch (Exception e) {
-
+    	System.err.println("The music file is missing!");
+    	  e.printStackTrace();
     	}
 	}
+	
+	/**
+	 * This stops the music from being played.
+	 */
+	public void stopMusic(){
+		clip.stop();
+	}
+	
 }
