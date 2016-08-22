@@ -19,7 +19,7 @@ public class InstructionsFrame extends JFrame{
 			canvas = new InstructionsCanvas(); // create canvas
 			setLayout(new BorderLayout()); // use border layour
 			add(canvas, BorderLayout.CENTER); // add canvas
-			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //dont kill the whole thingy.
 			pack(); // pack components tightly together
 			setResizable(false); // prevent us from being resizeable
 			setVisible(true); // make sure we are visible!
