@@ -177,7 +177,6 @@ public class CluedoTests {
 			game.board[player.position().getX()][player.position().getY()].setPlayer(player);
 			player.setNumberofMoves(12);
 			game.cluedoCanvas.move(6, -2, player, game.currentPlayers()); //moving diagonally but who cares anyway?
-			System.out.println(player.position().toString());
 			assertTrue(player.isInRoom());
 			game.cluedoCanvas.exitRoom(player, game.currentPlayers());
 			assertTrue(!player.isInRoom());
@@ -365,7 +364,6 @@ public class CluedoTests {
 			game.board[player.position().getX()][player.position().getY()].setPlayer(player);
 			Accusation accu = new Accusation(wep,room,character,player, env);
 			assertTrue(accu != null);
-			//assertTrue(accu.argumentStatus());
 		}catch(CluedoGameController.InvalidMove e){
 			fail(e.getMessage());
 		}
@@ -390,8 +388,6 @@ public class CluedoTests {
 			Accusation accu = new Accusation(wep,room,character,player,env);
 			assertTrue(accu != null);
 			assertTrue(accu.accusationStatus());
-			//assertTrue(accu.checkAccusation(env, player));
-			//assertTrue(game.isGameOver());
 		}catch(CluedoGameController.InvalidMove e){
 			fail(e.getMessage());
 		}
