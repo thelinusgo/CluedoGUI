@@ -491,9 +491,6 @@ public class CluedoGameController implements MouseListener{
 		return null;
 	}
 
-
-
-
 	/**
 	 * This code allows us to select from a collection of weapons.
 	 */
