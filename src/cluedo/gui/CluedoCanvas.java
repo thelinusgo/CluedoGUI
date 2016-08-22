@@ -772,8 +772,6 @@ public class CluedoCanvas extends JPanel{
 					CluedoGameController.makeSuggestion(CluedoGameController.getTheCurrentPlayer());
 				}
 			
-			
-			
 			}else{
 				p.setPos(x, y);
 			}

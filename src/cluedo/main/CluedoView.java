@@ -53,10 +53,12 @@ import java.awt.Color;
  * @author linus + casey
  *
  */
-public class CluedoView extends JFrame {	
+public class CluedoView extends JFrame {
 
 	/* The left panel of the Class. */
 	private JPanel contentPane;
+
+	private static Sound sound; // the sound object.
 
 	/* Holds the menuBar. */
 	private JMenuBar menuBar;
@@ -78,14 +80,13 @@ public class CluedoView extends JFrame {
 	private JButton btnDisplayHand;
 	private JButton btnMakeSuggestion;
 	private JButton btnMakeAccusation;
-	private JButton btnShowPrevPlayersCards;
 	/* Various text panes and text Fields. */
 	private JTextPane current_players_pane;
 	public JTextField currentPlayerText; // this is where one would set the
 
 	private JPanel leftPanel;
 
-	/*Represents the player Colors */
+	/* Represents the player Colors */
 	private ImageIcon green = new ImageIcon("green.png");
 	private ImageIcon white = new ImageIcon("white.png");
 	private ImageIcon yellow = new ImageIcon("yellow.png");
@@ -101,15 +102,18 @@ public class CluedoView extends JFrame {
 	 */
 	private DiceCanvas dicecanvas = new DiceCanvas();
 	/*
-
+	 * 
 	 * The canvas representing the pop up window, for drawing the players hand.
-
-	private CardsCanvas cardcanvas = new CardsCanvas();
+	 * 
+	 * private CardsCanvas cardcanvas = new CardsCanvas();
 	 *//**
-	 * The JFrame for the cardvancas.
-	 *//*
-	private CardsFrame cardsframe;*/
+		 * The JFrame for the cardvancas.
+		 *//*
+		 * private CardsFrame cardsframe;
+		 */
 	private JLabel playerColor;
+	private JButton btnShowPreviousplayersCards;
+	private JRadioButton rdbtnMuteSound;
 
 	/**
 	 * Launch the application.
@@ -118,11 +122,11 @@ public class CluedoView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Sound sound = new Sound();
+					sound = new Sound();
 					sound.music();
 					CluedoView theFrame = new CluedoView();
 					theFrame.setVisible(true);
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -135,18 +139,18 @@ public class CluedoView extends JFrame {
 	 */
 	public CluedoView() {
 		super("Canus Studios Present: The Game of Cluedo");
-		game = new CluedoGameController(this);// create a new instance of the game.
+		game = new CluedoGameController(this);// create a new instance of the
+												// game.
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.addWindowListener(new WindowAdapter(){
+		this.addWindowListener(new WindowAdapter() {
 
 			@Override
-			public void windowClosing(WindowEvent e){
+			public void windowClosing(WindowEvent e) {
 				int value = JOptionPane.showConfirmDialog(null, "Do you want to exit this Game?", "Confirmation",
 						JOptionPane.YES_NO_OPTION);
 				if (value == 0)
 					System.exit(0);
 			}
-
 
 		});
 		setBounds(100, 100, 775, 700);
@@ -188,7 +192,7 @@ public class CluedoView extends JFrame {
 		leftPanel = new JPanel();
 		leftPanel.setToolTipText("The current player.");
 		contentPane.add(leftPanel, BorderLayout.WEST);
-		leftPanel.setLayout(new MigLayout("", "[113px]", "[23px][::50px][][][][][][][45px][][][][][grow]"));
+		leftPanel.setLayout(new MigLayout("", "[113px]", "[23px][::50px][][][][][][][][][45px][][][][][][grow]"));
 
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.SOUTH);
@@ -212,7 +216,6 @@ public class CluedoView extends JFrame {
 		btnMakeMove.setToolTipText("Press this to make a move.");
 		leftPanel.add(btnMakeMove, "cell 0 3,growx");
 
-
 		// Button for when a turn has ended.
 		btnEndTurn = new JButton("End Turn");
 		btnEndTurn.setToolTipText("Press this to end your turn.");
@@ -222,37 +225,39 @@ public class CluedoView extends JFrame {
 		btnDisplayHand = new JButton("Display your Hand");
 		btnDisplayHand.setToolTipText("Press this to show what cards in hand you have.");
 		btnDisplayHand.setHorizontalAlignment(SwingConstants.RIGHT);
-		leftPanel.add(btnDisplayHand, "cell 0 5,growx");
+		leftPanel.add(btnDisplayHand, "cell 0 6,growx");
+
+		btnShowPreviousplayersCards = new JButton("Previous Players Cards");
+		btnShowPreviousplayersCards.setToolTipText("Press this to show previous players cards.");
+		leftPanel.add(btnShowPreviousplayersCards, "cell 0 7");
 
 		// Button to roll the dice.
 		btnRollDice = new JButton("Roll the Dice");
 		btnRollDice.setToolTipText("Press this to roll the die.");
-		leftPanel.add(btnRollDice, "cell 0 6,growx");
+		leftPanel.add(btnRollDice, "cell 0 8,growx");
 
-		btnShowPrevPlayersCards = new JButton("Previous Players Cards");
-		btnShowPrevPlayersCards.setToolTipText("Press this to show previous players cards.");
+		leftPanel.add(dicecanvas, "cell 0 9,alignx center,aligny top");
 
-		leftPanel.add(btnShowPrevPlayersCards, "cell 0 7");
-
-		leftPanel.add(dicecanvas, "cell 0 8,alignx center,aligny top");
+		rdbtnMuteSound = new JRadioButton("Mute Sound");
+		leftPanel.add(rdbtnMuteSound, "cell 0 10");
 
 		btnMakeSuggestion = new JButton("Make Suggestion");
 		btnMakeSuggestion.setToolTipText("Press this button to make a Suggestion.");
-		leftPanel.add(btnMakeSuggestion, "cell 0 9,growx");
+		leftPanel.add(btnMakeSuggestion, "cell 0 11,growx");
 
 		btnMakeAccusation = new JButton("Make Accusation");
 		btnMakeAccusation.setToolTipText("Press this button to make an accusation.");
-		leftPanel.add(btnMakeAccusation, "cell 0 10,growx");
+		leftPanel.add(btnMakeAccusation, "cell 0 12,growx");
 
 		JLabel lblListOfPlayers = new JLabel("List of available players: ");
-		leftPanel.add(lblListOfPlayers, "cell 0 11");
-		current_players_pane = new JTextPane();
-		current_players_pane.setToolTipText("The list of available players.");
-		current_players_pane.setEditable(false);
-		leftPanel.add(current_players_pane, "cell 0 12,grow");
+		leftPanel.add(lblListOfPlayers, "cell 0 13");
 
 		playerColor = new JLabel(no_player);
 		leftPanel.add(playerColor, "cell 0 1");
+		current_players_pane = new JTextPane();
+		current_players_pane.setToolTipText("The list of available players.");
+		current_players_pane.setEditable(false);
+		leftPanel.add(current_players_pane, "cell 0 14,grow");
 
 		contentPane.add(game.cluedoCanvas, BorderLayout.CENTER);
 
@@ -262,18 +267,19 @@ public class CluedoView extends JFrame {
 
 	/**
 	 * This sets the players current color.
+	 * 
 	 * @param p
 	 */
-	public void setPlayerColor(Player p){
-		if(p == null){ 
-			playerColor.setIcon(no_player);	 
+	public void setPlayerColor(Player p) {
+		if (p == null) {
+			playerColor.setIcon(no_player);
 			return;
 		}
 		String value = p.getCharacter().name();
 
-		switch(value){
+		switch (value) {
 		case "Miss Scarlet":
-			playerColor.setIcon(red);	 
+			playerColor.setIcon(red);
 			game.cleanCanvas();
 			break;
 		case "Colonel Mustard":
@@ -281,30 +287,31 @@ public class CluedoView extends JFrame {
 			game.cleanCanvas();
 			break;
 		case "Mrs. White":
-			playerColor.setIcon(white);	 
+			playerColor.setIcon(white);
 			game.cleanCanvas();
 			break;
 		case "The Reverend Green":
-			playerColor.setIcon(green);	 
+			playerColor.setIcon(green);
 			game.cleanCanvas();
 			break;
 		case "Mrs. Peacock":
-			playerColor.setIcon(purple);	 
+			playerColor.setIcon(purple);
 			game.cleanCanvas();
 			break;
 		case "Professor Plum":
-			playerColor.setIcon(blue);	 
+			playerColor.setIcon(blue);
 			game.cleanCanvas();
 			break;
 		default:
-			playerColor.setIcon(no_player);	 
+			playerColor.setIcon(no_player);
 			game.cleanCanvas();
 			break;
 		}
 	}
 
 	/**
-	 * This method sets up and initializes the action listeners. If you want to add an action listener for a Swing component, you would do it here.
+	 * This method sets up and initializes the action listeners. If you want to
+	 * add an action listener for a Swing component, you would do it here.
 	 */
 	private void setupActionListeners() {
 		/***************************
@@ -312,10 +319,17 @@ public class CluedoView extends JFrame {
 		 ***************************/
 		game.cluedoCanvas.addMouseListener(game);
 
+		rdbtnMuteSound.addActionListener(e -> {
+			if (rdbtnMuteSound.isSelected())
+				sound.stopMusic();
+			else
+				sound.music();
+		});
+
 		btnMakeSuggestion.addActionListener(e -> {
 			Suggestion sug = game.makeSuggestion(game.currentPlayer());
-			if(sug == null){
-				System.err.println("Why is the suggestion null? Look at me (line 301)");
+			if (sug == null) {
+				System.err.println("Why is the suggestion null? Look at me (line 336)");
 				return;
 			}
 
@@ -324,23 +338,26 @@ public class CluedoView extends JFrame {
 		btnMakeAccusation.addActionListener(e -> {
 			try {
 
-				for(Card c : Initializer.getEnvelope().getCards()){
+				for (Card c : Initializer.getEnvelope().getCards()) {
 					System.out.println(c.toString());
 				}
 
 				Accusation status = game.makeAccusation(game.currentPlayer());
-				if(status == null){
-					JOptionPane.showMessageDialog(null, "The accusation was incorrect.", "ACCUSATION INCORRECT", JOptionPane.ERROR_MESSAGE);
-				}else{
-					JOptionPane.showMessageDialog(null, "The accusation was Correct. Nice work!", "ACCUSATION CORRECT", JOptionPane.INFORMATION_MESSAGE);
-					JOptionPane.showMessageDialog(null, game.currentPlayer().getName() + " has won the game.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+				if (status == null) {
+					JOptionPane.showMessageDialog(null, "The accusation was incorrect.", "ACCUSATION INCORRECT",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, "The accusation was Correct. Nice work!", "ACCUSATION CORRECT",
+							JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, game.currentPlayer().getName() + " has won the game.",
+							"Congratulations", JOptionPane.INFORMATION_MESSAGE);
 					btnStartTurn.setEnabled(false);
 					btnEndTurn.setEnabled(false);
 					btnMakeMove.setEnabled(false);
 					btnRollDice.setEnabled(false);
 					btnMakeSuggestion.setEnabled(false);
 					btnMakeAccusation.setEnabled(false);
-					btnShowPrevPlayersCards.setEnabled(false);
+					btnShowPreviousplayersCards.setEnabled(false);
 				}
 
 			} catch (Exception e1) {
@@ -350,12 +367,6 @@ public class CluedoView extends JFrame {
 
 		btnEndTurn.addActionListener(e -> {
 			game.reset();
-		});
-
-		btnShowPrevPlayersCards.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				game.setOption("d");
-			}
 		});
 
 		mntmStartGame.addActionListener(e -> {
@@ -375,8 +386,9 @@ public class CluedoView extends JFrame {
 				"This game was created by Casey Huang and Linus Go for their SWEN 222 Project. \n (c) 2016 All rights reserved."));
 
 		btnDisplayHand.addActionListener(e -> {
-			if(game.currentPlayer() == null){
-				JOptionPane.showMessageDialog(null, "Cannot check the hand of a non-existant player!", "Game ERROR", JOptionPane.ERROR_MESSAGE);
+			if (game.currentPlayer() == null) {
+				JOptionPane.showMessageDialog(null, "Cannot check the hand of a non-existant player!", "Game ERROR",
+						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			cardsframe = new CardsJFrame(game.currentPlayer().getCards());
@@ -389,12 +401,14 @@ public class CluedoView extends JFrame {
 				return;
 			}
 
-			if(game.currentPlayer() == null){
-				JOptionPane.showMessageDialog(null, "You must have a current Player to roll the dice!", "Game ERROR", JOptionPane.ERROR_MESSAGE);
+			if (game.currentPlayer() == null) {
+				JOptionPane.showMessageDialog(null, "You must have a current Player to roll the dice!", "Game ERROR",
+						JOptionPane.ERROR_MESSAGE);
 			}
 
-			if(game.rolled && game.moveMade){
-				JOptionPane.showMessageDialog(null, "You have already rolled! Let the next player go.", "Game ERROR", JOptionPane.ERROR_MESSAGE);
+			if (game.rolled && game.moveMade) {
+				JOptionPane.showMessageDialog(null, "You have already rolled! Let the next player go.", "Game ERROR",
+						JOptionPane.ERROR_MESSAGE);
 			}
 
 			if (game.isMoveSelection && !game.rolled) {

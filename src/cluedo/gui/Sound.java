@@ -12,14 +12,12 @@ import javax.sound.sampled.DataLine;
 import sun.audio.*;
 
 public class Sound {
+	private static Clip clip;
+	private static AudioInputStream stream;
+	private static AudioFormat format;
+	private static DataLine.Info info;
 	public static void music(){
 		try {
-    	    File yourFile;
-    	    AudioInputStream stream;
-    	    AudioFormat format;
-    	    DataLine.Info info;
-    	    Clip clip;
-
     	    stream = AudioSystem.getAudioInputStream(new File("Spy_Glass.wav"));
     	    format = stream.getFormat();
     	    info = new DataLine.Info(Clip.class, format);
@@ -28,7 +26,12 @@ public class Sound {
     	    clip.start();
     	}
     	catch (Exception e) {
-    	    //whatevers
+    	  e.printStackTrace();
     	}
 	}
+	
+	public void stopMusic(){
+		clip.stop();
+	}
+	
 }
