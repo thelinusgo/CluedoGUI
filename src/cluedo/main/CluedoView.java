@@ -347,7 +347,7 @@ public class CluedoView extends JFrame {
 				dicecanvas.resetDice();
 				leftPanel.repaint();
 			}else{
-				
+				game.resetAll();
 			}
 		});
 
@@ -409,7 +409,6 @@ public class CluedoView extends JFrame {
 
 		btnMakeMove.addActionListener(e -> {
 			if (game.moveMade) {
-				game.reset();
 				return;
 			}
 			game.isMoveSelection = true;
