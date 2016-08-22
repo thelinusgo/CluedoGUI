@@ -6,10 +6,10 @@ import java.io.File;
 
 import javax.swing.JFrame;
 /**
- * The Game over frame that shows up when the game has been lost..
- * @author Casey and Linus
- *
+ * This class represents the Game Over Frame, which is represents the pop-up window shown when the game is lost.
+ * @author Linus
  */
+@SuppressWarnings("serial")
 public class GameOverFrame extends JFrame{
 	
 	private GameOverCanvas canvas;
