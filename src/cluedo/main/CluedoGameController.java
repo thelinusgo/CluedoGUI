@@ -637,12 +637,6 @@ public class CluedoGameController implements MouseListener{
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void mouseReleased(MouseEvent e) {
 		if(this.currentPlayer == null){
 			//handle when the current player is null.
@@ -686,21 +680,19 @@ public class CluedoGameController implements MouseListener{
 		this.cleanCanvas();
 	}
 
-
+	/*
+	 * Unused MouseListener methods
+	 * (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+	 */
 	@Override
-	public void mouseClicked(MouseEvent e) {
-
-	}
-
+	public void mouseClicked(MouseEvent e) {}
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		System.out.println("mouse entered");
-	}
-
+	public void mouseEntered(MouseEvent e) {}
 	@Override
-	public void mouseExited(MouseEvent e) {
-
-	}
+	public void mouseExited(MouseEvent e) {}
+	@Override
+	public void mousePressed(MouseEvent e) {}
 
 	public void reset() {
 		currentRoll = 0;

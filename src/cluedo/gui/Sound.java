@@ -22,10 +22,11 @@ public class Sound {
 	 */
 	public static void music(){
 		try {
-    	    AudioInputStream stream;
+			AudioInputStream stream;
     	    AudioFormat format;
     	    DataLine.Info info;
     	    Clip clip;
+
     	    stream = AudioSystem.getAudioInputStream(new File("Spy_Glass.wav"));
     	    format = stream.getFormat();
     	    info = new DataLine.Info(Clip.class, format);
