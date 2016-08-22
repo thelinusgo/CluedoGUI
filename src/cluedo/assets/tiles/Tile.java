@@ -15,7 +15,7 @@ public class Tile{
 	public int x;
 	public int y;
 	protected Player player;
-	private Color color = new Color(222, 192, 70); 
+	private Color color;
 	
 	public static final int TILESIZE = 21;
 	
@@ -28,6 +28,7 @@ public class Tile{
 		this.yLoc = 25+y*TILESIZE;
 		this.x = x;
 		this.y = y;
+		this.color = new Color(222, 192, 70);
 	}
 	
 	public void setColor(Color c){

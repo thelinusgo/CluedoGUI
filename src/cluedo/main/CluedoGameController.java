@@ -34,7 +34,7 @@ import cluedo.gui.CluedoCanvas;
  * @author Casey & Linus
  *
  */
-public class CluedoGameController implements MouseMotionListener, MouseListener{
+public class CluedoGameController implements MouseListener{
 	//Setup Card Images
 	/*Fields to represent the room Cards. */
 	public static BufferedImage kitchenCard;
@@ -694,21 +694,11 @@ public class CluedoGameController implements MouseMotionListener, MouseListener{
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-
+		System.out.println("mouse entered");
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent arg0) {
 
 	}
 

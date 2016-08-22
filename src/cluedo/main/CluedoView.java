@@ -12,6 +12,7 @@ import cluedo.assets.Position;
 import cluedo.cards.Card;
 import cluedo.gui.CardsJFrame;
 import cluedo.gui.DiceCanvas;
+import cluedo.gui.Sound;
 import cluedo.arguments.Accusation;
 import cluedo.arguments.Suggestion;
 import cluedo.assets.Character;
@@ -53,7 +54,7 @@ import java.awt.Color;
  *
  */
 public class CluedoView extends JFrame {	
-	
+
 	/* The left panel of the Class. */
 	private JPanel contentPane;
 
@@ -92,19 +93,19 @@ public class CluedoView extends JFrame {
 	private ImageIcon purple = new ImageIcon("purple.png");
 	private ImageIcon blue = new ImageIcon("blue.png");
 	private ImageIcon no_player = new ImageIcon("no_player.png");
-	
+
 	private CardsJFrame cardsframe;
-	
+
 	/**
 	 * The dice canvas - where the dice ImageIcons are drawn.
 	 */
 	private DiceCanvas dicecanvas = new DiceCanvas();
-/*
-	
+	/*
+
 	 * The canvas representing the pop up window, for drawing the players hand.
-	 
+
 	private CardsCanvas cardcanvas = new CardsCanvas();
-	*//**
+	 *//**
 	 * The JFrame for the cardvancas.
 	 *//*
 	private CardsFrame cardsframe;*/
@@ -117,8 +118,11 @@ public class CluedoView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					Sound sound = new Sound();
+					sound.music();
 					CluedoView theFrame = new CluedoView();
 					theFrame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -134,7 +138,7 @@ public class CluedoView extends JFrame {
 		game = new CluedoGameController(this);// create a new instance of the game.
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter(){
-			
+
 			@Override
 			public void windowClosing(WindowEvent e){
 				int value = JOptionPane.showConfirmDialog(null, "Do you want to exit this Game?", "Confirmation",
@@ -142,8 +146,8 @@ public class CluedoView extends JFrame {
 				if (value == 0)
 					System.exit(0);
 			}
-			
-			
+
+
 		});
 		setBounds(100, 100, 775, 700);
 		this.setResizable(false);
@@ -207,7 +211,7 @@ public class CluedoView extends JFrame {
 		btnMakeMove = new JButton("Make Move");
 		btnMakeMove.setToolTipText("Press this to make a move.");
 		leftPanel.add(btnMakeMove, "cell 0 3,growx");
-		
+
 
 		// Button for when a turn has ended.
 		btnEndTurn = new JButton("End Turn");
@@ -246,7 +250,7 @@ public class CluedoView extends JFrame {
 		current_players_pane.setToolTipText("The list of available players.");
 		current_players_pane.setEditable(false);
 		leftPanel.add(current_players_pane, "cell 0 12,grow");
-		
+
 		playerColor = new JLabel(no_player);
 		leftPanel.add(playerColor, "cell 0 1");
 
@@ -255,7 +259,7 @@ public class CluedoView extends JFrame {
 		// this sets up the action listeners.
 		this.setupActionListeners();
 	}
-	
+
 	/**
 	 * This sets the players current color.
 	 * @param p
@@ -266,7 +270,7 @@ public class CluedoView extends JFrame {
 			return;
 		}
 		String value = p.getCharacter().name();
-	
+
 		switch(value){
 		case "Miss Scarlet":
 			playerColor.setIcon(red);	 
@@ -308,26 +312,22 @@ public class CluedoView extends JFrame {
 		 ***************************/
 		game.cluedoCanvas.addMouseListener(game);
 
-		
-				
-		
-		
 		btnMakeSuggestion.addActionListener(e -> {
-		Suggestion sug = game.makeSuggestion(game.currentPlayer());
-		if(sug == null){
-			System.err.println("Why is the suggestion null? Look at me (line 301)");
-			return;
-		}
-		
+			Suggestion sug = game.makeSuggestion(game.currentPlayer());
+			if(sug == null){
+				System.err.println("Why is the suggestion null? Look at me (line 301)");
+				return;
+			}
+
 		});
 
 		btnMakeAccusation.addActionListener(e -> {
 			try {
-				
+
 				for(Card c : Initializer.getEnvelope().getCards()){
 					System.out.println(c.toString());
 				}
-				
+
 				Accusation status = game.makeAccusation(game.currentPlayer());
 				if(status == null){
 					JOptionPane.showMessageDialog(null, "The accusation was incorrect.", "ACCUSATION INCORRECT", JOptionPane.ERROR_MESSAGE);
@@ -342,7 +342,7 @@ public class CluedoView extends JFrame {
 					btnMakeAccusation.setEnabled(false);
 					btnShowPrevPlayersCards.setEnabled(false);
 				}
-				
+
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -363,12 +363,14 @@ public class CluedoView extends JFrame {
 			this.setPlayerColor(game.currentPlayer());
 			current_players_pane.setText(game.askPlayers());
 		});
+
 		mntmExitGame.addActionListener(e -> {
 			int value = JOptionPane.showConfirmDialog(null, "Do you want to exit this Game?", "Confirmation",
 					JOptionPane.YES_NO_OPTION);
 			if (value == 0)
 				System.exit(0);
 		});
+
 		mntmAboutCluedogui.addActionListener(e -> JOptionPane.showMessageDialog(null,
 				"This game was created by Casey Huang and Linus Go for their SWEN 222 Project. \n (c) 2016 All rights reserved."));
 
@@ -386,15 +388,15 @@ public class CluedoView extends JFrame {
 				game.reset();
 				return;
 			}
-			
+
 			if(game.currentPlayer() == null){
 				JOptionPane.showMessageDialog(null, "You must have a current Player to roll the dice!", "Game ERROR", JOptionPane.ERROR_MESSAGE);
 			}
-			
+
 			if(game.rolled && game.moveMade){
 				JOptionPane.showMessageDialog(null, "You have already rolled! Let the next player go.", "Game ERROR", JOptionPane.ERROR_MESSAGE);
 			}
-			
+
 			if (game.isMoveSelection && !game.rolled) {
 				dicecanvas.setDiceOne(game.diceRoll());
 				dicecanvas.setDiceTwo(game.diceRoll());
@@ -404,7 +406,7 @@ public class CluedoView extends JFrame {
 				game.rolled = true;
 			}
 		});
-		
+
 		btnMakeMove.addActionListener(e -> {
 			if (game.moveMade) {
 				game.reset();
