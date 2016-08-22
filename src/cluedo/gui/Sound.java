@@ -25,11 +25,8 @@ public class Sound {
 			AudioInputStream stream;
     	    AudioFormat format;
     	    DataLine.Info info;
-<<<<<<< HEAD
-    	    Clip clip;
+    	    
 
-=======
->>>>>>> branch 'master' of https://oznaprazzi@bitbucket.org/golinu/cluedogui.git
     	    stream = AudioSystem.getAudioInputStream(new File("Spy_Glass.wav"));
     	    format = stream.getFormat();
     	    info = new DataLine.Info(Clip.class, format);
