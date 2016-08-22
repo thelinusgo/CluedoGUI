@@ -22,6 +22,9 @@ public class Sound {
 	 */
 	public static void music(){
 		try {
+    	    AudioInputStream stream;
+    	    AudioFormat format;
+    	    DataLine.Info info;
     	    stream = AudioSystem.getAudioInputStream(new File("Spy_Glass.wav"));
     	    format = stream.getFormat();
     	    info = new DataLine.Info(Clip.class, format);
@@ -29,6 +32,7 @@ public class Sound {
     	    clip.open(stream);
     	    clip.start();
     	}
+
     	catch (Exception e) {
     	System.err.println("The music file is missing!");
     	  e.printStackTrace();
@@ -40,6 +44,10 @@ public class Sound {
 	 */
 	public void stopMusic(){
 		clip.stop();
+	}
+	
+	  public void startMusic(){
+	    clip.start();
 	}
 	
 }
