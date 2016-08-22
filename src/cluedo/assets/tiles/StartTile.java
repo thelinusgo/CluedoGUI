@@ -5,9 +5,15 @@ import java.awt.Graphics;
 
 import cluedo.assets.Character;
 import cluedo.assets.Player;
-
+/**
+ * Determines the player's start tile.
+ * @author Casey
+ *
+ */
 public class StartTile extends Tile{
-
+	/**
+	 * Stores the character that this start tile belongs to.
+	 */
 	private Character c;
 	
 	public StartTile(int x, int y, Character c) {
@@ -15,10 +21,16 @@ public class StartTile extends Tile{
 		this.c = c;
 	}
 	
+	/**
+	 * Sets the player of this Tile.
+	 */
 	public void setPlayer(Player p){
 		super.setPlayer(p);
 	}
 
+	/**
+	 * Draws the Tile.
+	 */
 	public void draw(Graphics g){
 		g.setColor(c.getColor());
 		g.fillRect(xLoc, yLoc, TILESIZE, TILESIZE);
@@ -29,6 +41,9 @@ public class StartTile extends Tile{
 		}
 	}
 	
+	/**
+	 * Returns the colour of this Tile.
+	 */
 	public Color getColor(){
 		return c.getColor();
 	}

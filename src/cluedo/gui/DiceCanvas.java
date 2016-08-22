@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 /**
  * The canvas being used to draw the dice.
- * @author linus
+ * @author Casey and Linus
  *
  */
 public class DiceCanvas extends JPanel{
@@ -30,7 +30,7 @@ public class DiceCanvas extends JPanel{
 	private BufferedImage dNull;
 	
 	/**
-	 * Dumb constructor, just create the canvas with the default values
+	 * Dumb constructor, just creates the canvas with the default values
 	 * @param value
 	 */
 	public DiceCanvas(){
@@ -48,14 +48,25 @@ public class DiceCanvas extends JPanel{
 		this.diceTwo = secondVal;
 	}
 	
+	/**
+	 * Sets the value of the first dice.
+	 * @param value
+	 */
 	public void setDiceOne(int value){
 		this.diceOne = value;
 	}
 	
+	/**
+	 * Sets the value of the second dice.
+	 * @param value
+	 */
 	public void setDiceTwo(int value){
 		this.diceTwo = value;
 	}
 	
+	/**
+	 * Resets the dice roll.
+	 */
 	public void resetDice(){
 		this.diceOne = 0;
 		this.diceTwo = 0;

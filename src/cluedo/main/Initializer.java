@@ -165,7 +165,6 @@ public class Initializer {
 	 * Initializes the envelope list.
 	 */
 	private void initializeEnvelope(){
-
 		RoomCard roomCard = null;
 		CharacterCard characterCard = null;
 		WeaponCard weaponCard = null;

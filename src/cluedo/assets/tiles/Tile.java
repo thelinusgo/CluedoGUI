@@ -7,15 +7,29 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import cluedo.assets.Player;
-
+/**
+ * Determines if player wants to move into a Tile.
+ * @author Casey
+ *
+ */
 public class Tile{
 	
+	/**
+	 * x and y location of the Tile on the canvas
+	 */
 	protected int xLoc;
 	protected int yLoc;
+	
+	/**
+	 * x and y location of the Tile in the 2D array of Tiles
+	 */
 	public int x;
 	public int y;
+	
+	/**
+	 * Stores the player in this Tile.
+	 */
 	protected Player player;
-	private Color color;
 	
 	public static final int TILESIZE = 21;
 	
@@ -28,19 +42,14 @@ public class Tile{
 		this.yLoc = 25+y*TILESIZE;
 		this.x = x;
 		this.y = y;
-		this.color = new Color(222, 192, 70);
 	}
 	
-	public void setColor(Color c){
-		this.color = c;
-	}
-	
-	public Color getColor(){
-		return this.color;
-	}
-	
+	/**
+	 * Draws the Tile.
+	 * @param g
+	 */
 	public void draw(Graphics g){
-		g.setColor(color);
+		g.setColor(new Color(222, 192, 70));
 		g.fillRect(xLoc, yLoc, TILESIZE, TILESIZE);
 		g.setColor(Color.black);
 		g.drawRect(xLoc, yLoc, TILESIZE, TILESIZE);
@@ -50,10 +59,19 @@ public class Tile{
 		}
 	}
 
+	/**
+	 * Sets the player.
+	 * @param p
+	 */
 	public void setPlayer(Player p) {
 		this.player = p;
 	}
 	
+	/**
+	 * Checks if the point is within this Tile.
+	 * @param p
+	 * @return
+	 */
 	public boolean contains(Point p){
 		if(this.xLoc <= p.x && this.xLoc + TILESIZE > p.x && this.yLoc <= p.y && this.yLoc + TILESIZE > p.y){
 			return true;
@@ -61,6 +79,10 @@ public class Tile{
 		return false;
 	}
 
+	/**
+	 * Returns the player's name.
+	 * @return
+	 */
 	public String player() {
 		return this.player.getName();
 	}

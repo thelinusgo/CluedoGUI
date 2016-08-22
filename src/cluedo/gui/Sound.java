@@ -11,6 +11,11 @@ import javax.sound.sampled.DataLine;
 
 import sun.audio.*;
 
+/**
+ * This class is used to play the background music for the game.
+ * @author Casey and Linus
+ *
+ */
 public class Sound {
 	private static Clip clip;
 	private static AudioInputStream stream;
@@ -48,7 +53,10 @@ public class Sound {
 		clip.stop();
 	}
 	
-	  public void startMusic(){
+	/**
+	 * This starts the music again.
+	 */
+	public void startMusic(){
 	    clip.start();
 	}
 	

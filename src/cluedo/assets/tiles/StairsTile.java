@@ -6,21 +6,26 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import cluedo.assets.Player;
-
+/**
+ * Determines if player wants to move into a StairsTile.
+ * @author Casey
+ *
+ */
 public class StairsTile extends Tile{
-	private String direction = null;
-	private String direction2 = null;
-	
-	public StairsTile(int x, int y, String dir, String dir2){
+	public StairsTile(int x, int y){
 		super(x, y);
-		this.direction = dir;
-		this.direction2 = dir2;
 	}
 	
+	/**
+	 * Sets the player in this Tile.
+	 */
 	public void setPlayer(Player p){
 		super.setPlayer(p);
 	}
 	
+	/**
+	 * Draws the Tile.
+	 */
 	public void draw(Graphics g){
 		if(this.player != null){
 			this.player.draw(g, xLoc, yLoc);

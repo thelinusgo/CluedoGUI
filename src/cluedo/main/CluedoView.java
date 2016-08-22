@@ -52,7 +52,7 @@ import java.awt.Color;
  * the menu contexts, the buttons and the layout for the GUI of the game. (This
  * is the View in the MVC design pattern)
  * 
- * @author linus + casey
+ * @author Casey & Linus
  *
  */
 public class CluedoView extends JFrame {
@@ -85,8 +85,6 @@ public class CluedoView extends JFrame {
 	JPanel leftPanel;
 	
 	GameOverFrame gameoverframe;
-	
-
 	/* Represents the player Colors */
 	private ImageIcon green = new ImageIcon("green.png");
 	private ImageIcon white = new ImageIcon("white.png");
@@ -106,11 +104,6 @@ public class CluedoView extends JFrame {
 	private JLabel playerColor;
 	private JButton btnShowPreviousplayersCards;
 	private JRadioButton rdbtnMuteSound;
-
-	/**
-	 * Launch the application.
-	 */
-	
 
 	/**
 	 * Create the frame.

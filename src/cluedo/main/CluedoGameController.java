@@ -32,6 +32,7 @@ import cluedo.gui.CardsCanvas;
 import cluedo.gui.CluedoCanvas;
 import cluedo.gui.Sound;
 import tests.CluedoTests;
+
 /**
  * The heart of the Cluedo Game.
  * @author Casey & Linus
@@ -178,15 +179,6 @@ public class CluedoGameController implements MouseListener{
 	/**
 	 * Construct a new instance of the cluedo game. Initialize the fields.
 	 */
-	
-	
-	public static Player getTheCurrentPlayer(){
-		return currentPlayer;
-	}
-	
-	
-	
-	
 	public CluedoGameController(CluedoView cluedoJF){
 		try {
 			//load in the weapon images.
@@ -239,6 +231,10 @@ public class CluedoGameController implements MouseListener{
 		return currentPlayers;
 	}
 
+	/**
+	 * Returns the current player playing.
+	 * @return
+	 */
 	public Player currentPlayer(){
 		return this.currentPlayer;
 	}
@@ -273,7 +269,8 @@ public class CluedoGameController implements MouseListener{
 	}
 
 	/**
-	 * Repaints all canvases whenever this is called. This ensures that the canvas is updated appropriately whenever it is cleaned.
+	 * Repaints all canvases whenever this is called. This ensures that the canvas is 
+	 * updated appropriately whenever it is cleaned.
 	 */
 	public void cleanCanvas(){
 		cluedoJFrame.repaint();
@@ -304,14 +301,8 @@ public class CluedoGameController implements MouseListener{
 		rolled = true;
 	}
 	
-	
-	
-	
-	
-	
-	
 	/**
-	 * Initialize the current players - give them random cards
+	 * Initialize the current players - give them random cards.
 	 */
 	public void initialSetup(){
 		if(currentPlayers.size() == 0){
@@ -329,6 +320,7 @@ public class CluedoGameController implements MouseListener{
 
 	/**
 	 * Returns all of the currentPlayers, for use in a JTextBox or a JList.
+	 * @return
 	 */
 	public String getPlayerAndCharacterText(){
 		StringBuilder sb = new StringBuilder();
@@ -345,7 +337,6 @@ public class CluedoGameController implements MouseListener{
 	///////////////////////////
 	/**
 	 * Determines whether the user has inputed an integer.
-	 * 
 	 * @param input
 	 * @return
 	 */
@@ -360,8 +351,8 @@ public class CluedoGameController implements MouseListener{
 
 	/**
 	 * Asks the players for their name, and their preferred character.. Brings up a JOptionPane to request user
-	 * input. This then calls askCharacters .
-	 * 
+	 * input. This then calls askCharacters.
+	 * @return
 	 */
 	public String askPlayers() {
 		String numPlayers = "";
@@ -408,7 +399,9 @@ public class CluedoGameController implements MouseListener{
 	}
 
 	/**
-	 * This code allows us to select from a list of characters, given a player.
+	 * This method allows us to select from a list of characters, given a player.
+	 * @param characters
+	 * @param p
 	 */
 	public void grabCharacters(Character[] characters, Player p) {
 		JPanel panel = new JPanel();
@@ -523,6 +516,9 @@ public class CluedoGameController implements MouseListener{
 
 	/**
 	 * This code allows us to select from a collection of weapons.
+	 * @param weaponCol
+	 * @param p
+	 * @return
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static WeaponCard askWeapons(WeaponCard[] weaponCol, Player p) {
@@ -601,6 +597,9 @@ public class CluedoGameController implements MouseListener{
 
 	/**
 	 * This code allows us to select from a collection of Suspects.
+	 * @param charCol
+	 * @param p
+	 * @return
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static CharacterCard askSuspects(CharacterCard[] charCol, Player p){
@@ -712,6 +711,9 @@ public class CluedoGameController implements MouseListener{
 	@Override
 	public void mousePressed(MouseEvent e) {}
 
+	/**
+	 * This resets everything for the next player's turn.
+	 */
 	public void reset() {
 		currentRoll = 0;
 		this.argsButtonPressed = false;
@@ -733,6 +735,9 @@ public class CluedoGameController implements MouseListener{
 		}
 	}
 
+	/**
+	 * This resets everything for a new game.
+	 */
 	public void resetAll() {
 		currentPlayers = new ArrayList<Player>();
 		numPlayers = 0; 
@@ -752,6 +757,24 @@ public class CluedoGameController implements MouseListener{
 		return showCards;
 	}
 	
+	/**
+	 * Returns the Sound object of the game.
+	 * @return
+	 */
+	public Sound getSound(){
+		return sound;
+	}
+	
+	/**
+	 * Indicates an attempt to make an invalid move. Whenever an invalid move is thrown, it also brings up a Warning Dialog.
+	 */
+	public static class InvalidMove extends Exception {
+		public InvalidMove(String msg) {
+			super(" ");
+			JOptionPane.showMessageDialog(null, msg, "GAME WARNING" ,JOptionPane.WARNING_MESSAGE);
+		}
+	}
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -765,19 +788,5 @@ public class CluedoGameController implements MouseListener{
 				}
 			}
 		});
-	}
-	
-	public Sound getSound(){
-		return sound;
-	}
-	
-	/**
-	 * Indicates an attempt to make an invalid move. Whenever an invalid move is thrown, it also brings up a Warning Dialog.
-	 */
-	public static class InvalidMove extends Exception {
-		public InvalidMove(String msg) {
-			super(" ");
-			JOptionPane.showMessageDialog(null, msg, "GAME WARNING" ,JOptionPane.WARNING_MESSAGE);
-		}
 	}
 }
