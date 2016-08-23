@@ -16,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import cluedo.arguments.Accusation;
 import cluedo.arguments.Suggestion;
@@ -38,7 +39,7 @@ import tests.CluedoTests;
  * @author Casey & Linus
  *
  */
-public class CluedoGameController implements MouseListener{
+public class CluedoGameController implements MouseListener, MouseMotionListener{
 	//Setup Card Images
 	/*Fields to represent the room Cards. */
 	public static BufferedImage kitchenCard;
@@ -91,7 +92,7 @@ public class CluedoGameController implements MouseListener{
 	 * An instance of the CluedoCanvas.
 	 */
 	public static CluedoCanvas cluedoCanvas;
-	
+
 	/**
 	 * An instance of the CardsCanvas.
 	 */
@@ -170,11 +171,16 @@ public class CluedoGameController implements MouseListener{
 	 * Store JFrame
 	 */
 	private CluedoView cluedoJFrame;
-	
+
 	/**
 	 * For playing music.
 	 */
 	private static Sound sound;
+
+	/**
+	 * Stores the tile the player hovered over previously.
+	 */
+	private Tile tile;
 
 	/**
 	 * Construct a new instance of the cluedo game. Initialize the fields.
@@ -276,7 +282,7 @@ public class CluedoGameController implements MouseListener{
 		cluedoJFrame.repaint();
 		cluedoCanvas.repaint();
 	}
-	
+
 	/**
 	 * Reset the round - after a player has lost.
 	 */
@@ -288,7 +294,7 @@ public class CluedoGameController implements MouseListener{
 		theView.current_players_pane.setText(this.getPlayerAndCharacterText());
 		theView.leftPanel.repaint();		
 	}
-	
+
 	/**
 	 * Set dice Roll. This should only be called inside the CluedoView class.
 	 */
@@ -300,7 +306,7 @@ public class CluedoGameController implements MouseListener{
 		theView.leftPanel.repaint();
 		rolled = true;
 	}
-	
+
 	/**
 	 * Initialize the current players - give them random cards.
 	 */
@@ -360,10 +366,10 @@ public class CluedoGameController implements MouseListener{
 
 		while (!correctInput && !isInteger) {
 			numPlayers = (String) (JOptionPane.showInputDialog(null, "How many players would you like?", JOptionPane.OK_OPTION));
-			
-		
-			
-			
+
+
+
+
 			if (isInteger(numPlayers)) {
 				if (Integer.parseInt(numPlayers) > 6 || Integer.parseInt(numPlayers) < 3) {
 					JOptionPane.showMessageDialog(null, "Number of players has to be in between 3-6 (a number)",
@@ -372,7 +378,7 @@ public class CluedoGameController implements MouseListener{
 					correctInput = true;
 					isInteger = true;
 				}
-			
+
 			} else {
 				JOptionPane.showMessageDialog(null, "You must enter Integer values only.", "GAME ERROR", JOptionPane.ERROR_MESSAGE);
 			}
@@ -456,16 +462,16 @@ public class CluedoGameController implements MouseListener{
 		WeaponCard weapon = askWeapons(Initializer.getWeaponCards(), p);
 		CharacterCard character = askSuspects(Initializer.getCharacterCards(), p);
 		RoomCard room = findRoom(p.getRoom());
-		
+
 		Suggestion sugg = new Suggestion(weapon, room, character, p);
-		
+
 		if(sugg.checkSuggestion(currentPlayers())){
 			JOptionPane.showMessageDialog(null, "At least one extra card was found", "NOTICE", JOptionPane.INFORMATION_MESSAGE);
 		}else{
 			JOptionPane.showMessageDialog(null, "No extra cards were found.", "WARNING", JOptionPane.WARNING_MESSAGE);
 		}
 		return sugg;
-		
+
 	}
 
 	/**
@@ -501,13 +507,13 @@ public class CluedoGameController implements MouseListener{
 		CharacterCard character = askSuspects(Initializer.getCharacterCards(), p);
 
 		Card[] solutionEnvelope = Initializer.getEnvelope().getCards();
-		
+
 		Accusation ac = new Accusation(weapon, room, character, p, Initializer.getEnvelope());
 		if(ac.accusationStatus()){
 			return ac;
 		}
-	
-		
+
+
 		for(Card c : p.getCards()){
 			getShowCards().add(c);
 		}
@@ -697,8 +703,24 @@ public class CluedoGameController implements MouseListener{
 		this.cleanCanvas();
 	}
 
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		for(int x = 0; x < board.length; x++){
+			for(int y = 0; y < board[0].length; y++){
+				Tile t = board[x][y];
+					if(t.contains(e.getPoint())){
+						t.setColor(new Color(255, 255, 153));
+					}else{
+						t.setColor(new Color(222, 192, 70));
+					}
+				
+			}
+		}
+		this.cleanCanvas();
+	}
+
 	/*
-	 * Unused MouseListener methods
+	 * Unused MouseListener and MouseMotionListener methods
 	 * (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
 	 */
@@ -710,6 +732,8 @@ public class CluedoGameController implements MouseListener{
 	public void mouseExited(MouseEvent e) {}
 	@Override
 	public void mousePressed(MouseEvent e) {}
+	@Override
+	public void mouseDragged(MouseEvent e) {}
 
 	/**
 	 * This resets everything for the next player's turn.
@@ -756,7 +780,7 @@ public class CluedoGameController implements MouseListener{
 	public static List<Card> getShowCards() {
 		return showCards;
 	}
-	
+
 	/**
 	 * Returns the Sound object of the game.
 	 * @return
@@ -764,7 +788,7 @@ public class CluedoGameController implements MouseListener{
 	public Sound getSound(){
 		return sound;
 	}
-	
+
 	/**
 	 * Indicates an attempt to make an invalid move. Whenever an invalid move is thrown, it also brings up a Warning Dialog.
 	 */
@@ -774,7 +798,7 @@ public class CluedoGameController implements MouseListener{
 			JOptionPane.showMessageDialog(null, msg, "GAME WARNING" ,JOptionPane.WARNING_MESSAGE);
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

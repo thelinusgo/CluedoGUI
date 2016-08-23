@@ -26,6 +26,8 @@ public class Tile{
 	public int x;
 	public int y;
 	
+	private Color color;
+	
 	/**
 	 * Stores the player in this Tile.
 	 */
@@ -42,6 +44,7 @@ public class Tile{
 		this.yLoc = 25+y*TILESIZE;
 		this.x = x;
 		this.y = y;
+		color = new Color(222, 192, 70);
 	}
 	
 	/**
@@ -49,7 +52,7 @@ public class Tile{
 	 * @param g
 	 */
 	public void draw(Graphics g){
-		g.setColor(new Color(222, 192, 70));
+		g.setColor(color);
 		g.fillRect(xLoc, yLoc, TILESIZE, TILESIZE);
 		g.setColor(Color.black);
 		g.drawRect(xLoc, yLoc, TILESIZE, TILESIZE);
@@ -57,6 +60,10 @@ public class Tile{
 		if(this.player != null){
 			this.player.draw(g, xLoc, yLoc);
 		}
+	}
+	
+	public void setColor(Color c){
+		this.color = c;
 	}
 
 	/**

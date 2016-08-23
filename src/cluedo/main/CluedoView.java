@@ -287,7 +287,7 @@ public class CluedoView extends JFrame {
 		 * START OF ACTION/MOUSE LISTENER STUFF
 		 ***************************/
 		game.cluedoCanvas.addMouseListener(game);
-		
+		game.cluedoCanvas.addMouseMotionListener(game);
 
 		mntmGameInstructions.addActionListener(e->{
 			new InstructionsFrame();
