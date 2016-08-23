@@ -25,12 +25,12 @@ public class InstructionsCanvas extends Canvas {
 
 	@Override
 	public void paint(Graphics g){
-		g.drawImage(img, 0, 0, 1062, 851, null);
+		g.drawImage(img, 0, 0, 708, 567, null);
 	}
 	
 	@Override
 	public Dimension getPreferredSize(){
-		return new Dimension(1052,841);
+		return new Dimension(695, 557);
 	}
 	
 	
