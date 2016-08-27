@@ -1,0 +1,2 @@
+# CluedoGUI
+This assignment builds up on our previous SWEN 222 Cluedo Assignment, however its functionality was extended by the use of a GUI and the use of MVC (Model-View-Controller). We programmed the GUI using Swing and used MIGLayout as our layout manager. For this assignment, I did most of the work on the GUI/Swing Interface, and Casey worked on drawing the Board, and we both worked hard to port over our Assignment1 code into a working GUI form.
